@@ -1,0 +1,63 @@
+//-----------------------------------------------------------------------------
+//  Unit              : MiniCsl Library
+//
+//  Versiune          : 1.0
+//
+//  Descriere         :
+//    * the Csl loads dlls as libraries and used static C functions for embedding
+//      with the script language;
+//    * since I dont particullary like dynamic libraries and the requirements of the
+//      PPTactical engine are method callbacks, the libraries have became classes
+//    * the ZLibrary class is the base class and is pointless to add it as a library
+//      to the script language; instead, derive from it and register with the script
+//      the derived class
+//    * I also kept the list linking the original Csl had (mPrevLibrary); it isn't
+//      the healthiest thing to do in a program (a STL vector would have been better);
+//    * I will probably change this in a further refactoring :)
+//
+//  Istorie           :
+//    [30.11.2001] - [Karg] - unit created
+//-----------------------------------------------------------------------------
+
+#ifndef ZLibraryH
+#define ZLibraryH
+//---------------------------------------------------------------------------
+
+#include <ZString.hpp>
+
+class ZCsl;
+
+class ZLibrary
+{
+  private:
+    ZLibrary* mPrevLibrary;       // previous library in list
+    bool      mNative;            // library is native
+    ZCsl*     mParent;            // parent
+    ZString   mName;
+
+  private: // library methods
+   // handlers must be of this form: ZString (__closure* mHandleThing)(ZCsl* aCsl);
+
+   // the actual method must be of this form: ZString Thing(ZCsl* csl);
+
+  public: // get-set
+    bool      IsNative()         { return mNative; }
+    ZCsl*     GetParent()        { return mParent; };
+    ZString   GetName()          { return mName; }
+    
+    ZLibrary* GetPrevLibrary()   { return mPrevLibrary; };
+    void SetPrevLibrary(ZLibrary* _v) { mPrevLibrary = _v; };
+
+  public: // class specific
+    ZLibrary(                     // constructor
+       ZCsl* _Parent,             // parent
+       const ZString& _Name      // library name
+       // ZLibrary* _Prev         // previous library
+       );
+
+   virtual void InitLibrary();
+
+   virtual ~ZLibrary();                  // destructor
+};
+
+#endif

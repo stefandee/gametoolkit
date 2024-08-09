@@ -1,0 +1,54 @@
+// Export Script for Sentry Editor
+// Author: Karg
+// Date  : 02.09.2007
+// Info  : test script
+
+//---------------------------------------------------------------------------
+//
+// Prelude - mandatory; Only change the values, dont modify const/variable names
+//
+//---------------------------------------------------------------------------
+
+const ScriptName = "Export Test";
+const ScriptInfo = "Will export to custom format";
+const ScriptCategory = "Export";
+const ScriptParamCount = 5;
+
+// name, value, default value, type
+var Params[ScriptParamCount][4] = {
+  { 'PARAM INT',    1,           1,                                          'INT' },
+  { 'PARAM FLOAT',  1.233,       1.233,                                      'DOUBLE' },
+  { 'PARAM PATH',   "C:\\TEMP",  "C:\\TEMP",                                 'PATH' },
+  { 'PARAM STRING', "NAME",      "NAME",                                     'STRING' },
+  { 'PARAM ENUM',   "0",         '256 colors|RGB 555|RGB 565|RGB 24|RGB 32', 'ENUM' }
+};
+
+GetParam(var index, var type)
+{
+  if (index >= 0 && index < ScriptParamCount && type >= 0 && type <= 3)
+  {
+    return Params[index][type];
+  }
+  
+  return '';
+}
+
+//---------------------------------------------------------------------------
+//
+// Additional functions
+//
+//---------------------------------------------------------------------------
+
+
+//---------------------------------------------------------------------------
+//
+// Execute - mandatory; does the actual processing
+//
+//---------------------------------------------------------------------------
+execute()
+{
+    var fileH = FileOpen("testing.txt", O_BINARY + O_CREAT + O_RDWR, S_IREAD | S_IWRITE);    
+    FileWrite(fileH, "O balarie\n");    
+    FileClose(fileH);    
+}
+

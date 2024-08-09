@@ -1,0 +1,194 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!-- C++Builder XML Project -->
+<PROJECT>
+  <MACROS>
+    <VERSION value="BCB.06.00"/>
+    <PROJECT value="..\..\..\bin\Spred.exe"/>
+    <OBJFILES value="..\..\..\tmp\spred\Spred.obj ..\..\..\tmp\spred\m_spred.obj 
+      ..\..\..\tmp\spred\newbmp.obj ..\..\..\tmp\spred\cell.obj 
+      ..\..\..\tmp\spred\SpecReplace.obj ..\..\..\tmp\spred\CfgBin.obj 
+      ..\..\..\tmp\spred\Cfg.obj ..\..\..\tmp\spred\ImageEx.obj 
+      ..\..\..\tmp\spred\logfile.obj ..\..\..\tmp\spred\PP_String.obj 
+      ..\..\..\tmp\spred\Serializable.obj ..\..\..\tmp\spred\Stream.obj 
+      ..\..\..\tmp\spred\Stream_ANSI_C.obj ..\..\..\tmp\spred\ExprEval.obj 
+      ..\..\..\tmp\spred\FAbout.obj"/>
+    <RESFILES value="Spred.res"/>
+    <IDLFILES value=""/>
+    <IDLGENFILES value=""/>
+    <DEFFILE value=""/>
+    <RESDEPEN value="$(RESFILES) m_spred.dfm newbmp.dfm cell.dfm SpecReplace.dfm FAbout.dfm"/>
+    <LIBFILES value=""/>
+    <LIBRARIES value="ScriptPopup.lib HttpLabel.lib ImageExPakage.lib vclx.lib vcl.lib rtl.lib"/>
+    <SPARELIBS value="rtl.lib vcl.lib vclx.lib ImageExPakage.lib HttpLabel.lib ScriptPopup.lib"/>
+    <PACKAGES value="vclx.bpi rtl.bpi vcl.bpi bcbsmp.bpi dclocx.bpi"/>
+    <PATHCPP value=".;..\..\..\src\cpp\Common\Cfg;..\..\..\src\cpp\Common\Cfg;..\Components;..\..\..\src\cpp\Common;..\..\..\src\cpp\Common;..\..\..\src\cpp\Common\Archive;..\..\..\src\cpp\Common\Archive;..\..\..\src\cpp\Common\Archive;..\..\..\src\cpp\Common"/>
+    <PATHPAS value=".;"/>
+    <PATHRC value=".;"/>
+    <PATHASM value=".;"/>
+    <DEBUGLIBPATH value="$(BCB)\lib\debug"/>
+    <RELEASELIBPATH value="$(BCB)\lib\release"/>
+    <LINKER value="ilink32"/>
+    <USERDEFINES value=""/>
+    <SYSDEFINES value="NO_STRICT;_VIS_NOLIB"/>
+    <MAINSOURCE value="Spred.cpp"/>
+    <INCLUDEPATH value="..\..\..\src\cpp\Common\Archive;..\Components;..\..\..\src\cpp\Common\Cfg;..\..\..\src\cpp\Common;..\..\..\src\cpp\Common\GLoad;$(BCB)\include;$(BCB)\include\vcl"/>
+    <LIBPATH value="..\Components;..\..\..\src\cpp\Common\Archive;..\..\..\src\cpp\Common;..\..\Comps;..\..\..\src\cpp\Common\Cfg;$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib"/>
+    <WARNINGS value="-w-par -w-8027 -w-8026"/>
+    <WARNOPTSTR value=""/>
+    <OTHERFILES value=""/>
+  </MACROS>
+  <OPTIONS>
+    <IDLCFLAGS value="-I..\..\..\src\cpp\Common\Archive -I..\Components 
+      -I..\..\..\src\cpp\Common\Cfg -I..\..\..\src\cpp\Common 
+      -I..\..\..\src\cpp\Common\GLoad -I$(BCB)\include -I$(BCB)\include\vcl 
+      -src_suffix cpp -boa"/>
+    <CFLAG1 value="-O2 -H=c:\PROGRA~1\BORLAND\CBUILD~1\lib\vcl60.csm -Hc -Vx -Ve -Tkh30000 
+      -X- -r- -a8 -5 -b- -k -y -v -vi- -c -tW -tWM"/>
+    <PFLAGS value="-N2..\..\..\tmp\spred -N0..\..\..\tmp\spred -$YD -$W -$O- -$A8 -v -M -JPHNE"/>
+    <RFLAGS value=""/>
+    <AFLAGS value="/mx /w2 /zd"/>
+    <LFLAGS value="-I..\..\..\tmp\spred -D&quot;&quot; -aa -Tpe -x -Gn -w -v"/>
+    <OTHERFILES value=""/>
+  </OPTIONS>
+  <LINKER>
+    <ALLOBJ value="c0w32.obj sysinit.obj $(OBJFILES)"/>
+    <ALLRES value="$(RESFILES)"/>
+    <ALLLIB value="$(LIBFILES) $(LIBRARIES) import32.lib cp32mt.lib"/>
+    <OTHERFILES value=""/>
+  </LINKER>
+  <FILELIST>
+      <FILE FILENAME="Spred.cpp" FORMNAME="" UNITNAME="Spred" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="Spred.res" FORMNAME="" UNITNAME="Spred" CONTAINERID="ResTool" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="m_spred.cpp" FORMNAME="MainForm" UNITNAME="m_spred" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="newbmp.cpp" FORMNAME="NewForm" UNITNAME="newbmp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="cell.cpp" FORMNAME="CellForm" UNITNAME="cell" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="SpecReplace.cpp" FORMNAME="FormReplace" UNITNAME="SpecReplace" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\Common\Cfg\CfgBin.cpp" FORMNAME="" UNITNAME="CfgBin" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\Common\Cfg\Cfg.cpp" FORMNAME="" UNITNAME="Cfg" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\Components\ImageEx.cpp" FORMNAME="" UNITNAME="ImageEx" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\Common\logfile.cpp" FORMNAME="" UNITNAME="logfile" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\Common\PP_String.cpp" FORMNAME="" UNITNAME="PP_String" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\Common\Archive\Serializable.cpp" FORMNAME="" UNITNAME="Serializable.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\Common\Archive\Stream.cpp" FORMNAME="" UNITNAME="Stream.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\Common\Archive\Stream_ANSI_C.cpp" FORMNAME="" UNITNAME="Stream_ANSI_C.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\Common\ExprEval.cpp" FORMNAME="" UNITNAME="ExprEval" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="FAbout.cpp" FORMNAME="FormAbout" UNITNAME="FAbout" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+  </FILELIST>
+  <BUILDTOOLS>
+  </BUILDTOOLS>
+
+  <IDEOPTIONS>
+[Version Info]
+IncludeVerInfo=1
+AutoIncBuild=1
+MajorVer=1
+MinorVer=1
+Release=0
+Build=5
+Debug=0
+PreRelease=0
+Special=0
+Private=0
+DLL=0
+Locale=1033
+CodePage=1252
+
+[Version Info Keys]
+CompanyName=
+FileDescription=
+FileVersion=1.1.0.5
+InternalName=
+LegalCopyright=
+LegalTrademarks=
+OriginalFilename=
+ProductName=
+ProductVersion=1.0.0.0
+Comments=
+
+[Excluded Packages]
+c:\program files\borland\cbuilder6\Bin\dclite60.bpl=Borland Integrated Translation Environment
+
+[HistoryLists\hlIncludePath]
+Count=13
+Item0=..\..\..\src\cpp\Common\Archive;..\..\Comps;..\..\..\src\cpp\Common\Cfg;..\..\..\src\cpp\Common;..\..\..\src\cpp\Common\GLoad;$(BCB)\include;$(BCB)\include\vcl
+Item1=..\..\Comps;..\..\..\src\cpp\Common\Cfg;..\..\..\src\cpp\Common;..\..\..\src\cpp\Common\GLoad;$(BCB)\include;$(BCB)\include\vcl
+Item2=..\..\Comps;..\..\Common\Cfg;..\..\Common;..\..\Common\GLoad;$(BCB)\include;$(BCB)\include\vcl
+Item3=..\..\Common\Cfg;..\..\Common;..\..\Common\GLoad;$(BCB)\include;$(BCB)\include\vcl
+Item4=..\..\Commo;..\..\Comm;..\..\Com;..\..\Co;..\..\C;..\..;..\..\Commo\Cfg;..\..\Comm\Cfg;..\..\Com\Cfg;..\..\Co\Cfg;..\..\C\Cfg;..\..\Cfg;..\..\Sources;..\..\Sources\Cfg;..\..\Common;..\..\Comps;..\..\Common\Cfg;$(BCB)\include;$(BCB)\include\vcl
+Item5=..\..\Common;..\..\Comps;..\..\Common\Cfg;$(BCB)\include;$(BCB)\include\vcl
+Item6=..\..\Sources;..\..\Comps;..\..\Sources\Cfg;..\..\Common;..\Common\Cfg;$(BCB)\include;$(BCB)\include\vcl
+Item7=..\..\Common;..\Common\Cfg;$(BCB)\include;$(BCB)\include\vcl
+Item8=..\..\Sources;..\..\Comps;..\..\Sources\Cfg;..\Sources\Cfg;..\..\..\bin\borland\cbuilder3\objrepos;..\..\..\bin\borland\cbuilder3\bin;..\comps;..\sources;$(BCB)\include;$(BCB)\include\vcl
+Item9=..\Sources\Cfg;..\..\..\bin\borland\cbuilder3\objrepos;..\..\..\bin\borland\cbuilder3\bin;..\comps;..\sources;$(BCB)\include;$(BCB)\include\vcl
+Item10=..\..\..\bin\borland\cbuilder3\objrepos;..\..\..\bin\borland\cbuilder3\bin;..\comps;..\sources;$(BCB)\include;$(BCB)\include\vcl
+Item11=..\..\..\bin\borland\cbuilder3\bin;..\comps;..\sources;$(BCB)\include;$(BCB)\include\vcl
+Item12=..\sources;$(BCB)\include;$(BCB)\include\vcl
+
+[HistoryLists\hlLibraryPath]
+Count=12
+Item0=..\..\..\src\cpp\Common\Archive;..\..\..\src\cpp\Common;..\..\Comps;..\..\..\src\cpp\Common\Cfg;$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib
+Item1=..\..\..\src\cpp\Common;..\..\Comps;..\..\..\src\cpp\Common\Cfg;$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib
+Item2=..\..\Common;..\..\Comps;..\..\Common\Cfg;$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib
+Item3=$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib
+Item4=..\..\Common;..\..\Commo;..\..\Comm;..\..\Com;..\..\Co;..\..\C;..\..;..\..\Common\Cfg;..\..\Commo\Cfg;..\..\Comm\Cfg;..\..\Com\Cfg;..\..\Co\Cfg;..\..\C\Cfg;..\..\Cfg;..\..\Sources;..\..\Comps;..\..\Sources\Cfg;$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib
+Item5=..\..\Sources;..\..\Comps;..\..\Sources\Cfg;$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib
+Item6=..\..\Sources;..\..\Comps;..\..\Sources\Cfg;..\Sources\Cfg;$(BCB)\Projects\Lib;..\..\..\bin\borland\cbuilder3\objrepos;..\..\..\bin\borland\cbuilder3\bin;..\sources;..\comps;$(BCB)\lib\obj;$(BCB)\lib
+Item7=..\Sources\Cfg;$(BCB)\Projects\Lib;..\..\..\bin\borland\cbuilder3\objrepos;..\..\..\bin\borland\cbuilder3\bin;..\sources;..\comps;$(BCB)\lib\obj;$(BCB)\lib
+Item8=$(BCB)\Projects\Lib;..\..\..\bin\borland\cbuilder3\objrepos;..\..\..\bin\borland\cbuilder3\bin;..\sources;..\comps;$(BCB)\lib\obj;$(BCB)\lib
+Item9=..\..\..\bin\borland\cbuilder3\objrepos;..\..\..\bin\borland\cbuilder3\bin;..\sources;..\comps;$(BCB)\lib\obj;$(BCB)\lib
+Item10=..\..\..\bin\borland\cbuilder3\bin;..\sources;..\comps;$(BCB)\lib\obj;$(BCB)\lib
+Item11=..\comps;$(BCB)\lib\obj;$(BCB)\lib
+
+[HistoryLists\hlDebugSourcePath]
+Count=1
+Item0=$(BCB)\source\vcl
+
+[HistoryLists\hlConditionals]
+Count=3
+Item0=_RTLDLL;USEPACKAGES
+Item1=USEPACKAGES
+Item2=_RTLDLL
+
+[HistoryLists\hlIntOutputDir]
+Count=5
+Item0=..\..\..\tmp\spred
+Item1=..\..\..\..\tmp\bcb\spred
+Item2=..\..\..\..\tmp\spred
+Item3=c:\temp\trashcan
+Item4=c:\temp\trashcan\
+
+[HistoryLists\hlFinalOutputDir]
+Count=6
+Item0=..\..\..\bin\
+Item1=..\..\..\..\Bin\
+Item2=..\..\..\Bin\PPTools\
+Item3=C:\Home\Karg\PPTactical\Bin\PPTools
+Item4=..\..\..\..\..\Bin\Borland\bin\pptools\
+Item5=c:\home\karg\ppwork\bin\pptools
+
+[Debugging]
+DebugSourceDirs=$(BCB)\source\vcl
+
+[Parameters]
+RunParams=
+Launcher=
+UseLauncher=0
+DebugCWD=
+HostApplication=
+RemoteHost=
+RemotePath=
+RemoteLauncher=
+RemoteCWD=
+RemoteDebug=0
+
+[Compiler]
+ShowInfoMsgs=0
+LinkDebugVcl=1
+LinkCGLIB=0
+
+[CORBA]
+AddServerUnit=1
+AddClientUnit=1
+PrecompiledHeaders=1
+  </IDEOPTIONS>
+</PROJECT>

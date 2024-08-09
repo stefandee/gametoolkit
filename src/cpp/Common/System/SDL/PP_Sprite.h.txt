@@ -1,0 +1,136 @@
+//-----------------------------------------------------------------------------
+// This file is part of PPTactical Engine.                                   //
+//                                                                           //
+// PPTactical Engine - engine for tactical/strategy games                    // 
+// Copyright (C) 1998, 1999, 2000, 2001 Stefan Dicu & Tudor Girba            //
+//                                                                           //
+// PPTactical Engine is free software; you can redistribute it               //
+// and/or modify it under the terms of the GNU General Public License as     // 
+// published by the Free Software Foundation; either version 2 of the        //
+// License, or (at your option) any later version.                           //
+//                                                                           //  
+// PPTactical Engine is distributed in the hope that it will be useful, but  //
+// WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY// 
+// or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  //
+// for more details.                                                         //
+//                                                                           // 
+// You should have received a copy of the GNU General Public License         //
+// along with PPTactical Engine; if not, write to the Free Software          //
+// Foundation Inc. 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA   // 
+//-----------------------------------------------------------------------------
+/*---------------------------------------------------------------------------
+ application: Pure Power Mission Editor
+
+ descrition : Class Sprite
+ last modify: 21 04 2000
+        by Grab
+---------------------------------------------------------------------------*/
+
+/*--------------------------------------------------------------------------
+ - Description: Implementeaza clasa CSprite
+        by Grab
+--------------------------------------------------------------------------*/
+#ifndef PP_SpriteH
+#define PP_SpriteH
+
+#include "DDraw.h"
+#include "PP_String.h"
+#include "basic2d.h"
+#include <stdexcept>
+//---------------------------------------------------------------------------
+
+// clasa de exceptie
+class CSpriteError : public std::exception {
+   public:
+     explicit CSpriteError(const std::string& what_arg) {};
+};
+
+class CSprite
+{
+   public:
+
+//      CSprite(CPString filename, long cellWidth, long cellHeight);
+      CSprite(CPString filename, long wcells, long hcells);
+      CSprite() {};
+
+      ~CSprite();
+      HRESULT ReleaseSurface();
+      HRESULT Restore();
+      void    AddRef();
+      void    Release();
+
+      LPDIRECTDRAWSURFACE7
+               GetSurface();                             //inline
+      CPRect    GetAnimRect(int AnimCount, int AnimType); //inline
+      CPString GetFileName();                            //inline
+      int      GetAnimWidth();                           //inline
+      int      GetAnimHeight();                          //inline
+      int      GetAnimCount();                           //inline
+      int      GetAnimTypes();                           //inline
+      int      GetWidth()  { return mWidth; }
+      int      GetHeight() { return mHeight; }
+
+      CPString             mFileName;          //pentru restore
+      
+   protected:
+      int                  mReferences;        //numarul de referinte catre adcest sprite
+
+      bool	           mValid;             //intrarea e valida - s-a incarcat ceva
+      long                 mWidth, mHeight;    //dimensiunile imaginii mari
+      long                 mCWidth, mCHeight;  //cell width, cell height
+      long                 mWCells, mHCells;   //numarul de cells pe oriz si vert
+      long                 mCount;             //informatie redundanta : width = count * cwidth;
+      LPDIRECTDRAWSURFACE7 mSurface;           //suprafata unde e incarcat sprite-ul
+      bool                 mInVideo;           //nefolosita
+
+      bool    LoadGraphicFile16(CPString filename);
+      HRESULT CreateSurface(long width, long height); //evident
+};
+
+class CSpriteCustom : public CSprite
+{
+   public:
+      CSpriteCustom(int _width, int _height, int _wcells, int _hcells);
+};
+//---------------------------------------------------------------------------
+
+/////////////////////////////////////////////////////////////////////////////
+//INLINE SECTION
+/////////////////////////////////////////////////////////////////////////////
+inline LPDIRECTDRAWSURFACE7 CSprite::GetSurface()
+{
+   return mSurface;
+}
+inline CPRect CSprite::GetAnimRect(int animCount, int animType)
+{
+   return CPRect(animCount*mCWidth, animType*mCHeight, animCount*mCWidth+mCWidth, animType*mCHeight + mCHeight);
+}
+
+inline CPString CSprite::GetFileName()
+{
+   return mFileName;
+}
+
+inline int CSprite::GetAnimWidth()
+{
+   return mCWidth;
+}
+inline int CSprite::GetAnimHeight()
+{
+   return mCHeight;
+}
+
+inline int CSprite::GetAnimCount()
+{
+   return mCount;
+}
+
+inline int CSprite::GetAnimTypes()
+{
+   return mHCells;
+}
+
+typedef CSprite CPGISprite;
+typedef CSprite CPSprite;
+
+#endif

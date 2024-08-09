@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsprite version="1.0">
+    <images>
+        <image id="4096" file="unit_raider_fighter.bmp" transparent="0" info="No Info" />
+    </images>
+    <modules />
+    <frames />
+    <anims />
+</xsprite>

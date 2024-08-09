@@ -1,0 +1,37 @@
+// InputStream_zzip.h
+#pragma once
+#ifndef PP_COMMON_INPUTSTREAM_ZZIP_H
+#define pp_common_inputstream_zzip_h
+
+#include "InputStream.h"
+
+namespace PP {
+
+// InputStream is not really a "stream", since you can rewind() it,
+// but the name kind of stuck.
+
+class InputStream_zzip : public InputStream
+{
+public:
+	InputStream_zzip(const char* filename);
+	virtual ~InputStream_zzip();
+
+	// returns number of bytes read.
+	virtual size_t read(void* pMem, size_t nBytes);
+
+	// If we can't rewind, then the brown stuff hit the rotating
+	// ventilation device.
+	virtual bool rewind();
+	virtual bool seek(size_t offset);
+	virtual bool skip(size_t size);
+
+private:
+	InputStream_zzip(const InputStream_zzip& rhs);	// no impl.
+	void operator=(const InputStream_zzip& rhs);	// no impl.
+
+	class InputStream_zzip_impl* mPimpl;
+};
+
+}	// end of namespace PP
+
+#endif	// PP_COMMON_INPUTSTREAM_ZZIP_H

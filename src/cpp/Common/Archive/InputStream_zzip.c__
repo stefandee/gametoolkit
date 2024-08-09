@@ -1,0 +1,77 @@
+// InputStream_zzip.cpp
+#include <zzip.h>
+#include <stdexcept>
+#include <algorithm>	// replace
+#include "InputStream_zzip.h"
+
+#ifdef _DEBUG
+#pragma comment(lib, "../../zzip/zziplib-0.10.51/Debug/zziplib/zziplib.lib")
+#else
+#pragma comment(lib, "../../zzip/zziplib-0.10.51/Release/zziplib/zziplib.lib")
+#endif
+
+namespace PP {
+
+class InputStream_zzip_impl
+{
+public:
+	InputStream_zzip_impl(const char* filename)
+	:	mFile(0)
+	{
+		std::string s(filename);
+		// MS-DOS -> "real" path separator.
+		std::replace(s.begin(), s.end(), '\\', '/');
+		// A bug in some of the tools inserts multiple path separators,
+		// why we need to fix that [here].
+		std::string::size_type lOff;
+		while ((lOff = s.find("//")) != s.npos) {
+			s.erase(lOff, 1);
+		}
+		mFile = zzip_open(s.c_str(), O_RDONLY | O_BINARY | ZZIP_CASEINSENSITIVE);
+		if (!mFile)
+		{
+			std::string sErr("Can not open file: ");
+			sErr += filename;
+			throw std::invalid_argument(sErr);
+		}
+	}
+	~InputStream_zzip_impl()
+	{
+		zzip_close(mFile);
+	}
+	ZZIP_FILE* mFile;
+};
+
+InputStream_zzip::InputStream_zzip(const char* filename)
+:	mPimpl(new InputStream_zzip_impl(filename))
+{
+}
+
+InputStream_zzip::~InputStream_zzip()
+{
+	delete mPimpl;
+}
+
+size_t InputStream_zzip::read(void* pMem, size_t nBytes)
+{
+	return zzip_read(mPimpl->mFile, (char*)pMem, nBytes);
+}
+
+bool InputStream_zzip::rewind()
+{
+	zzip_rewind(mPimpl->mFile);
+	return true;
+}
+
+bool InputStream_zzip::seek(size_t offset)
+{
+	return zzip_seek(mPimpl->mFile, offset, SEEK_SET) == 0;
+}
+
+bool InputStream_zzip::skip(size_t size)
+{
+	return zzip_seek(mPimpl->mFile, size, SEEK_CUR) == 0;
+}
+
+}	// end of namespace PP
+

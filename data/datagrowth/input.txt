@@ -1,0 +1,2 @@
+exported\Shooter.spr
+exported\Player.spr

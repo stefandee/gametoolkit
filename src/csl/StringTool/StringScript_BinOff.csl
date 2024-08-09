@@ -1,0 +1,49 @@
+main()
+{
+  var i, j;
+
+  var packageCount = GetPackageCount();
+
+  for(i = 0; i < packageCount; i++)
+  {
+    var packageName = GetPackageName(i);
+    var stringCount = GetPackageStringCount(i);
+    
+    var fileBIN  = FileOpen(GetOutputDir()|packageName|".BIN", O_BINARY + O_CREAT + O_RDWR, S_IREAD + S_IWRITE);
+    var fileOFF  = FileOpen(GetOutputDir()|packageName|".OFF", O_BINARY + O_CREAT + O_RDWR, S_IREAD + S_IWRITE);
+    var fileH    = FileOpen(GetOutputDir()|packageName|".h", O_BINARY + O_CREAT + O_RDWR, S_IREAD | S_IWRITE);
+    var fileJava = FileOpen(GetOutputDir()|packageName|".java", O_BINARY + O_CREAT + O_RDWR, S_IREAD + S_IWRITE);
+
+    FileWrite(fileJava, "/* Generated file - StringTool "|fileVersion|" */"|"\n"|"public class "|packageName|"\n{\n");
+    FileWrite(fileH, "/* Generated file - StringTool "|fileVersion|" */"|"\n"|"#ifdef "|packageName|"H\n"|"#define "|packageName|"H\n");
+
+    var offset = 0;	
+
+    FileWriteParam(fileOFF, offset, FILELIB_PARAM_INT);
+
+    for(j = 0; j < stringCount; j++)
+    {
+      // write the .java the id
+      FileWrite(fileJava, "\tpublic final static int \t"|GetPackageStringId(i, j)|" = "|j|";\n");
+
+      // write in .h
+      FileWrite(fileH, "\tconst int \t"|GetPackageStringId(i, j)|" = "|j|";\n");
+      
+      // write string in the bin file
+      FileWrite(fileBIN, GetPackageStringValue(i, j));
+
+      // write the offset in the offset file
+      offset += strLength(GetPackageStringValue(i, j));
+      FileWriteParam(fileOFF, offset, FILELIB_PARAM_INT);
+    }
+
+    FileClose(fileBIN);
+    FileClose(fileOFF);
+
+    FileWrite(fileH, "#endif //"|packageName|"H\n");
+    FileClose(fileH);
+
+    FileWrite(fileJava, "}\n"); 
+    FileClose(fileJava);
+  }
+}

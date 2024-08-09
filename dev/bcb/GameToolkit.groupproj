@@ -1,0 +1,96 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{FF611E7C-E991-4C5E-8C9E-5DF3728BC09F}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="Components\PironGamesComponents.cbproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="jadupdate\JadUpdate.cbproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\src\cpp\TestPNG\TestPNG.cbproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="DataGrowth\DataGrowth.cbproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="CurveEd\CurveEd.cbproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="StringTool\StringTool.cbproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="PironGamesComponents">
+        <MSBuild Projects="Components\PironGamesComponents.cbproj"/>
+    </Target>
+    <Target Name="PironGamesComponents:Clean">
+        <MSBuild Projects="Components\PironGamesComponents.cbproj" Targets="Clean"/>
+    </Target>
+    <Target Name="PironGamesComponents:Make">
+        <MSBuild Projects="Components\PironGamesComponents.cbproj" Targets="Make"/>
+    </Target>
+    <Target Name="JadUpdate">
+        <MSBuild Projects="jadupdate\JadUpdate.cbproj"/>
+    </Target>
+    <Target Name="JadUpdate:Clean">
+        <MSBuild Projects="jadupdate\JadUpdate.cbproj" Targets="Clean"/>
+    </Target>
+    <Target Name="JadUpdate:Make">
+        <MSBuild Projects="jadupdate\JadUpdate.cbproj" Targets="Make"/>
+    </Target>
+    <Target Name="TestPNG">
+        <MSBuild Projects="..\..\src\cpp\TestPNG\TestPNG.cbproj"/>
+    </Target>
+    <Target Name="TestPNG:Clean">
+        <MSBuild Projects="..\..\src\cpp\TestPNG\TestPNG.cbproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TestPNG:Make">
+        <MSBuild Projects="..\..\src\cpp\TestPNG\TestPNG.cbproj" Targets="Make"/>
+    </Target>
+    <Target Name="DataGrowth">
+        <MSBuild Projects="DataGrowth\DataGrowth.cbproj"/>
+    </Target>
+    <Target Name="DataGrowth:Clean">
+        <MSBuild Projects="DataGrowth\DataGrowth.cbproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DataGrowth:Make">
+        <MSBuild Projects="DataGrowth\DataGrowth.cbproj" Targets="Make"/>
+    </Target>
+    <Target Name="CurveEd">
+        <MSBuild Projects="CurveEd\CurveEd.cbproj"/>
+    </Target>
+    <Target Name="CurveEd:Clean">
+        <MSBuild Projects="CurveEd\CurveEd.cbproj" Targets="Clean"/>
+    </Target>
+    <Target Name="CurveEd:Make">
+        <MSBuild Projects="CurveEd\CurveEd.cbproj" Targets="Make"/>
+    </Target>
+    <Target Name="StringTool">
+        <MSBuild Projects="StringTool\StringTool.cbproj"/>
+    </Target>
+    <Target Name="StringTool:Clean">
+        <MSBuild Projects="StringTool\StringTool.cbproj" Targets="Clean"/>
+    </Target>
+    <Target Name="StringTool:Make">
+        <MSBuild Projects="StringTool\StringTool.cbproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="PironGamesComponents;JadUpdate;TestPNG;DataGrowth;CurveEd;StringTool"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="PironGamesComponents:Clean;JadUpdate:Clean;TestPNG:Clean;DataGrowth:Clean;CurveEd:Clean;StringTool:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="PironGamesComponents:Make;JadUpdate:Make;TestPNG:Make;DataGrowth:Make;CurveEd:Make;StringTool:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

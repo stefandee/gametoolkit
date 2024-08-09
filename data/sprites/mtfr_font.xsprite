@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsprite version="1.0">
+    <images>
+        <image id="4096" file="mtfr_font.bmp" transparent="16711935" info="No Info" />
+    </images>
+    <modules>
+        <module id="4096" imageid="4096" x="59" y="5" width="3" height="9" info="space" />
+        <module id="4097" imageid="4096" x="1138" y="4" width="5" height="10" info="!" />
+    </modules>
+    <frames>
+        <frame id="4096" info="">
+            <fmodule moduleid="4096" x="0" y="0" flags="0" />
+            <fmodule moduleid="4097" x="0" y="0" flags="0" />
+        </frame>
+    </frames>
+</xsprite>

@@ -1,0 +1,42 @@
+main()
+{
+  var i, j;
+
+  var packageCount = GetPackageCount();
+
+  for(i = 0; i < packageCount; i++)
+  {
+    var packageName = GetPackageName(i);
+    var stringCount = GetPackageStringCount(i);
+    
+    var fileData = FileOpen(packageName|".strings", O_BINARY | O_CREAT | O_RDWR, S_IREAD | S_IWRITE);
+    var fileH    = FileOpen(packageName|".h", O_BINARY + O_CREAT + O_RDWR, S_IREAD | S_IWRITE);
+    var fileJava = FileOpen(packageName|".java", O_BINARY | O_CREAT | O_RDWR, S_IREAD | S_IWRITE);
+
+    FileWrite(fileJava, "/* Generated file - StringTool "|fileVersion|" */"|"\n"|"public class "|packageName|"\n{\n");
+    FileWrite(fileH, "/* Generated file - StringTool "|fileVersion|" */"|"\n"|"#ifdef "|packageName|"H\n"|"#define "|packageName|"H\n");
+
+    for(j = 0; j < stringCount; j++)
+    {
+      // write the .java the id
+      FileWrite(fileJava, "\tpublic final static int \t"|GetPackageStringId(i, j)|" = "|j|";\n");
+
+      // write in .h
+      FileWrite(fileH, "\tconst int \t"|GetPackageStringId(i, j)|" = "|j|";\n");
+      
+      // write string
+      FileWrite(fileData, GetPackageStringValue(i, j));
+
+      // write null string separator (0)
+      FileWriteParam(fileData, 0, FILELIB_PARAM_BYTE);
+    }
+
+    FileClose(fileData);
+
+    FileWrite(fileJava, "}\n"); 
+    FileClose(fileJava);
+
+    FileWrite(fileH, "#endif //"|packageName|"H\n");
+    FileClose(fileH);
+  }
+}

@@ -1,0 +1,243 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!-- C++Builder XML Project -->
+<PROJECT>
+  <MACROS>
+    <VERSION value="BCB.06.00"/>
+    <PROJECT value="..\..\..\bin\Sentry\Sentry.exe"/>
+    <OBJFILES value="..\..\..\tmp\Sentry\Sentry.obj ..\..\..\tmp\Sentry\FMain.obj 
+      ..\..\..\tmp\Sentry\FAbout.obj ..\..\..\tmp\Sentry\XSpriteDesigner.obj 
+      ..\..\..\tmp\Sentry\Manager.obj ..\..\..\tmp\Sentry\tinystr.obj 
+      ..\..\..\tmp\Sentry\tinyxml.obj ..\..\..\tmp\Sentry\tinyxmlerror.obj 
+      ..\..\..\tmp\Sentry\tinyxmlparser.obj ..\..\..\tmp\Sentry\ImageCache.obj 
+      ..\..\..\tmp\Sentry\Defines.obj ..\..\..\tmp\Sentry\MouseWork.obj 
+      ..\..\..\tmp\Sentry\Unit1.obj ..\..\..\tmp\Sentry\AppConfig.obj 
+      ..\..\..\tmp\Sentry\FOptions.obj ..\..\..\tmp\Sentry\ZFileLib.obj 
+      ..\..\..\tmp\Sentry\ZLibrary.obj ..\..\..\tmp\Sentry\ZMathLib.obj 
+      ..\..\..\tmp\Sentry\ZStringLib.obj ..\..\..\tmp\Sentry\Block.obj 
+      ..\..\..\tmp\Sentry\Compile.obj ..\..\..\tmp\Sentry\Function.obj 
+      ..\..\..\tmp\Sentry\Input.obj ..\..\..\tmp\Sentry\Instruct.obj 
+      ..\..\..\tmp\Sentry\Interprt.obj ..\..\..\tmp\Sentry\Library.obj 
+      ..\..\..\tmp\Sentry\Parametr.obj ..\..\..\tmp\Sentry\Utility.obj 
+      ..\..\..\tmp\Sentry\Variable.obj ..\..\..\tmp\Sentry\ZCsl.obj 
+      ..\..\..\tmp\Sentry\ZDate.obj ..\..\..\tmp\Sentry\ZExcept.obj 
+      ..\..\..\tmp\Sentry\ZFile.obj ..\..\..\tmp\Sentry\ZPlatfrm.obj 
+      ..\..\..\tmp\Sentry\ZProcess.obj ..\..\..\tmp\Sentry\ZPtrlist.obj 
+      ..\..\..\tmp\Sentry\ZRegular.obj ..\..\..\tmp\Sentry\ZResrce.obj 
+      ..\..\..\tmp\Sentry\ZString.obj ..\..\..\tmp\Sentry\ZTrace.obj 
+      ..\..\..\tmp\Sentry\ZRegEx.obj ..\..\..\tmp\Sentry\Script.obj 
+      ..\..\..\tmp\Sentry\GenericCallback.obj ..\..\..\tmp\Sentry\FScript.obj 
+      ..\..\..\tmp\Sentry\ZPixelLib.obj"/>
+    <RESFILES value="Sentry.res"/>
+    <IDLFILES value=""/>
+    <IDLGENFILES value=""/>
+    <DEFFILE value=""/>
+    <RESDEPEN value="$(RESFILES) ..\..\..\src\cpp\Sentry\FMain.dfm 
+      ..\..\..\src\cpp\Sentry\FAbout.dfm ..\..\..\src\cpp\Sentry\FOptions.dfm 
+      ..\..\..\src\cpp\Sentry\FScript.dfm"/>
+    <LIBFILES value="..\..\..\lib\bcb6\gdiplus.lib"/>
+    <LIBRARIES value="bcbsmp.lib vclx.lib Piron.lib HttpLabel.lib rtl.lib vcl.lib"/>
+    <SPARELIBS value="vcl.lib rtl.lib HttpLabel.lib Piron.lib vclx.lib bcbsmp.lib"/>
+    <PACKAGES value="vcl.bpi rtl.bpi dbrtl.bpi adortl.bpi vcldb.bpi vclx.bpi bdertl.bpi 
+      vcldbx.bpi ibxpress.bpi dsnap.bpi cds.bpi bdecds.bpi qrpt.bpi teeui.bpi 
+      teedb.bpi tee.bpi dss.bpi teeqr.bpi visualclx.bpi visualdbclx.bpi 
+      dsnapcrba.bpi dsnapcon.bpi bcbsmp.bpi vclie.bpi xmlrtl.bpi inet.bpi 
+      inetdbbde.bpi inetdbxpress.bpi inetdb.bpi nmfast.bpi webdsnap.bpi 
+      bcbie.bpi websnap.bpi soaprtl.bpi dclocx.bpi dbexpress.bpi dbxcds.bpi 
+      indy.bpi bcb2kaxserver.bpi"/>
+    <PATHCPP value=".;..\..\..\src\cpp\Sentry;..\..\..\src\cpp\Sentry;..\..\..\src\cpp\Sentry;..\..\..\src\cpp\Sentry;..\..\..\src\cpp\common\tinyxml;..\..\..\src\cpp\common\tinyxml;..\..\..\src\cpp\common\tinyxml;..\..\..\src\cpp\common\tinyxml;..\..\..\src\cpp\Sentry;..\..\..\src\cpp\Sentry;..\..\..\src\cpp\Sentry;..\..\..\src\cpp\Sentry;..\..\..\src\cpp\Sentry;..\..\..\src\cpp\Sentry;..\..\..\src\cpp\common\MiniCsl\NativeLib;..\..\..\src\cpp\common\MiniCsl\NativeLib;..\..\..\src\cpp\common\MiniCsl\NativeLib;..\..\..\src\cpp\common\MiniCsl\NativeLib;..\..\..\src\cpp\common\MiniCsl\Csl;..\..\..\src\cpp\common\MiniCsl\Csl;..\..\..\src\cpp\common\MiniCsl\Csl;..\..\..\src\cpp\common\MiniCsl\Csl;..\..\..\src\cpp\common\MiniCsl\Csl;..\..\..\src\cpp\common\MiniCsl\Csl;..\..\..\src\cpp\common\MiniCsl\Csl;..\..\..\src\cpp\common\MiniCsl\Csl;..\..\..\src\cpp\common\MiniCsl\Csl;..\..\..\src\cpp\common\MiniCsl\Csl;..\..\..\src\cpp\common\MiniCsl\Csl;..\..\..\src\cpp\common\MiniCsl\Base;..\..\..\src\cpp\common\MiniCsl\Base;..\..\..\src\cpp\common\MiniCsl\Base;..\..\..\src\cpp\common\MiniCsl\Base;..\..\..\src\cpp\common\MiniCsl\Base;..\..\..\src\cpp\common\MiniCsl\Base;..\..\..\src\cpp\common\MiniCsl\Base;..\..\..\src\cpp\common\MiniCsl\Base;..\..\..\src\cpp\common\MiniCsl\Base;..\..\..\src\cpp\common\MiniCsl\Base;..\..\..\src\cpp\common\MiniCsl\RegEx;..\..\..\src\cpp\Sentry;..\..\..\src\cpp\common;..\..\..\src\cpp\Sentry;..\..\..\src\cpp\common\MiniCsl\NativeLib"/>
+    <PATHPAS value=".;"/>
+    <PATHRC value=".;"/>
+    <PATHASM value=".;"/>
+    <DEBUGLIBPATH value="$(BCB)\lib\debug"/>
+    <RELEASELIBPATH value="$(BCB)\lib\release"/>
+    <LINKER value="ilink32"/>
+    <USERDEFINES value="_DEBUG;STRICT"/>
+    <SYSDEFINES value="NO_STRICT"/>
+    <MAINSOURCE value="Sentry.cpp"/>
+    <INCLUDEPATH value="..\..\..\src\cpp\pngdib;..\..\..\src\cpp\include\zlib;..\..\..\src\cpp\common\pngdib;..\..\..\src\cpp\include\pnglib;..\..\..\src\cpp\common\MiniCsl\RegEx;..\..\..\src\cpp\common;..\..\..\src\cpp\common\MiniCsl\Base;..\..\..\src\cpp\common\MiniCsl\Csl;..\..\..\src\cpp\common\MiniCsl\NativeLib;..\..\..\src\cpp\common\tinyxml;..\Components;..\..\..\src\cpp\Sentry;&quot;C:\Program Files\Borland\CBuilder6\Projects&quot;;&quot;E:\Home\Karg\Lethal Metal\src\cpp\Sentry&quot;;$(BCB)\include;$(BCB)\include\vcl"/>
+    <LIBPATH value="..\..\..\src\cpp\pngdib;..\..\..\lib\bcb6;..\..\..\src\cpp\common;..\..\..\src\cpp\common\MiniCsl\RegEx;..\..\..\src\cpp\common\MiniCsl\Base;..\..\..\src\cpp\common\MiniCsl\Csl;..\..\..\src\cpp\common\MiniCsl\NativeLib;..\..\..\src\cpp\common\tinyxml;$(BCB)\Projects\Lib;..\Components;..\..\..\src\cpp\Sentry;&quot;C:\Program Files\Borland\CBuilder6\Projects&quot;;&quot;E:\Home\Karg\Lethal Metal\src\cpp\Sentry&quot;;$(BCB)\lib\obj;$(BCB)\lib"/>
+    <WARNINGS value="-w-par"/>
+    <OTHERFILES value=""/>
+  </MACROS>
+  <OPTIONS>
+    <IDLCFLAGS value="-I..\..\..\src\cpp\pngdib -I..\..\..\src\cpp\include\zlib 
+      -I..\..\..\src\cpp\common\pngdib -I..\..\..\src\cpp\include\pnglib 
+      -I..\..\..\src\cpp\common\MiniCsl\RegEx -I..\..\..\src\cpp\common 
+      -I..\..\..\src\cpp\common\MiniCsl\Base 
+      -I..\..\..\src\cpp\common\MiniCsl\Csl 
+      -I..\..\..\src\cpp\common\MiniCsl\NativeLib 
+      -I..\..\..\src\cpp\common\tinyxml -I..\Components 
+      -I..\..\..\src\cpp\Sentry -I&quot;C:\Program Files\Borland\CBuilder6\Projects&quot; 
+      -I&quot;E:\Home\Karg\Lethal Metal\src\cpp\Sentry&quot; -I$(BCB)\include 
+      -I$(BCB)\include\vcl -src_suffix cpp -D_DEBUG -DSTRICT -boa"/>
+    <CFLAG1 value="-Od -H=$(BCB)\lib\vcl60.csm -Hc -P -Vx -Ve -X- -r- -a8 -5 -b -k -y -v -vi- 
+      -c -tW -tWM"/>
+    <PFLAGS value="-N2..\..\..\tmp\Sentry -N0..\..\..\tmp\Sentry -$YD -$W -$O- -$A8 -v -JPHNE 
+      -M"/>
+    <RFLAGS value=""/>
+    <AFLAGS value="/mx /w2 /zi"/>
+    <LFLAGS value="-I..\..\..\tmp\Sentry -D&quot;&quot; -aa -Tpe -x -Gn -v"/>
+    <OTHERFILES value=""/>
+  </OPTIONS>
+  <LINKER>
+    <ALLOBJ value="c0w32.obj sysinit.obj $(OBJFILES)"/>
+    <ALLRES value="$(RESFILES)"/>
+    <ALLLIB value="$(LIBFILES) $(LIBRARIES) import32.lib cp32mt.lib"/>
+    <OTHERFILES value=""/>
+  </LINKER>
+  <FILELIST>
+      <FILE FILENAME="Sentry.res" FORMNAME="" UNITNAME="Sentry.res" CONTAINERID="ResTool" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="Sentry.cpp" FORMNAME="" UNITNAME="Sentry" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\Sentry\FMain.cpp" FORMNAME="FormMain" UNITNAME="FMain" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\Sentry\FAbout.cpp" FORMNAME="FormAbout" UNITNAME="FAbout" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\Sentry\XSpriteDesigner.cpp" FORMNAME="" UNITNAME="XSpriteDesigner" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\Sentry\Manager.cpp" FORMNAME="" UNITNAME="Manager" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\common\tinyxml\tinystr.cpp" FORMNAME="" UNITNAME="tinystr.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\common\tinyxml\tinyxml.cpp" FORMNAME="" UNITNAME="tinyxml.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\common\tinyxml\tinyxmlerror.cpp" FORMNAME="" UNITNAME="tinyxmlerror.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\common\tinyxml\tinyxmlparser.cpp" FORMNAME="" UNITNAME="tinyxmlparser.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\Sentry\ImageCache.cpp" FORMNAME="" UNITNAME="ImageCache" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\Sentry\Defines.cpp" FORMNAME="" UNITNAME="Defines" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\Sentry\MouseWork.cpp" FORMNAME="" UNITNAME="MouseWork" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\Sentry\Unit1.cpp" FORMNAME="" UNITNAME="Unit1" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\Sentry\AppConfig.cpp" FORMNAME="" UNITNAME="AppConfig" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\Sentry\FOptions.cpp" FORMNAME="FormOptions" UNITNAME="FOptions" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\common\MiniCsl\NativeLib\ZFileLib.cpp" FORMNAME="" UNITNAME="ZFileLib.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\common\MiniCsl\NativeLib\ZLibrary.cpp" FORMNAME="" UNITNAME="ZLibrary.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\common\MiniCsl\NativeLib\ZMathLib.cpp" FORMNAME="" UNITNAME="ZMathLib.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\common\MiniCsl\NativeLib\ZStringLib.cpp" FORMNAME="" UNITNAME="ZStringLib.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\common\MiniCsl\Csl\Block.cpp" FORMNAME="" UNITNAME="Block.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\common\MiniCsl\Csl\Compile.cpp" FORMNAME="" UNITNAME="Compile.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\common\MiniCsl\Csl\Function.cpp" FORMNAME="" UNITNAME="Function.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\common\MiniCsl\Csl\Input.cpp" FORMNAME="" UNITNAME="Input.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\common\MiniCsl\Csl\Instruct.cpp" FORMNAME="" UNITNAME="Instruct.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\common\MiniCsl\Csl\Interprt.cpp" FORMNAME="" UNITNAME="Interprt.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\common\MiniCsl\Csl\Library.cpp" FORMNAME="" UNITNAME="Library.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\common\MiniCsl\Csl\Parametr.cpp" FORMNAME="" UNITNAME="Parametr.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\common\MiniCsl\Csl\Utility.cpp" FORMNAME="" UNITNAME="Utility.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\common\MiniCsl\Csl\Variable.cpp" FORMNAME="" UNITNAME="Variable.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\common\MiniCsl\Csl\ZCsl.cpp" FORMNAME="" UNITNAME="ZCsl.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\common\MiniCsl\Base\ZDate.cpp" FORMNAME="" UNITNAME="ZDate.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\common\MiniCsl\Base\ZExcept.cpp" FORMNAME="" UNITNAME="ZExcept.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\common\MiniCsl\Base\ZFile.cpp" FORMNAME="" UNITNAME="ZFile.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\common\MiniCsl\Base\ZPlatfrm.cpp" FORMNAME="" UNITNAME="ZPlatfrm.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\common\MiniCsl\Base\ZProcess.cpp" FORMNAME="" UNITNAME="ZProcess.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\common\MiniCsl\Base\ZPtrlist.cpp" FORMNAME="" UNITNAME="ZPtrlist.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\common\MiniCsl\Base\ZRegular.cpp" FORMNAME="" UNITNAME="ZRegular.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\common\MiniCsl\Base\ZResrce.cpp" FORMNAME="" UNITNAME="ZResrce.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\common\MiniCsl\Base\ZString.cpp" FORMNAME="" UNITNAME="ZString.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\common\MiniCsl\Base\ZTrace.cpp" FORMNAME="" UNITNAME="ZTrace.cpp" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\common\MiniCsl\RegEx\ZRegEx.c" FORMNAME="" UNITNAME="ZRegEx" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\Sentry\Script.cpp" FORMNAME="" UNITNAME="Script" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\common\GenericCallback.cpp" FORMNAME="" UNITNAME="GenericCallback" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\Sentry\FScript.cpp" FORMNAME="FormScript" UNITNAME="FScript" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\src\cpp\common\MiniCsl\NativeLib\ZPixelLib.cpp" FORMNAME="" UNITNAME="ZPixelLib" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\..\lib\bcb6\gdiplus.lib" FORMNAME="" UNITNAME="gdiplus.lib" CONTAINERID="LibTool" DESIGNCLASS="" LOCALCOMMAND=""/>
+  </FILELIST>
+  <BUILDTOOLS>
+  </BUILDTOOLS>
+
+  <IDEOPTIONS>
+[Version Info]
+IncludeVerInfo=1
+AutoIncBuild=1
+MajorVer=1
+MinorVer=0
+Release=0
+Build=10
+Debug=0
+PreRelease=0
+Special=0
+Private=0
+DLL=0
+Locale=1033
+CodePage=1252
+
+[Version Info Keys]
+CompanyName=Piron
+FileDescription=Sentry Editor
+FileVersion=1.0.0.10
+InternalName=Sentry Editor
+LegalCopyright=(c)Karg 2006
+LegalTrademarks=
+OriginalFilename=
+ProductName=Sentry Editor
+ProductVersion=1.0.0.0
+Comments=Advanced Sprite Editor
+
+[HistoryLists\hlIncludePath]
+Count=9
+Item0=..\..\..\src\cpp\pngdib;..\..\..\src\cpp\include\zlib;..\..\..\src\cpp\common\pngdib;..\..\..\src\cpp\include\pnglib;..\..\..\src\cpp\common\MiniCsl\RegEx;..\..\..\src\cpp\common;..\..\..\src\cpp\common\MiniCsl\Base;..\..\..\src\cpp\common\MiniCsl\Csl;..\..\..\src\cpp\common\MiniCsl\NativeLib;..\..\..\src\cpp\common\tinyxml;..\Components;..\..\..\src\cpp\Sentry;C:\Program Files\Borland\CBuilder6\Projects;E:\Home\Karg\Lethal Metal\src\cpp\Sentry;$(BCB)\include;$(BCB)\include\vcl
+Item1=..\..\..\src\cpp\pngdib;..\..\..\src\cpp\common\include\zlib;..\..\..\src\cpp\common\pngdib;..\..\..\src\cpp\common\include\pnglib;..\..\..\src\cpp\common\MiniCsl\RegEx;..\..\..\src\cpp\common;..\..\..\src\cpp\common\MiniCsl\Base;..\..\..\src\cpp\common\MiniCsl\Csl;..\..\..\src\cpp\common\MiniCsl\NativeLib;..\..\..\src\cpp\common\tinyxml;..\Components;..\..\..\src\cpp\Sentry;C:\Program Files\Borland\CBuilder6\Projects;E:\Home\Karg\Lethal Metal\src\cpp\Sentry;$(BCB)\include;$(BCB)\include\vcl
+Item2=..\..\..\src\cpp\common\include\zlib;..\..\..\src\cpp\common\pngdib;..\..\..\src\cpp\common\include\pnglib;..\..\..\src\cpp\common\MiniCsl\RegEx;..\..\..\src\cpp\common;..\..\..\src\cpp\common\MiniCsl\Base;..\..\..\src\cpp\common\MiniCsl\Csl;..\..\..\src\cpp\common\MiniCsl\NativeLib;..\..\..\src\cpp\common\tinyxml;..\Components;..\..\..\src\cpp\Sentry;C:\Program Files\Borland\CBuilder6\Projects;E:\Home\Karg\Lethal Metal\src\cpp\Sentry;$(BCB)\include;$(BCB)\include\vcl
+Item3=..\..\..\src\cpp\common\pngdib;..\..\..\src\cpp\common\include;..\..\..\src\cpp\common\MiniCsl\RegEx;..\..\..\src\cpp\common;..\..\..\src\cpp\common\MiniCsl\Base;..\..\..\src\cpp\common\MiniCsl\Csl;..\..\..\src\cpp\common\MiniCsl\NativeLib;..\..\..\src\cpp\common\tinyxml;..\Components;..\..\..\src\cpp\Sentry;C:\Program Files\Borland\CBuilder6\Projects;E:\Home\Karg\Lethal Metal\src\cpp\Sentry;$(BCB)\include;$(BCB)\include\vcl
+Item4=..\..\..\src\cpp\common\MiniCsl\RegEx;..\..\..\src\cpp\common;..\..\..\src\cpp\common\MiniCsl\Base;..\..\..\src\cpp\common\MiniCsl\Csl;..\..\..\src\cpp\common\MiniCsl\NativeLib;..\..\..\src\cpp\common\tinyxml;..\Components;..\..\..\src\cpp\Sentry;C:\Program Files\Borland\CBuilder6\Projects;E:\Home\Karg\Lethal Metal\src\cpp\Sentry;$(BCB)\include;$(BCB)\include\vcl
+Item5=..\..\..\src\cpp\common;..\..\..\src\cpp\common\MiniCsl\Base;..\..\..\src\cpp\common\MiniCsl\Csl;..\..\..\src\cpp\common\MiniCsl\NativeLib;..\..\..\src\cpp\common\tinyxml;..\Components;..\..\..\src\cpp\Sentry;C:\Program Files\Borland\CBuilder6\Projects;E:\Home\Karg\Lethal Metal\src\cpp\Sentry;$(BCB)\include;$(BCB)\include\vcl
+Item6=..\..\..\src\cpp\common\MiniCsl\Base;..\..\..\src\cpp\common\MiniCsl\Csl;..\..\..\src\cpp\common\MiniCsl\NativeLib;..\..\..\src\cpp\common\tinyxml;..\Components;..\..\..\src\cpp\Sentry;C:\Program Files\Borland\CBuilder6\Projects;E:\Home\Karg\Lethal Metal\src\cpp\Sentry;$(BCB)\include;$(BCB)\include\vcl
+Item7=..\..\..\src\cpp\common\tinyxml;..\Components;..\..\..\src\cpp\Sentry;C:\Program Files\Borland\CBuilder6\Projects;E:\Home\Karg\Lethal Metal\src\cpp\Sentry;$(BCB)\include;$(BCB)\include\vcl
+Item8=C:\Program Files\Borland\CBuilder6\Projects;E:\Home\Karg\Lethal Metal\src\cpp\Sentry;$(BCB)\include;$(BCB)\include\vcl
+
+[HistoryLists\hlLibraryPath]
+Count=6
+Item0=..\..\..\src\cpp\pngdib;..\..\..\lib\bcb6;..\..\..\src\cpp\common;..\..\..\src\cpp\common\MiniCsl\RegEx;..\..\..\src\cpp\common\MiniCsl\Base;..\..\..\src\cpp\common\MiniCsl\Csl;..\..\..\src\cpp\common\MiniCsl\NativeLib;..\..\..\src\cpp\common\tinyxml;$(BCB)\Projects\Lib;..\Components;..\..\..\src\cpp\Sentry;C:\Program Files\Borland\CBuilder6\Projects;E:\Home\Karg\Lethal Metal\src\cpp\Sentry;$(BCB)\lib\obj;$(BCB)\lib
+Item1=..\..\..\lib\bcb6;..\..\..\src\cpp\common;..\..\..\src\cpp\common\MiniCsl\RegEx;..\..\..\src\cpp\common\MiniCsl\Base;..\..\..\src\cpp\common\MiniCsl\Csl;..\..\..\src\cpp\common\MiniCsl\NativeLib;..\..\..\src\cpp\common\tinyxml;$(BCB)\Projects\Lib;..\Components;..\..\..\src\cpp\Sentry;C:\Program Files\Borland\CBuilder6\Projects;E:\Home\Karg\Lethal Metal\src\cpp\Sentry;$(BCB)\lib\obj;$(BCB)\lib
+Item2=..\..\..\src\cpp\common;..\..\..\src\cpp\common\MiniCsl\RegEx;..\..\..\src\cpp\common\MiniCsl\Base;..\..\..\src\cpp\common\MiniCsl\Csl;..\..\..\src\cpp\common\MiniCsl\NativeLib;..\..\..\src\cpp\common\tinyxml;$(BCB)\Projects\Lib;..\Components;..\..\..\src\cpp\Sentry;C:\Program Files\Borland\CBuilder6\Projects;E:\Home\Karg\Lethal Metal\src\cpp\Sentry;$(BCB)\lib\obj;$(BCB)\lib
+Item3=..\..\..\src\cpp\common\MiniCsl\Base;..\..\..\src\cpp\common\MiniCsl\Csl;..\..\..\src\cpp\common\MiniCsl\NativeLib;..\..\..\src\cpp\common\tinyxml;$(BCB)\Projects\Lib;..\Components;..\..\..\src\cpp\Sentry;C:\Program Files\Borland\CBuilder6\Projects;E:\Home\Karg\Lethal Metal\src\cpp\Sentry;$(BCB)\lib\obj;$(BCB)\lib
+Item4=..\..\..\src\cpp\common\tinyxml;$(BCB)\Projects\Lib;..\Components;..\..\..\src\cpp\Sentry;C:\Program Files\Borland\CBuilder6\Projects;E:\Home\Karg\Lethal Metal\src\cpp\Sentry;$(BCB)\lib\obj;$(BCB)\lib
+Item5=C:\Program Files\Borland\CBuilder6\Projects;E:\Home\Karg\Lethal Metal\src\cpp\Sentry;$(BCB)\lib\obj;$(BCB)\lib
+
+[HistoryLists\hlDebugSourcePath]
+Count=1
+Item0=$(BCB)\source\vcl
+
+[HistoryLists\hlConditionals]
+Count=3
+Item0=_DEBUG;STRICT
+Item1=_DEBUG
+Item2=_DEBUG;__cplusplus
+
+[HistoryLists\hlIntOutputDir]
+Count=2
+Item0=..\..\..\tmp\Sentry
+Item1=E:\Home\Karg\Lethal Metal\tmp\obj\Sentry
+
+[HistoryLists\hlFinalOutputDir]
+Count=6
+Item0=..\..\..\bin\Sentry\
+Item1=..\..\..\bin\Sentry
+Item2=..\..\..\bin\
+Item3=..\..\..\bin
+Item4=E:\Home\Karg\Lethal Metal\dist\tools\
+Item5=E:\Home\Karg\Lethal Metal\dist\tools
+
+[Debugging]
+DebugSourceDirs=$(BCB)\source\vcl
+
+[Parameters]
+RunParams=
+Launcher=
+UseLauncher=0
+DebugCWD=
+HostApplication=
+RemoteHost=
+RemotePath=
+RemoteLauncher=
+RemoteCWD=
+RemoteDebug=0
+
+[Compiler]
+ShowInfoMsgs=0
+LinkDebugVcl=1
+LinkCGLIB=0
+
+[CORBA]
+AddServerUnit=1
+AddClientUnit=1
+PrecompiledHeaders=1
+
+[Language]
+ActiveLang=
+ProjectLang=
+RootDir=
+  </IDEOPTIONS>
+</PROJECT>

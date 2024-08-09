@@ -1,0 +1,269 @@
+// Export Script for Sentry Editor
+// Author: Karg
+// Date  : 02.09.2007
+// Info  : test script
+
+//---------------------------------------------------------------------------
+//
+// Prelude - mandatory; Only change the values, dont modify const/variable names
+//
+//---------------------------------------------------------------------------
+
+const ScriptName = "Flash in Haxe w/ Color Map";
+const ScriptInfo = "Exports to format needed by Haxe game engine";
+const ScriptCategory = "Export";
+const ScriptParamCount = 3;
+
+// name, value, default value, type
+var Params[ScriptParamCount][4] = {
+  { 'PARAM FILE',   "somefile.bin", "somefile.bin",                             'FILENAME' },
+  { 'PARAM ENUM',   "0",            '256 colors|RGB 555|RGB 565|RGB 24|RGB 32', 'ENUM' }
+};
+
+GetParam(var index, var type)
+{
+  if (index >= 0 && index < ScriptParamCount && type >= 0 && type <= 3)
+  {
+    return Params[index][type];
+  }
+  
+  return '';
+}
+
+SetParam(var index, var type, var value)
+{
+  if (index >= 0 && index < ScriptParamCount && type >= 0 && type <= 3)
+  {
+    Params[index][type] = value;
+  }
+  
+  return '';
+}
+
+//---------------------------------------------------------------------------
+//
+// Additional functions
+//
+//---------------------------------------------------------------------------
+
+//---------------------------------------------------------------------------
+//
+// Init - mandatory; mostly used to set the default values for the params
+//
+//---------------------------------------------------------------------------
+init()
+{
+  Params[0][1] = ChangeFileExt(GetSpritePath(), ".bin");
+}
+
+//---------------------------------------------------------------------------
+//
+// Execute - mandatory; does the actual processing
+//
+//---------------------------------------------------------------------------
+execute()
+{
+  var module, frame, anim;
+  var fileH = FileOpen(GetParam(0, 1), O_BINARY + O_CREAT + O_RDWR, S_IREAD | S_IWRITE);
+
+  // checks for any errors while opening the file
+  if (fileH == -1)
+  {
+    return;
+  }
+
+  //
+  // Write the module image data
+  //
+
+  // write the module count
+  FileWriteParam(fileH, GetModuleCount(), FILELIB_PARAM_INT);
+
+  for(module = 0; module < GetModuleCount(); module++)
+  {
+    var imageIndex = GetImageIndexById(GetModuleImageId(module));
+
+    var moduleX = GetModuleX(module);
+    var moduleY = GetModuleY(module);
+    var moduleW = GetModuleWidth(module);
+    var moduleH = GetModuleHeight(module);
+
+    // write the module id (just for debug purposes)
+    FileWriteParam(fileH, GetModuleId(module), FILELIB_PARAM_INT);
+
+    // write the module width and height
+    FileWriteParam(fileH, moduleW, FILELIB_PARAM_INT);
+    FileWriteParam(fileH, moduleH, FILELIB_PARAM_INT);
+
+    if (imageIndex == -1)
+    {
+      // the image is not valid, so the image data should be invalid too
+      FileWriteParam(fileH, 0, FILELIB_PARAM_BYTE);
+      continue;
+    }
+
+    // the image data is valid
+    FileWriteParam(fileH, 1, FILELIB_PARAM_BYTE);
+
+    // write the data
+    var x, y;
+
+    for(y = 0; y < moduleH; y++)
+    {
+      for(x = 0; x < moduleW; x++)
+      {
+	var pixel = GetImagePixel(imageIndex, x + moduleX, y + moduleY);
+
+	//FileWriteParam(fileH, GetImagePixel(imageIndex, x + moduleX, y + moduleY), FILELIB_PARAM_INT);
+	var alpha = 0xFF;
+
+	if (pixel == GetImageTColor(imageIndex))
+	{
+	  alpha = 0;
+	}
+
+	FileWriteParam(fileH, alpha,       FILELIB_PARAM_BYTE);
+	FileWriteParam(fileH, GetB(pixel), FILELIB_PARAM_BYTE);
+	FileWriteParam(fileH, GetG(pixel), FILELIB_PARAM_BYTE);
+	FileWriteParam(fileH, GetR(pixel), FILELIB_PARAM_BYTE);
+      }
+    }
+  }
+
+  //
+  // Write the frames
+  //
+
+  // write the frames count
+  FileWriteParam(fileH, GetFrameCount(), FILELIB_PARAM_INT);  
+
+  for(frame = 0; frame < GetFrameCount(); frame++)
+  {
+    // write the frame id
+    FileWriteParam(fileH, GetFrameId(frame), FILELIB_PARAM_INT);  
+
+    // write the bounding rectangle
+    FileWriteParam(fileH, GetFrameBoundX(frame), FILELIB_PARAM_INT);  
+    FileWriteParam(fileH, GetFrameBoundY(frame), FILELIB_PARAM_INT);  
+    FileWriteParam(fileH, GetFrameBoundWidth(frame), FILELIB_PARAM_INT);  
+    FileWriteParam(fileH, GetFrameBoundHeight(frame), FILELIB_PARAM_INT);
+
+    //
+    // Write the frame modules
+    //
+
+    // write the frame modules count
+    FileWriteParam(fileH, GetFModuleCount(frame), FILELIB_PARAM_INT);
+    
+    var fmodule;
+
+    for(fmodule = 0; fmodule < GetFModuleCount(frame); fmodule++)
+    {
+      // write the module index this fmodule is using
+      var moduleId = GetFModuleModuleId(frame, fmodule);
+
+      // TODO: moduleId may be invalid (-1)
+
+      FileWriteParam(fileH, GetModuleIndexById(moduleId), FILELIB_PARAM_INT);
+
+      // write the position
+      FileWriteParam(fileH, GetFModuleX(frame, fmodule), FILELIB_PARAM_INT);
+      FileWriteParam(fileH, GetFModuleY(frame, fmodule), FILELIB_PARAM_INT);
+
+      // write the flags
+      FileWriteParam(fileH, GetFModuleFlags(frame, fmodule), FILELIB_PARAM_INT);
+    }
+
+    //
+    // Write the frame logics
+    //
+
+    // write the frame logic count
+    FileWriteParam(fileH, GetFLogicCount(frame), FILELIB_PARAM_INT);
+
+    var flogic;
+
+    for(flogic = 0; flogic < GetFLogicCount(frame); flogic++)
+    {
+      // write the frame logic item count for this frame logic
+      FileWriteParam(fileH, GetFLogicItemCount(frame, flogic), FILELIB_PARAM_INT);
+
+      //
+      // Write the frame logic items
+      //
+      var flogicitem;
+
+      for(flogicitem = 0; flogicitem < GetFLogicItemCount(frame, flogic); flogicitem++)
+      {
+        // write the frame logic item type
+        FileWriteParam(fileH, GetFLogicItemType(frame, flogic, flogicitem), FILELIB_PARAM_INT);
+
+	switch(GetFLogicItemType(frame, flogic, flogicitem))
+	{
+	  case 0:
+            FileWriteParam(fileH, GetFLogicItemX(frame, flogic, flogicitem), FILELIB_PARAM_INT);
+            FileWriteParam(fileH, GetFLogicItemY(frame, flogic, flogicitem), FILELIB_PARAM_INT);
+	    break;
+
+	  case 1:
+            FileWriteParam(fileH, GetFLogicItemX(frame, flogic, flogicitem), FILELIB_PARAM_INT);
+            FileWriteParam(fileH, GetFLogicItemY(frame, flogic, flogicitem), FILELIB_PARAM_INT);
+            FileWriteParam(fileH, GetFLogicItemWidth(frame, flogic, flogicitem), FILELIB_PARAM_INT);
+            FileWriteParam(fileH, GetFLogicItemHeight(frame, flogic, flogicitem), FILELIB_PARAM_INT);
+	    break;
+	} 
+      } // frame logic item
+    } // frame logic
+  } // frames
+
+  //
+  // Write the anims
+  //
+
+  // write the anims count
+  FileWriteParam(fileH, GetAnimCount(), FILELIB_PARAM_INT);  
+
+  for(anim = 0; anim < GetAnimCount(); anim++)
+  {
+    // write the anim frame count 
+    FileWriteParam(fileH, GetAFrameCount(anim), FILELIB_PARAM_INT);
+
+    // write the anim frames
+    var aframe;
+
+    for(aframe = 0; aframe < GetAFrameCount(anim); aframe++)
+    {
+      // write frame index
+      FileWriteParam(fileH, GetFrameIndexById(GetAFrameFrameId(anim, aframe)), FILELIB_PARAM_INT);
+
+      // write anim frame pos
+      FileWriteParam(fileH, GetAFrameX(anim, aframe), FILELIB_PARAM_INT);
+      FileWriteParam(fileH, GetAFrameY(anim, aframe), FILELIB_PARAM_INT);
+
+      // write anim frame flags
+      FileWriteParam(fileH, GetAFrameFlags(anim, aframe), FILELIB_PARAM_INT);
+
+      // write anim frame time
+      FileWriteParam(fileH, GetAFrameTime(anim, aframe), FILELIB_PARAM_INT);
+    }
+  }
+
+  //
+  // Write the color maps (only those for the first image)
+  // TODO: test the export
+  //
+  FileWriteParam(fileH, GetColorMapsCount(0), FILELIB_PARAM_INT);  
+
+  for(colorMap = 0; colorMap < GetColorMapsCount(0); colorMap++)
+  {
+    FileWriteParam(fileH, GetColorMapItemsCount(0, colorMap), FILELIB_PARAM_INT);
+
+    for(colorMapItem = 0; colorMapItem < GetColorMapItemsCount(0, colorMap); colorMapItem++)
+    {
+      FileWriteParam(fileH, GetColorMapItemSrcColor(0, colorMap, colorMapItem), FILELIB_PARAM_INT);
+      FileWriteParam(fileH, GetColorMapItemDstColor(0, colorMap, colorMapItem), FILELIB_PARAM_INT);
+    }
+  }
+
+  FileClose(fileH);    
+}

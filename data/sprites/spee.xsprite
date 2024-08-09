@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsprite version="1.0">
+    <images>
+        <image id="4096" file="spee.bmp" transparent="0" info="No Info" />
+    </images>
+    <modules>
+        <module id="4099" imageid="4096" x="261" y="16" width="122" height="67" info="No info" />
+        <module id="4097" imageid="4096" x="411" y="137" width="94" height="69" info="No info" />
+        <module id="4098" imageid="4096" x="253" y="8" width="124" height="83" info="No info" />
+        <module id="4099" imageid="4096" x="155" y="132" width="93" height="71" info="No info" />
+        <module id="4100" imageid="4096" x="142" y="250" width="109" height="104" info="No info" />
+        <module id="4101" imageid="4096" x="257" y="248" width="133" height="95" info="No info" />
+        <module id="4102" imageid="4096" x="395" y="261" width="116" height="79" info="No info" />
+        <module id="4103" imageid="4096" x="548" y="266" width="57" height="75" info="No info" />
+        <module id="4104" imageid="4096" x="643" y="257" width="103" height="85" info="No info" />
+        <module id="4105" imageid="4096" x="763" y="251" width="132" height="88" info="No info" />
+    </modules>
+    <frames>
+        <frame id="4096" info="">
+            <fmodules>
+                <fmodule moduleid="4099" x="-57" y="-31" flags="0" />
+                <fmodule moduleid="4101" x="-68" y="-67" flags="0" />
+            </fmodules>
+            <flogics>
+                <flogic id="4096" info="">
+                    <flogicitem id="4096" type="0" x="0" y="0" />
+                    <flogicitem id="4097" type="1" x="1" y="-31" w="20" h="29" />
+                </flogic>
+            </flogics>
+        </frame>
+        <frame id="4097" info="">
+            <fmodules>
+                <fmodule moduleid="4098" x="-65" y="-39" flags="0" />
+                <fmodule moduleid="4097" x="-37" y="-43" flags="0" />
+            </fmodules>
+            <flogics />
+        </frame>
+    </frames>
+    <anims>
+        <anim id="4096" info="anim1">
+            <aframe frameid="4096" time="1" x="0" y="0" flags="0" />
+            <aframe frameid="4097" time="1" x="0" y="0" flags="0" />
+        </anim>
+    </anims>
+</xsprite>

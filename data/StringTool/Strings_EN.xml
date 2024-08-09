@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<package name="BASICS">
+	<string id="kStringID_Yes"			value="Yes" />
+	<string id="kStringID_No"			value="No"  />
+	<string id="kStringID_AskSound"			value="Enable Sound?" />
+	<string id="kStringID_Resume"			value="RESUME" />
+	<string id="kStringID_MainMenu"			value="MAIN MENU" />
+	<string id="kStringID_AskDataOverwrite"		value="Start a new game and erase previously saved game?"/>
+</package>
+
+<package name="LOADINGTIPS">
+	<string id="kStringID_LoadingTip00"		value="Each character prefers 2 stats. His or her maximum friendship is your lowest stat among those."/>
+	<string id="kStringID_LoadingTip01"		value="Julie can sell you useful items."/>
+	<string id="kStringID_LoadingTip02"		value="It is easier to raise a character's own favorite stats."/>
+</package>
+
