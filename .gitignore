@@ -44,6 +44,7 @@
 *.cbproj.local
 *.groupproj.local
 *.ddp
+*.dsk
 __recovery/
 __history/
 __astcache/

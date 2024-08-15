@@ -37,13 +37,13 @@ In hind-sight, it was not very clever to tie them up with a proprietary software
 
 The following tools are included:
 
-Sentry: a full-featured sprite editor (see separate chapter below)
-StringTool: tool to convert/transform a localization XML to a custom format by means of a CSL script (usable for games where parsing a xml would otherwise not be available/efficient - J2ME, Flash games)
-Curve Editor: a graphical wrapper over the curve library, with support to visualize and save a "library" of curves
-Data Growth: support to edit data packages (used in Lethal Metal). Has both a graphical mode and a command-line mode 
-JadUpdate: small command line application to update versions in jad/manifest files (relevant for J2ME games)
-SprEd: a sprite editor originally used by Pure Power and PPTactical Engine (obsolete, superseded by Sentry)
-XSprite: a sprite editor used by Lethal Metal/CyberNinja (obsolete, superseded by Sentry)
+* Sentry: a full-featured sprite editor (see separate chapter below)
+* StringTool: tool to convert/transform a localization XML to a custom format by means of a CSL script (usable for games where parsing a xml would otherwise not be available/efficient - J2ME, Flash games)
+* Curve Editor: a graphical wrapper over the curve library, with support to visualize and save a "library" of curves
+* Data Growth: support to edit data packages (used in Lethal Metal). Has both a graphical mode and a command-line mode 
+* JadUpdate: small command line application to update versions in jad/manifest files (relevant for J2ME games)
+* SprEd: a sprite editor originally used by Pure Power and PPTactical Engine (obsolete, superseded by Sentry)
+* XSprite: a sprite editor used by Lethal Metal/CyberNinja (obsolete, superseded by Sentry)
 
 Along with the tools, a couple of VCL components shared between them are available.
 
@@ -69,11 +69,11 @@ There are a few more features and fixes to be done, namely:
 ## Library Dependencies
 The toolkit uses the following libraries, for convenience included in the [lib](https://github.com/stefandee/gametoolkit/tree/main/lib) folder:
 
-Physfs: virtual file system
-Easylogging++: file logger
-Tinyxml: xml parser
-Pnglib/zlib: for png support
-Pngdib: render png data in Windows GDI (used by some tools)
+* Physfs: virtual file system
+* Easylogging++: file logger
+* Tinyxml: xml parser
+* Pnglib/zlib: for png support
+* Pngdib: render png data in Windows GDI (used by some tools)
 
 ## Setup&Install&Build
 Most of the code will compile with a C++11 compiler.
@@ -88,9 +88,7 @@ Due to the time when it was developed, the toolkit and tools don't have (full) U
 In parts, the code is still C++98. Gradual upgrading to latest standard and std library would be nice to have.
 
 ## Contributors
-Stefan "Karg" Dicu
-Tudor Garba
-Mikael "tamlin" Nordell
+Stefan "Karg" Dicu, Tudor "grab" Garba, Mikael "tamlin" Nordell
 
 ## License
 
