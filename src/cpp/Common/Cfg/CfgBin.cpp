@@ -13,13 +13,14 @@
 // WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY// 
 // or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License  //
 // for more details.                                                         //
-//                                                                           // 
+//                                                                           //
 // You should have received a copy of the GNU Lesser General Public License         //
 // along with PPTactical Engine; if not, write to the Free Software          //
 // Foundation Inc. 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA   // 
 //-----------------------------------------------------------------------------
 //---------------------------------------------------------------------------
-//#include <vcl.h>
+#include <cstring>
+#include <cstdlib>
 #include "Platform.h"
 
 #ifdef PPT_PLATFORM_WIN
@@ -92,7 +93,7 @@ bool CCfgBin::GetInfo(char* description, int* versionMajor, int* versionMinor)
 {
   if (fileHandle > 0)
   {
-    // merg la inceputul fisierului
+	// merg la inceputul fisierului
     if (lseek(fileHandle, 0, SEEK_SET) == -1) return false;
 
     TCfgFileHeader header;
@@ -178,7 +179,7 @@ bool CCfgBin::GetResource(const char* resName, void* value)
 
       switch(cfgLine.resType)
       {
-        case RES_CHAR :
+		case RES_CHAR :
           read(fileHandle, (char*)value, sizeof(char));
           break;
         case RES_INT  :
@@ -191,15 +192,15 @@ bool CCfgBin::GetResource(const char* resName, void* value)
           read(fileHandle, (char*)value, 32);
           break;
         case RES_STRING256 :
-          read(fileHandle, (char*)value, 256);
-          break;
-        case RES_TPOINT :
-          read(fileHandle, (CPPoint*)value, sizeof(CPPoint));
-          break;
-        case RES_TRECT :
-          read(fileHandle, (CPRect*)value, sizeof(CPRect));
-          break;
-        default :
+		  read(fileHandle, (char*)value, 256);
+		  break;
+		case RES_TPOINT :
+		  read(fileHandle, (CPPoint*)value, sizeof(CPPoint));
+		  break;
+		case RES_TRECT :
+		  read(fileHandle, (CPRect*)value, sizeof(CPRect));
+		  break;
+		default :
           return false;
       }
 
@@ -236,39 +237,39 @@ bool CCfgBin::SetResource(const char* resName, void* value)
 
       if (strcmp(resName, cfgLine.resName) == 0)
       {
-        switch(cfgLine.resType)
+		switch(cfgLine.resType)
         {
           case RES_CHAR :
             if (write(fileHandle, (char*)value, sizeof(char)) == -1) return false;
             break;
-          case RES_INT  :
+		  case RES_INT  :
             if (write(fileHandle, (int*)value, sizeof(int)) == -1) return false;
             break;
           case RES_DOUBLE :
-            if (write(fileHandle, (double*)value, sizeof(double)) == -1) return false;
+			if (write(fileHandle, (double*)value, sizeof(double)) == -1) return false;
             break;
           case RES_STRING32 :
-            strcpy(buffer, (char*)value);
-            if (write(fileHandle, buffer, 32) == -1) return false;
-            break;
-          case RES_STRING256 :
-            strcpy(buffer, (char*)value);
-            if (write(fileHandle, buffer, 256) == -1) return false;
-            break;
-          case RES_TPOINT :
-            if (write(fileHandle, (CPPoint*)value, sizeof(CPPoint)) == -1) return false;
-            break;
-          case RES_TRECT :
-            if (write(fileHandle, (CPRect*)value, sizeof(CPRect)) == -1) return false;
-            break;
-          default :
+			strcpy_s(buffer, CFG_BUFFER_SIZE, (char*)value);
+			if (write(fileHandle, buffer, 32) == -1) return false;
+			break;
+		  case RES_STRING256 :
+			strcpy_s(buffer, CFG_BUFFER_SIZE, (char*)value);
+			if (write(fileHandle, buffer, 256) == -1) return false;
+			break;
+		  case RES_TPOINT :
+			if (write(fileHandle, (CPPoint*)value, sizeof(CPPoint)) == -1) return false;
+			break;
+		  case RES_TRECT :
+			if (write(fileHandle, (CPRect*)value, sizeof(CPRect)) == -1) return false;
+			break;
+		  default :
             return false;
         }
 
         return true;
       }
 
-      // sar peste un numar de octeti
+	  // sar peste un numar de octeti
       switch(cfgLine.resType)
       {
         case RES_CHAR :
@@ -278,13 +279,13 @@ bool CCfgBin::SetResource(const char* resName, void* value)
           if (lseek(fileHandle, sizeof(int), SEEK_CUR) == -1) return false;
           break;
         case RES_DOUBLE :
-          if (lseek(fileHandle, sizeof(double), SEEK_CUR) == -1) return false;
-          break;
+		  if (lseek(fileHandle, sizeof(double), SEEK_CUR) == -1) return false;
+		  break;
         case RES_STRING32 :
-          if (lseek(fileHandle, 32, SEEK_CUR) == -1) return false;
-          break;
-        case RES_STRING256 :
-          if (lseek(fileHandle, 256, SEEK_CUR) == -1) return false;
+		  if (lseek(fileHandle, 32 * sizeof(char), SEEK_CUR) == -1) return false;
+		  break;
+		case RES_STRING256 :
+		  if (lseek(fileHandle, 256 * sizeof(char), SEEK_CUR) == -1) return false;
           break;
         case RES_TPOINT :
           if (lseek(fileHandle, sizeof(CPPoint), SEEK_CUR) == -1) return false;
@@ -295,7 +296,7 @@ bool CCfgBin::SetResource(const char* resName, void* value)
         default :
           return false;
       }
-    }
+	}
   }
 
   return false;
@@ -338,19 +339,19 @@ bool CCfgBin::AddResource(const char* resName, TResourceType resType, void* valu
     {
       case RES_CHAR :
         if (write(fileHandle, (char*)value, sizeof(char)) == -1) return false;
-        break;
+		break;
       case RES_INT  :
-        if (write(fileHandle, (int*)value, sizeof(int)) == -1) return false;
+		if (write(fileHandle, (int*)value, sizeof(int)) == -1) return false;
         break;
-      case RES_DOUBLE :
-        if (write(fileHandle, (double*)value, sizeof(double)) == -1) return false;
+	  case RES_DOUBLE :
+		if (write(fileHandle, (double*)value, sizeof(double)) == -1) return false;
         break;
-      case RES_STRING32 :
-        strcpy(buffer, (char*)value);
-        if (write(fileHandle, buffer, 32) == -1) return false;
-        break;
-      case RES_STRING256 :
-        strcpy(buffer, (char*)value);
+	  case RES_STRING32 :
+		strcpy_s(buffer, CFG_BUFFER_SIZE, (char*)value);
+		if (write(fileHandle, buffer, 32) == -1) return false;
+		break;
+	  case RES_STRING256 :
+		strcpy_s(buffer, CFG_BUFFER_SIZE, (char*)value);
         if (write(fileHandle, buffer, 256) == -1) return false;
         break;
       case RES_TPOINT :

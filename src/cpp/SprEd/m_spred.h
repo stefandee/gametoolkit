@@ -106,7 +106,7 @@ public:		// User declarations
         int xCellSize, yCellSize;
         int xCellSel, yCellSel;
         int xBmpSize, yBmpSize;
-        AnsiString fileName;
+        UnicodeString fileName;
         bool modified, newFile;
         // AnsiString appDir;
         CCfgBin cfgFile;

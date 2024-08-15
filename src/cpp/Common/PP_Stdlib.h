@@ -9,6 +9,7 @@ extern int gfRandom(int _v);
 extern float gfRandom48();
 extern std::wstring StringToWString(const std::string& str);
 extern std::string WStringToString(const std::wstring& wstr);
+extern std::string ReplaceString(std::string subject, const std::string& search, const std::string& replace);
 
 template <typename T>T clamp(T in, T low, T high)
 {

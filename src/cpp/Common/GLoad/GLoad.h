@@ -45,6 +45,7 @@
 #include <stdio.h>
 #include "ColorConv.h"
 #include "Stream.h"
+#include "PP_String.h"
 
 // informatii despre imaginea din fisier
 typedef struct __TGInfo

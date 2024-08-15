@@ -38,7 +38,7 @@ public:
 
 Stream_ANSI_C::Stream_ANSI_C(const char* filename, bool _empty)
 {
-    CPString lFixedPath = FixPath(CPString(filename));
+    std::string lFixedPath = FixPath(std::string(filename));
 
     //logWrite("opening: ");
     //logWriteLn(lFixedPath.c_str());

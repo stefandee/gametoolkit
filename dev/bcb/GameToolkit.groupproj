@@ -21,6 +21,9 @@
         <Projects Include="StringTool\StringTool.cbproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="SprEd\SprEd.cbproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -83,14 +86,23 @@
     <Target Name="StringTool:Make">
         <MSBuild Projects="StringTool\StringTool.cbproj" Targets="Make"/>
     </Target>
+    <Target Name="SprEd">
+        <MSBuild Projects="SprEd\SprEd.cbproj"/>
+    </Target>
+    <Target Name="SprEd:Clean">
+        <MSBuild Projects="SprEd\SprEd.cbproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SprEd:Make">
+        <MSBuild Projects="SprEd\SprEd.cbproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="PironGamesComponents;JadUpdate;TestPNG;DataGrowth;CurveEd;StringTool"/>
+        <CallTarget Targets="PironGamesComponents;JadUpdate;TestPNG;DataGrowth;CurveEd;StringTool;SprEd"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="PironGamesComponents:Clean;JadUpdate:Clean;TestPNG:Clean;DataGrowth:Clean;CurveEd:Clean;StringTool:Clean"/>
+        <CallTarget Targets="PironGamesComponents:Clean;JadUpdate:Clean;TestPNG:Clean;DataGrowth:Clean;CurveEd:Clean;StringTool:Clean;SprEd:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="PironGamesComponents:Make;JadUpdate:Make;TestPNG:Make;DataGrowth:Make;CurveEd:Make;StringTool:Make"/>
+        <CallTarget Targets="PironGamesComponents:Make;JadUpdate:Make;TestPNG:Make;DataGrowth:Make;CurveEd:Make;StringTool:Make;SprEd:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

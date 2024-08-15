@@ -43,7 +43,7 @@
 #define CFG_DESCRIPTION_SIZE 32
 #define CFG_VERSION_MAJOR    0
 #define CFG_VERSION_MINOR    40
-#define CFG_BUFFER_SIZE      512
+#define CFG_BUFFER_SIZE      1024
 //---------------------------------------------------------------------------
 
 // formatul fisierului de configurare
@@ -68,7 +68,7 @@ typedef struct
 class CCfgBin : public CCfg
 {
   private:
-    char  buffer[CFG_BUFFER_SIZE];
+	char  buffer[CFG_BUFFER_SIZE];
 
   protected:
     virtual bool ReadHeader();

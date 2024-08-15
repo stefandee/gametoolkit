@@ -35,7 +35,6 @@
 #define ExprEvalH
 //---------------------------------------------------------------------------
 
-#include "PP_String.h"
 #include <stdexcept>
 
 #define EVAL_DATA_SIZE 4096
@@ -58,8 +57,8 @@ class CPExprEval
 {
   private:
     int            mExprIndex;
-    CPString       mExpr;
-    TCfgAtomValue2 mAv;
+	std::string    mExpr;
+	TCfgAtomValue2 mAv;
 
   protected:
     bool TermenStatic (double* _v);
@@ -74,7 +73,7 @@ class CPExprEval
   public:
     CPExprEval();
 
-    virtual double Evaluate(CPString _e);
+	virtual double Evaluate(std::string _e);
 
     ~CPExprEval();
 };

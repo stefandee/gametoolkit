@@ -58,11 +58,11 @@ CPExprEval::CPExprEval()
 }
 //---------------------------------------------------------------------------
 
-double CPExprEval::Evaluate(CPString _e)
+double CPExprEval::Evaluate(std::string _e)
 {
   double lValue = 0.0;
 
-  if (_e.isEmpty())
+  if (_e.empty())
   {
     throw CPEvalError("String is empty.");
   }
@@ -81,7 +81,7 @@ double CPExprEval::Evaluate(CPString _e)
 
 int  CPExprEval::NextChar()
 {
-  if (++mExprIndex >= mExpr.Length())
+  if (++mExprIndex >= mExpr.length())
   {
     return 256;
   }

@@ -1,6 +1,7 @@
 // Stream.cpp
 #include "Stream.h"
 #include "Platform.h"
+#include "PP_Stdlib.h"
 
 namespace PP {
 
@@ -13,13 +14,13 @@ Stream::~Stream()
 {
 }
 
-CPString Stream::FixPath(CPString _path)
+std::string Stream::FixPath(std::string _path)
 {
   // FIXME: just a minor hack ;)
-  _path.Replace('\\', PPT_PATHSEPARATOR);
-  _path.Replace('/', PPT_PATHSEPARATOR);
+  ReplaceString(_path, "\\", std::string() + PPT_PATHSEPARATOR);
+  ReplaceString(_path, "/", std::string() + PPT_PATHSEPARATOR);
 
-  return CPString(_path);
+  return _path;
 }
 
 }	// end of namespace PP

@@ -49,26 +49,28 @@ __fastcall TMainForm::TMainForm(TComponent* Owner)
   {
     if (!cfgFile.Create(CFG_FILE_NAME))
     {
-      Application->MessageBox("Cannot create cfg file", "Error", MB_OK);
-      return;
-    }
-    else
-    {
-      if (!cfgFile.SetInfo("Sprite Editor cfg"))
-      {
-        Application->MessageBox("Cannot write cfg header", "Error", MB_OK);
+	  Application->MessageBox(L"Cannot create cfg file", L"Error", MB_OK);
+	  return;
+	}
+	else
+	{
+	  if (!cfgFile.SetInfo("Sprite Editor cfg"))
+	  {
+        Application->MessageBox(L"Cannot write cfg header", L"Error", MB_OK);
         return;
-      }
+	  }
+
+	  UnicodeString empty = L"";
 
       // adaug resursa pentru directorul curent
-      cfgFile.AddResource("CurrentDir", RES_STRING256, "");
+	  cfgFile.AddResource("CurrentDir", RES_STRING256, empty.c_str());
 
-      // adaug inca 5 resurse pentru ultimele fisiere (history)
-      cfgFile.AddResource("File1", RES_STRING256, "");
-      cfgFile.AddResource("File2", RES_STRING256, "");
-      cfgFile.AddResource("File3", RES_STRING256, "");
-      cfgFile.AddResource("File4", RES_STRING256, "");
-      cfgFile.AddResource("File5", RES_STRING256, "");
+	  // adaug inca 5 resurse pentru ultimele fisiere (history)
+	  cfgFile.AddResource("File1", RES_STRING256, empty.c_str());
+	  cfgFile.AddResource("File2", RES_STRING256, empty.c_str());
+	  cfgFile.AddResource("File3", RES_STRING256, empty.c_str());
+	  cfgFile.AddResource("File4", RES_STRING256, empty.c_str());
+      cfgFile.AddResource("File5", RES_STRING256, empty.c_str());
     }
   }
   else
@@ -89,8 +91,9 @@ __fastcall TMainForm::TMainForm(TComponent* Owner)
     for(int i = 1; i < MAX_HISTORY_LINKS; i++)
     {
       if (cfgFile.GetResource(("File" + AnsiString(i)).c_str(), buffer))
-      {
-        historyPath = AnsiString((char*)buffer);
+	  {
+		historyPath = AnsiString((char*)buffer);
+
         if (!historyPath.IsEmpty())
         {
           menuItem            = new TMenuItem(MainForm->MainMenu);
@@ -182,20 +185,20 @@ void __fastcall TMainForm::Replace1Click(TObject *Sender)
     }
     catch(...)
     {
-      MessageBox(0, "Error", "Cannot allocate TBitmapEx*", MB_OK);
-      return;
-    }
+	  MessageBox(0, L"Error", L"Cannot allocate TBitmapEx*", MB_OK);
+	  return;
+	}
 
-    tempic->Width = xCellSize;
-    tempic->Height = yCellSize;
+	tempic->Width = xCellSize;
+	tempic->Height = yCellSize;
 
-    try
-    {
-      tempic->LoadFromFile(OpenPictureDialog->FileName);
-    }
-    catch(...)
-    {
-      MessageBox(0, "Error", "Cannot load bitmap", MB_OK);
+	try
+	{
+	  tempic->LoadFromFile(OpenPictureDialog->FileName);
+	}
+	catch(...)
+	{
+	  MessageBox(0, L"Error", L"Cannot load bitmap", MB_OK);
       delete tempic;
       return;
     }
@@ -313,7 +316,7 @@ void __fastcall TMainForm::Savebitmap1Click(TObject *Sender)
     }
     catch(...)
     {
-      MessageBox(0, "Save error", "Error", MB_OK);
+	  MessageBox(0, L"Save error", L"Error", MB_OK);
       return;
     }
     // end of saving
@@ -402,7 +405,7 @@ void __fastcall TMainForm::Savebitmapas1Click(TObject *Sender)
     }
     catch(...)
     {
-      MessageBox(0, "Error", "Save error", MB_OK);
+      MessageBox(0, L"Error", L"Save error", MB_OK);
       return;
     }
     // end of saving
@@ -442,7 +445,7 @@ void __fastcall TMainForm::ReplaceClick(TObject *Sender)
 void TMainForm::FillByRows()
 {
   int i, j, k, fileIndexRow, fileIndexCol, zeros, originalXCell, pos_x, pos_y;
-  AnsiString stringFile, fileName;
+  UnicodeString stringFile, fileName;
   TBitmapEx* tempic;
 
   // special replace
@@ -454,15 +457,15 @@ void TMainForm::FillByRows()
       zeros = 3;
       if (fileIndexRow > 999)
       {
-        Application->MessageBox("First file number is out of range", "Error", MB_OK);
-        return;
-      }
-      break;
-    case _0000 :
-      zeros = 4;
-      if (fileIndexRow > 9999)
-      {
-        Application->MessageBox("First file number is out of range", "Error", MB_OK);
+		Application->MessageBox(L"First file number is out of range", L"Error", MB_OK);
+		return;
+	  }
+	  break;
+	case _0000 :
+	  zeros = 4;
+	  if (fileIndexRow > 9999)
+	  {
+		Application->MessageBox(L"First file number is out of range", L"Error", MB_OK);
         return;
       }
       break;
@@ -470,7 +473,7 @@ void TMainForm::FillByRows()
       zeros = 3;
       if (fileIndexRow > 999)
       {
-        Application->MessageBox("First file number is out of range", "Error", MB_OK);
+		Application->MessageBox(L"First file number is out of range", L"Error", MB_OK);
         return;
       }
   }
@@ -481,7 +484,7 @@ void TMainForm::FillByRows()
   }
   catch(...)
   {
-    Application->MessageBox("Cannot alloc TBitmapEx*", "Error", MB_OK);
+    Application->MessageBox(L"Cannot alloc TBitmapEx*", L"Error", MB_OK);
     return;
   }
 
@@ -502,16 +505,16 @@ void TMainForm::FillByRows()
         fileName = fileName + "0";
       }
 
-      fileName = fileName + AnsiString(fileIndexCol) + ".bmp";
+      fileName = fileName + UnicodeString(fileIndexCol) + L".bmp";
 
       // citesc fisierul bmp si il pun in sprite
       try
       {
         tempic->LoadFromFile(FormReplace->pathToFiles + fileName);
-      }
+	  }
       catch(...)
       {
-        Application->MessageBox(AnsiString("Cannot open " + fileName).c_str(), "Error", MB_OK);
+		Application->MessageBox((L"Cannot open " + fileName).c_str(), L"Error", MB_OK);
         delete tempic;
         return;
       }
@@ -612,19 +615,19 @@ bool TMainForm::LoadSpriteBmp(AnsiString spriteFileName)
     }
     catch(...)
     {
-      MessageBox(0, "Error", "Cannot alloc TBitmapEx*", MB_OK);
-      return false;
-    }
+	  MessageBox(0, L"Error", L"Cannot alloc TBitmapEx*", MB_OK);
+	  return false;
+	}
 
-    // incarca imaginea
-    try
-    {
-      //Sprite->Picture->Bitmap->LoadFromFile(spriteFileName);
-      tempic->LoadFromFile(spriteFileName);
-    }
-    catch(...)
-    {
-      MessageBox(0, "Error", "Cannot load image file", MB_OK);
+	// incarca imaginea
+	try
+	{
+	  //Sprite->Picture->Bitmap->LoadFromFile(spriteFileName);
+	  tempic->LoadFromFile(spriteFileName);
+	}
+	catch(...)
+	{
+      MessageBox(0, L"Error", L"Cannot load image file", MB_OK);
       return false;
     }
 
@@ -673,8 +676,7 @@ void __fastcall TMainForm::FormClose(TObject *Sender, TCloseAction &Action)
   if (!fileName.IsEmpty())
   {
     // salvez si calea curenta
-    strcpy(buffer, ExtractFilePath(fileName).c_str());
-    cfgFile.SetResource(AnsiString("CurrentDir").c_str(), buffer);
+	cfgFile.SetResource(AnsiString("CurrentDir").c_str(), ExtractFilePath(fileName).c_str());
   }
 
   for(int i = 0; i < historyCrtItems; i++)

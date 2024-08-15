@@ -46,8 +46,8 @@ void __fastcall TCellForm::ed_xsizeExit(TObject *Sender)
   }
   catch(...)
   {
-    MessageBox(0, "Error", "Invalid value (>0 req)", MB_OK);
-    ed_xsize->Text = "1";
+	MessageBox(0, L"Error", L"Invalid value (>0 req)", MB_OK);
+	ed_xsize->Text = "1";
   }
 }
 //---------------------------------------------------------------------------
@@ -56,15 +56,15 @@ void __fastcall TCellForm::ed_ysizeExit(TObject *Sender)
 {
   try
   {
-    int tempint = ed_ysize->Text.ToInt();
-    if (tempint == 0)
-    {
-      ed_ysize->Text = "1";
-    }
+	int tempint = ed_ysize->Text.ToInt();
+	if (tempint == 0)
+	{
+	  ed_ysize->Text = "1";
+	}
   }
   catch(...)
   {
-    MessageBox(0, "Error", "Invalid value (>0 req)", MB_OK);
+    MessageBox(0, L"Error", L"Invalid value (>0 req)", MB_OK);
     ed_ysize->Text = "1";
   }
 }

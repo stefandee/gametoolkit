@@ -4,7 +4,7 @@
 #define PP_COMMON_STREAM_H
 
 #include <stdlib.h>	// size_t
-#include "PP_String.h"
+#include <string>
 
 namespace PP {
 
@@ -41,7 +41,7 @@ public:
         virtual bool  writeBool  (bool*   _v) = 0;
 
   public:
-        static CPString FixPath(CPString _path);
+        static std::string FixPath(std::string _path);
 
   protected:
 	Stream();

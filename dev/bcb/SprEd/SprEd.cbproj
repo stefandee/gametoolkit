@@ -1,15 +1,15 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
-        <ProjectGuid>{37D5EB52-726A-4385-8B09-785C1DBB80E1}</ProjectGuid>
+        <ProjectGuid>{78280BAF-9882-4763-9150-1E77DC6164F3}</ProjectGuid>
         <ProjectVersion>19.5</ProjectVersion>
-        <FrameworkType>None</FrameworkType>
-        <MainSource>PironGamesComponents.cpp</MainSource>
+        <FrameworkType>VCL</FrameworkType>
+        <AppType>Application</AppType>
+        <MainSource>SprEd.cpp</MainSource>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Debug</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <CC_Suffix Condition="'$(CC_Suffix)'==''">c</CC_Suffix>
         <TargetedPlatforms>1</TargetedPlatforms>
-        <AppType>Package</AppType>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
         <Base>true</Base>
@@ -50,37 +50,41 @@
         <DCC_CBuilderOutput>JPHNE</DCC_CBuilderOutput>
         <DynamicRTL>true</DynamicRTL>
         <UsePackages>true</UsePackages>
-        <IntermediateOutputDir>.\$(Platform)\$(Config)</IntermediateOutputDir>
+        <IntermediateOutputDir>..\..\..\tmp\SprEd\$(Platform)\$(Config)</IntermediateOutputDir>
+        <FinalOutputDir>..\..\..\bin\SprEd\$(Platform)\$(Config)</FinalOutputDir>
         <BCC_wpar>false</BCC_wpar>
         <BCC_OptimizeForSpeed>true</BCC_OptimizeForSpeed>
         <BCC_ExtendedErrorInfo>true</BCC_ExtendedErrorInfo>
         <ILINK_TranslatedLibraryPath>$(BDSLIB)\$(PLATFORM)\release\$(LANGDIR);$(ILINK_TranslatedLibraryPath)</ILINK_TranslatedLibraryPath>
-        <ProjectType>CppPackage</ProjectType>
-        <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;$(DCC_Namespace)</DCC_Namespace>
-        <ILINK_GenerateLibFile>true</ILINK_GenerateLibFile>
-        <ILINK_GenerateImportLibrary>true</ILINK_GenerateImportLibrary>
-        <_TCHARMapping>char</_TCHARMapping>
+        <ProjectType>CppVCLApplication</ProjectType>
+        <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;$(DCC_Namespace)</DCC_Namespace>
+        <AllPackageLibs>rtl.lib;vcl.lib;PironGamesComponents.lib</AllPackageLibs>
+        <_TCHARMapping>wchar_t</_TCHARMapping>
         <Multithreaded>true</Multithreaded>
-        <IncludePath>..\..\..\lib\easyloggingpp-9.95.0\;..\..\..\src\cpp\Common\;..\..\..\src\cpp\Common\Archive\;..\..\..\src\cpp\Common\GLoad\;.\;..\..\..\src\cpp\Components\;..\..\..\src\cpp\Common;..\..\..\src\cpp\Common\GLoad;..\..\..\src\cpp\Common\Archive;..\..\..\lib\easyloggingpp-9.95.0;$(IncludePath)</IncludePath>
-        <ILINK_LibraryPath>..\..\..\lib\easyloggingpp-9.95.0\;..\..\..\src\cpp\Common\;..\..\..\src\cpp\Common\Archive\;..\..\..\src\cpp\Common\GLoad\;..\..\..\src\cpp\Components\;E:\Projects\github\gametoolkit\dev\bcb\Components\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
-        <DCC_UnitSearchPath>E:\Projects\github\gametoolkit\dev\bcb\Components;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
-        <ILINK_Description>Components for C++Builder 11 CE</ILINK_Description>
-        <SanitizedProjectName>PironGamesComponents</SanitizedProjectName>
+        <Icon_MainIcon>$(BDS)\bin\cbuilder_PROJECTICON.ico</Icon_MainIcon>
+        <UWP_CppLogo44>$(BDS)\bin\Artwork\Windows\UWP\cppreg_UwpDefault_44.png</UWP_CppLogo44>
+        <UWP_CppLogo150>$(BDS)\bin\Artwork\Windows\UWP\cppreg_UwpDefault_150.png</UWP_CppLogo150>
+        <IncludePath>..\..\..\src\cpp\Common\Archive\;..\..\..\src\cpp\Common\GLoad\;..\..\..\src\cpp\Components\;..\..\..\lib\easyloggingpp-9.95.0\;..\..\..\src\cpp\Common\;..\..\..\src\cpp\Common\Cfg\;..\..\..\src\cpp\SprEd\;.\;..\..\..\src\cpp\Components;..\..\..\src\cpp\Common\Cfg;..\..\..\src\cpp\Common\GLoad;..\..\..\src\cpp\Common\Archive;$(IncludePath)</IncludePath>
+        <ILINK_LibraryPath>..\..\..\src\cpp\Common\Archive\;..\..\..\src\cpp\Common\GLoad\;..\..\..\src\cpp\Components\;..\..\..\lib\easyloggingpp-9.95.0\;..\..\..\src\cpp\Common\;..\..\..\src\cpp\Common\Cfg\;..\..\..\src\cpp\SprEd\;E:\Projects\github\gametoolkit\dev\bcb\SprEd\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
+        <SanitizedProjectName>SprEd</SanitizedProjectName>
         <VerInfo_Locale>2057</VerInfo_Locale>
         <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
-        <PackageImports>adortl;appanalytics;bcbie;bcbsmp;bindcomp;bindcompdbx;bindcompfmx;bindcompvcl;bindcompvclsmp;bindcompvclwinx;bindengine;CloudService;CustomIPTransport;dbexpress;dbrtl;dbxcds;DbxClientDriver;DbxCommonDriver;DBXInterBaseDriver;DBXMySQLDriver;DBXSqliteDriver;dsnap;dsnapcon;dsnapxml;FireDAC;FireDACADSDriver;FireDACCommon;FireDACCommonDriver;FireDACCommonODBC;FireDACIBDriver;FireDACMSAccDriver;FireDACMySQLDriver;FireDACPgDriver;FireDACSqliteDriver;fmx;fmxase;fmxdae;fmxFireDAC;fmxobj;FMXTee;FmxTeeUI;IndyCore;IndyIPClient;IndyIPCommon;IndyIPServer;IndyProtocols;IndySystem;inet;inetdb;inetdbxpress;RESTBackendComponents;RESTComponents;rtl;soapmidas;soaprtl;soapserver;Tee;TeeDB;TeeUI;tethering;vcl;vclactnband;vcldb;vcldsnap;vcledge;vclFireDAC;vclie;vclimg;VCLRESTComponents;VclSmp;vcltouch;vclwinx;vclx;xmlrtl;$(PackageImports)</PackageImports>
+        <PackageImports>adortl;appanalytics;bcbie;bcbsmp;bindcomp;bindcompdbx;bindcompfmx;bindcompvcl;bindcompvclsmp;bindcompvclwinx;bindengine;CloudService;CustomIPTransport;dbexpress;dbrtl;dbxcds;DbxClientDriver;DbxCommonDriver;DBXInterBaseDriver;DBXMySQLDriver;DBXSqliteDriver;dsnap;dsnapcon;dsnapxml;FireDAC;FireDACADSDriver;FireDACCommon;FireDACCommonDriver;FireDACCommonODBC;FireDACIBDriver;FireDACMSAccDriver;FireDACMySQLDriver;FireDACPgDriver;FireDACSqliteDriver;fmx;fmxase;fmxdae;fmxFireDAC;fmxobj;FMXTee;FmxTeeUI;IndyCore;IndyIPClient;IndyIPCommon;IndyIPServer;IndyProtocols;IndySystem;inet;inetdb;inetdbxpress;PironGames;PironGamesComponents;RESTBackendComponents;RESTComponents;rtl;soapmidas;soaprtl;soapserver;Tee;TeeDB;TeeUI;tethering;vcl;vclactnband;vcldb;vcldsnap;vcledge;vclFireDAC;vclie;vclimg;VCLRESTComponents;VclSmp;vcltouch;vclwinx;vclx;xmlrtl;$(PackageImports)</PackageImports>
+        <IncludePath>$(BDSINCLUDE)\windows\vcl;$(IncludePath)</IncludePath>
         <DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
         <BT_BuildType>Debug</BT_BuildType>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <VerInfo_Locale>1033</VerInfo_Locale>
-        <BCC_PCHName_Clang>PironGamesComponentsPCH1.h</BCC_PCHName_Clang>
+        <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
+        <BCC_PCHName_Clang>SprEdPCH1.h</BCC_PCHName_Clang>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win64)'!=''">
         <PackageImports>adortl;appanalytics;bcbie;bcbsmp;bindcomp;bindcompdbx;bindcompfmx;bindcompvcl;bindcompvclsmp;bindcompvclwinx;bindengine;CloudService;CustomIPTransport;dbexpress;dbrtl;dbxcds;DbxClientDriver;DbxCommonDriver;DBXInterBaseDriver;DBXMySQLDriver;DBXSqliteDriver;dsnap;dsnapcon;dsnapxml;FireDAC;FireDACADSDriver;FireDACCommon;FireDACCommonDriver;FireDACCommonODBC;FireDACIBDriver;FireDACMSAccDriver;FireDACMySQLDriver;FireDACPgDriver;FireDACSqliteDriver;fmx;fmxase;fmxdae;fmxFireDAC;fmxobj;FMXTee;FmxTeeUI;IndyCore;IndyIPClient;IndyIPCommon;IndyIPServer;IndyProtocols;IndySystem;inet;inetdb;inetdbxpress;RESTBackendComponents;RESTComponents;rtl;soapmidas;soaprtl;soapserver;Tee;TeeDB;TeeUI;tethering;vcl;vclactnband;vcldb;vcldsnap;vcledge;vclFireDAC;vclie;vclimg;VCLRESTComponents;VclSmp;vcltouch;vclwinx;vclx;xmlrtl;$(PackageImports)</PackageImports>
-        <BCC_PCHName_Clang>PironGamesComponentsPCH1.h</BCC_PCHName_Clang>
+        <IncludePath>$(BDSINCLUDE)\windows\vcl;$(IncludePath)</IncludePath>
+        <BCC_PCHName_Clang>SprEdPCH1.h</BCC_PCHName_Clang>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1)'!=''">
         <BCC_OptimizeForSpeed>false</BCC_OptimizeForSpeed>
@@ -103,11 +107,12 @@
         <CLANG_UnwindTables>true</CLANG_UnwindTables>
         <ILINK_LibraryPath>$(BDSLIB)\$(PLATFORM)\debug;$(ILINK_LibraryPath)</ILINK_LibraryPath>
         <ILINK_TranslatedLibraryPath>$(BDSLIB)\$(PLATFORM)\debug\$(LANGDIR);$(ILINK_TranslatedLibraryPath)</ILINK_TranslatedLibraryPath>
-        <BCC_OutputDir>E:\Projects\github\gametoolkit\tmp\components</BCC_OutputDir>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
+        <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <BCC_UseClassicCompiler>false</BCC_UseClassicCompiler>
         <ILINK_LibraryPath>$(BDSLIB)\$(PLATFORM)$(CC_SUFFIX)\debug;$(ILINK_LibraryPath)</ILINK_LibraryPath>
+        <LinkPackageImports>rtl.bpi;vcl.bpi;PironGamesComponents.bpi</LinkPackageImports>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
     </PropertyGroup>
@@ -116,116 +121,108 @@
         <TASM_Debugging>None</TASM_Debugging>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
+        <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <BCC_UseClassicCompiler>false</BCC_UseClassicCompiler>
     </PropertyGroup>
     <ItemGroup>
-        <PackageImport Include="bindengine.bpi">
-            <BuildOrder>17</BuildOrder>
-        </PackageImport>
-        <PackageImport Include="designide.bpi">
-            <BuildOrder>4</BuildOrder>
-        </PackageImport>
-        <PackageImport Include="designideresources.bpi">
-            <BuildOrder>14</BuildOrder>
-        </PackageImport>
-        <CppCompile Include="PironGamesComponents.cpp">
+        <CppCompile Include="SprEd.cpp">
             <BuildOrder>0</BuildOrder>
         </CppCompile>
-        <PCHCompile Include="PironGamesComponentsPCH1.h">
-            <BuildOrder>2</BuildOrder>
+        <PCHCompile Include="SprEdPCH1.h">
+            <BuildOrder>1</BuildOrder>
             <PCH>true</PCH>
         </PCHCompile>
-        <PackageImport Include="rtl.bpi">
-            <BuildOrder>1</BuildOrder>
-        </PackageImport>
-        <PackageImport Include="vcl.bpi">
-            <BuildOrder>5</BuildOrder>
-        </PackageImport>
-        <PackageImport Include="vclactnband.bpi">
-            <BuildOrder>6</BuildOrder>
-        </PackageImport>
-        <PackageImport Include="vclimg.bpi">
-            <BuildOrder>16</BuildOrder>
-        </PackageImport>
-        <PackageImport Include="vclwinx.bpi">
-            <BuildOrder>15</BuildOrder>
-        </PackageImport>
-        <PackageImport Include="vclx.bpi">
-            <BuildOrder>7</BuildOrder>
-        </PackageImport>
-        <PackageImport Include="xmlrtl.bpi">
-            <BuildOrder>8</BuildOrder>
-        </PackageImport>
         <CppCompile Include="..\..\..\lib\easyloggingpp-9.95.0\easylogging++.cc">
-            <BuildOrder>28</BuildOrder>
+            <BuildOrder>11</BuildOrder>
         </CppCompile>
-        <None Include="..\..\..\lib\easyloggingpp-9.95.0\easylogging++.h">
-            <BuildOrder>29</BuildOrder>
-        </None>
         <CppCompile Include="..\..\..\src\cpp\Common\Archive\Stream.cpp">
-            <BuildOrder>23</BuildOrder>
+            <BuildOrder>21</BuildOrder>
         </CppCompile>
         <CppCompile Include="..\..\..\src\cpp\Common\Archive\Stream_ANSI_C.cpp">
-            <BuildOrder>24</BuildOrder>
+            <BuildOrder>20</BuildOrder>
         </CppCompile>
         <CppCompile Include="..\..\..\src\cpp\Common\BitOp.cpp">
             <DependentOn>..\..\..\src\cpp\Common\BitOp.h</DependentOn>
-            <BuildOrder>25</BuildOrder>
+            <BuildOrder>19</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Common\Cfg\Cfg.cpp">
+            <BuildOrder>7</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Common\Cfg\CfgBin.cpp">
+            <BuildOrder>8</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Common\ExprEval.cpp">
+            <DependentOn>..\..\..\src\cpp\Common\ExprEval.h</DependentOn>
+            <BuildOrder>9</BuildOrder>
         </CppCompile>
         <CppCompile Include="..\..\..\src\cpp\Common\GLoad\GBmpLoad.cpp">
             <DependentOn>..\..\..\src\cpp\Common\GLoad\GBmpLoad.h</DependentOn>
-            <BuildOrder>18</BuildOrder>
+            <BuildOrder>14</BuildOrder>
         </CppCompile>
         <CppCompile Include="..\..\..\src\cpp\Common\GLoad\GILbmLoad.cpp">
             <DependentOn>..\..\..\src\cpp\Common\GLoad\GILbmLoad.h</DependentOn>
-            <BuildOrder>19</BuildOrder>
+            <BuildOrder>15</BuildOrder>
         </CppCompile>
         <CppCompile Include="..\..\..\src\cpp\Common\GLoad\GLoad.cpp">
             <DependentOn>..\..\..\src\cpp\Common\GLoad\GLoad.h</DependentOn>
-            <BuildOrder>20</BuildOrder>
+            <BuildOrder>18</BuildOrder>
         </CppCompile>
         <CppCompile Include="..\..\..\src\cpp\Common\GLoad\GPcxLoad.cpp">
             <DependentOn>..\..\..\src\cpp\Common\GLoad\GPcxLoad.h</DependentOn>
-            <BuildOrder>21</BuildOrder>
+            <BuildOrder>16</BuildOrder>
         </CppCompile>
         <CppCompile Include="..\..\..\src\cpp\Common\GLoad\GSgiLoad.cpp">
             <DependentOn>..\..\..\src\cpp\Common\GLoad\GSgiLoad.h</DependentOn>
-            <BuildOrder>22</BuildOrder>
+            <BuildOrder>17</BuildOrder>
         </CppCompile>
         <CppCompile Include="..\..\..\src\cpp\Common\PP_Stdlib.cpp">
-            <BuildOrder>30</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="..\..\..\src\cpp\Common\PP_String.cpp">
-            <BuildOrder>26</BuildOrder>
-        </CppCompile>
-        <None Include="..\..\..\src\cpp\Common\PP_String.h">
-            <BuildOrder>27</BuildOrder>
-        </None>
-        <CppCompile Include="..\..\..\src\cpp\Components\ImageEx.cpp">
-            <DependentOn>..\..\..\src\cpp\Components\ImageEx.h</DependentOn>
-            <BuildOrder>8</BuildOrder>
-        </CppCompile>
-        <None Include="..\..\..\src\cpp\Components\ImageExDesign.cpp">
-            <Exclude>True</Exclude>
-            <DependentOn>..\..\..\src\cpp\Components\ImageExDesign.h</DependentOn>
-            <BuildOrder>9</BuildOrder>
-        </None>
-        <CppCompile Include="..\..\..\src\cpp\Components\ScriptPopupMenu.cpp">
-            <DependentOn>..\..\..\src\cpp\Components\ScriptPopupMenu.h</DependentOn>
             <BuildOrder>10</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\..\src\cpp\Components\StringGridX.cpp">
-            <DependentOn>..\..\..\src\cpp\Components\StringGridX.h</DependentOn>
-            <BuildOrder>11</BuildOrder>
+        <CppCompile Include="..\..\..\src\cpp\Common\PP_String.cpp">
+            <BuildOrder>22</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\..\src\cpp\Components\THttpLabel.cpp">
-            <DependentOn>..\..\..\src\cpp\Components\THttpLabel.h</DependentOn>
+        <CppCompile Include="..\..\..\src\cpp\Components\ImageEx.cpp">
+            <DependentOn>..\..\..\src\cpp\Components\ImageEx.h</DependentOn>
             <BuildOrder>12</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\..\src\cpp\Components\TImgExEditorForm.cpp">
-            <DependentOn>..\..\..\src\cpp\Components\TImgExEditorForm.h</DependentOn>
+        <None Include="..\..\..\src\cpp\Components\ImageEx.h">
             <BuildOrder>13</BuildOrder>
+        </None>
+        <CppCompile Include="..\..\..\src\cpp\SprEd\cell.cpp">
+            <Form>CellForm</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>..\..\..\src\cpp\SprEd\cell.h</DependentOn>
+            <BuildOrder>2</BuildOrder>
         </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\SprEd\FAbout.cpp">
+            <Form>FormAbout</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>..\..\..\src\cpp\SprEd\FAbout.h</DependentOn>
+            <BuildOrder>3</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\SprEd\m_spred.cpp">
+            <Form>MainForm</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>..\..\..\src\cpp\SprEd\m_spred.h</DependentOn>
+            <BuildOrder>4</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\SprEd\newbmp.cpp">
+            <Form>NewForm</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>..\..\..\src\cpp\SprEd\newbmp.h</DependentOn>
+            <BuildOrder>5</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\SprEd\SpecReplace.cpp">
+            <Form>FormReplace</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>..\..\..\src\cpp\SprEd\SpecReplace.h</DependentOn>
+            <BuildOrder>6</BuildOrder>
+        </CppCompile>
+        <FormResources Include="..\..\..\src\cpp\SprEd\cell.dfm"/>
+        <FormResources Include="..\..\..\src\cpp\SprEd\SpecReplace.dfm"/>
+        <FormResources Include="..\..\..\src\cpp\SprEd\newbmp.dfm"/>
+        <FormResources Include="..\..\..\src\cpp\SprEd\m_spred.dfm"/>
+        <FormResources Include="..\..\..\src\cpp\SprEd\FAbout.dfm"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -240,7 +237,7 @@
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>CPlusPlusBuilder.Personality.12</Borland.Personality>
-        <Borland.ProjectType>CppPackage</Borland.ProjectType>
+        <Borland.ProjectType>CppVCLApplication</Borland.ProjectType>
         <BorlandProject>
             <CPlusPlusBuilder.Personality>
                 <ProjectProperties>
@@ -250,7 +247,7 @@
                     <ProjectProperties Name="IndexFiles">False</ProjectProperties>
                 </ProjectProperties>
                 <Source>
-                    <Source Name="MainSource">PironGamesComponents.cpp</Source>
+                    <Source Name="MainSource">SprEd.cpp</Source>
                 </Source>
                 <Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\bcboffice2k280.bpl">Embarcadero C++Builder Office 2000 Servers Package</Excluded_Packages>
@@ -258,27 +255,12 @@
                 </Excluded_Packages>
             </CPlusPlusBuilder.Personality>
             <Deployment Version="4">
-                <DeployFile LocalName="$(BDS)\Redist\iossimulator\libcgunwind.1.0.dylib" Class="DependencyModule">
-                    <Platform Name="iOSSimulator">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="$(BDS)\Redist\iossimulator\libpcre.dylib" Class="DependencyModule">
-                    <Platform Name="iOSSimulator">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile Condition="'$(DynamicRTL)'=='true'" LocalName="$(BDS)\Redist\osx32\libcgcrtl.dylib" Class="DependencyModule">
                     <Platform Name="OSX32">
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile Condition="'$(DynamicRTL)'=='true'" LocalName="$(BDS)\Redist\osx32\libcgstl.dylib" Class="DependencyModule">
-                    <Platform Name="OSX32">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="$(BDS)\Redist\osx32\libcgunwind.1.0.dylib" Class="DependencyModule">
                     <Platform Name="OSX32">
                         <Overwrite>true</Overwrite>
                     </Platform>
@@ -323,20 +305,30 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="C:\Users\Public\Documents\Embarcadero\Studio\22.0\BPL\PironGamesComponents.bpl" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="..\..\..\bin\SprEd\Win32\Debug\SprEd.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
-                        <RemoteName>PironGamesComponents.bpl</RemoteName>
+                        <RemoteName>SprEd.exe</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="C:\Users\Public\Documents\Embarcadero\Studio\22.0\BPL\PironGamesComponents.tds" Configuration="Debug" Class="DebugSymbols">
+                <DeployFile LocalName="..\..\..\bin\SprEd\Win32\Debug\SprEd.tds" Configuration="Debug" Class="DebugSymbols">
                     <Platform Name="Win32">
-                        <RemoteName>PironGamesComponents.tds</RemoteName>
+                        <RemoteName>SprEd.tds</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="..\..\..\lib\easyloggingpp-9.95.0\easylogging++.cc" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployClass Name="AdditionalDebugSymbols">
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                    </Platform>
                     <Platform Name="OSX32">
+                        <RemoteDir>Contents\MacOS</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
                     <Platform Name="Win32">
@@ -626,6 +618,7 @@
                         <Operation>1</Operation>
                     </Platform>
                     <Platform Name="OSX32">
+                        <RemoteDir>Contents\MacOS</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
                     <Platform Name="Win32">
@@ -634,14 +627,17 @@
                 </DeployClass>
                 <DeployClass Name="DependencyFramework">
                     <Platform Name="OSX32">
+                        <RemoteDir>Contents\MacOS</RemoteDir>
                         <Operation>1</Operation>
                         <Extensions>.framework</Extensions>
                     </Platform>
                     <Platform Name="OSX64">
+                        <RemoteDir>Contents\MacOS</RemoteDir>
                         <Operation>1</Operation>
                         <Extensions>.framework</Extensions>
                     </Platform>
                     <Platform Name="OSXARM64">
+                        <RemoteDir>Contents\MacOS</RemoteDir>
                         <Operation>1</Operation>
                         <Extensions>.framework</Extensions>
                     </Platform>
@@ -650,15 +646,30 @@
                     </Platform>
                 </DeployClass>
                 <DeployClass Name="DependencyModule">
+                    <Platform Name="iOSDevice32">
+                        <Operation>1</Operation>
+                        <Extensions>.dylib</Extensions>
+                    </Platform>
+                    <Platform Name="iOSDevice64">
+                        <Operation>1</Operation>
+                        <Extensions>.dylib</Extensions>
+                    </Platform>
+                    <Platform Name="iOSSimARM64">
+                        <Operation>1</Operation>
+                        <Extensions>.dylib</Extensions>
+                    </Platform>
                     <Platform Name="OSX32">
+                        <RemoteDir>Contents\MacOS</RemoteDir>
                         <Operation>1</Operation>
                         <Extensions>.dylib</Extensions>
                     </Platform>
                     <Platform Name="OSX64">
+                        <RemoteDir>Contents\MacOS</RemoteDir>
                         <Operation>1</Operation>
                         <Extensions>.dylib</Extensions>
                     </Platform>
                     <Platform Name="OSXARM64">
+                        <RemoteDir>Contents\MacOS</RemoteDir>
                         <Operation>1</Operation>
                         <Extensions>.dylib</Extensions>
                     </Platform>
@@ -681,14 +692,17 @@
                         <Extensions>.dylib</Extensions>
                     </Platform>
                     <Platform Name="OSX32">
+                        <RemoteDir>Contents\MacOS</RemoteDir>
                         <Operation>1</Operation>
                         <Extensions>.dylib</Extensions>
                     </Platform>
                     <Platform Name="OSX64">
+                        <RemoteDir>Contents\MacOS</RemoteDir>
                         <Operation>1</Operation>
                         <Extensions>.dylib</Extensions>
                     </Platform>
                     <Platform Name="OSXARM64">
+                        <RemoteDir>Contents\MacOS</RemoteDir>
                         <Operation>1</Operation>
                         <Extensions>.dylib</Extensions>
                     </Platform>
@@ -714,12 +728,15 @@
                         <Operation>0</Operation>
                     </Platform>
                     <Platform Name="OSX32">
+                        <RemoteDir>Contents\Resources\StartUp\</RemoteDir>
                         <Operation>0</Operation>
                     </Platform>
                     <Platform Name="OSX64">
+                        <RemoteDir>Contents\Resources\StartUp\</RemoteDir>
                         <Operation>0</Operation>
                     </Platform>
                     <Platform Name="OSXARM64">
+                        <RemoteDir>Contents\Resources\StartUp\</RemoteDir>
                         <Operation>0</Operation>
                     </Platform>
                     <Platform Name="Win32">
@@ -734,9 +751,44 @@
                         <Operation>1</Operation>
                     </Platform>
                 </DeployClass>
-                <DeployClass Name="ProjectOSXDebug"/>
-                <DeployClass Name="ProjectOSXEntitlements"/>
-                <DeployClass Name="ProjectOSXInfoPList"/>
+                <DeployClass Name="ProjectOSXDebug">
+                    <Platform Name="OSX64">
+                        <RemoteDir>..\$(PROJECTNAME).app.dSYM\Contents\Resources\DWARF</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="OSXARM64">
+                        <RemoteDir>..\$(PROJECTNAME).app.dSYM\Contents\Resources\DWARF</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="ProjectOSXEntitlements">
+                    <Platform Name="OSX32">
+                        <RemoteDir>..\</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="OSX64">
+                        <RemoteDir>..\</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="OSXARM64">
+                        <RemoteDir>..\</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="ProjectOSXInfoPList">
+                    <Platform Name="OSX32">
+                        <RemoteDir>Contents</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="OSX64">
+                        <RemoteDir>Contents</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="OSXARM64">
+                        <RemoteDir>Contents</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
                 <DeployClass Name="ProjectOSXResource">
                     <Platform Name="OSX32">
                         <RemoteDir>Contents\Resources</RemoteDir>
@@ -773,12 +825,15 @@
                         <Operation>1</Operation>
                     </Platform>
                     <Platform Name="OSX32">
+                        <RemoteDir>Contents\MacOS</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
                     <Platform Name="OSX64">
+                        <RemoteDir>Contents\MacOS</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
                     <Platform Name="OSXARM64">
+                        <RemoteDir>Contents\MacOS</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
                     <Platform Name="Win32">
@@ -813,9 +868,41 @@
                         <Operation>1</Operation>
                     </Platform>
                 </DeployClass>
-                <DeployClass Name="ProjectiOSEntitlements"/>
-                <DeployClass Name="ProjectiOSInfoPList"/>
-                <DeployClass Name="ProjectiOSLaunchScreen"/>
+                <DeployClass Name="ProjectiOSEntitlements">
+                    <Platform Name="iOSDevice32">
+                        <RemoteDir>..\</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="iOSDevice64">
+                        <RemoteDir>..\</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="iOSSimARM64">
+                        <RemoteDir>..\</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="ProjectiOSInfoPList">
+                    <Platform Name="iOSDevice32">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="iOSDevice64">
+                        <Operation>1</Operation>
+                    </Platform>
+                    <Platform Name="iOSSimARM64">
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="ProjectiOSLaunchScreen">
+                    <Platform Name="iOSDevice64">
+                        <RemoteDir>..\$(PROJECTNAME).launchscreen</RemoteDir>
+                        <Operation>64</Operation>
+                    </Platform>
+                    <Platform Name="iOSSimARM64">
+                        <RemoteDir>..\$(PROJECTNAME).launchscreen</RemoteDir>
+                        <Operation>64</Operation>
+                    </Platform>
+                </DeployClass>
                 <DeployClass Name="ProjectiOSResource">
                     <Platform Name="iOSDevice32">
                         <Operation>1</Operation>
@@ -1053,9 +1140,9 @@
                 <ProjectRoot Platform="iOSDevice64" Name="$(PROJECTNAME).app"/>
                 <ProjectRoot Platform="iOSSimARM64" Name="$(PROJECTNAME).app"/>
                 <ProjectRoot Platform="Linux64" Name="$(PROJECTNAME)"/>
-                <ProjectRoot Platform="OSX32" Name="$(PROJECTNAME)"/>
-                <ProjectRoot Platform="OSX64" Name="$(PROJECTNAME)"/>
-                <ProjectRoot Platform="OSXARM64" Name="$(PROJECTNAME)"/>
+                <ProjectRoot Platform="OSX32" Name="$(PROJECTNAME).app"/>
+                <ProjectRoot Platform="OSX64" Name="$(PROJECTNAME).app"/>
+                <ProjectRoot Platform="OSXARM64" Name="$(PROJECTNAME).app"/>
                 <ProjectRoot Platform="Win32" Name="$(PROJECTNAME)"/>
                 <ProjectRoot Platform="Win64" Name="$(PROJECTNAME)"/>
             </Deployment>

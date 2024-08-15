@@ -152,23 +152,36 @@ void __fastcall TBitmapEx::LoadFromFile(const AnsiString FileName)
   bmpInfo.bmiHeader.biPlanes        = 1;
   bmpInfo.bmiHeader.biBitCount      = 24;
   bmpInfo.bmiHeader.biCompression   = BI_RGB;
-  bmpInfo.bmiHeader.biSizeImage     = 0;
+  bmpInfo.bmiHeader.biSizeImage     = info.width * info.height * 3;
   bmpInfo.bmiHeader.biClrUsed       = 0;
   bmpInfo.bmiHeader.biClrImportant  = 0;
 
   // ... si fac un SetDIB
-  if (SetDIBits(Canvas->Handle, Handle, 0, info.height, data, &bmpInfo, DIB_RGB_COLORS) == 0)
+  // if (SetDIBits(Canvas->Handle, Handle, 0, info.height, data, &bmpInfo, DIB_RGB_COLORS) == 0)
+  if (StretchDIBits(Canvas->Handle,
+		0, 0, info.width, info.height,
+		0, 0, info.width, info.height,
+		data,
+		&bmpInfo,
+		DIB_RGB_COLORS,SRCCOPY) == 0)
   {
-   char* buffer = new char[256];
-   AnsiString errorMessage;
+   TCHAR* buffer = NULL;
    int errorCode = GetLastError();
 
-   FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, errorCode, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), buffer, 256, NULL);
-   // Application->MessageBox(buffer, "Error", MB_OK);
+   FormatMessage(
+	FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_IGNORE_INSERTS,
+	NULL,
+	errorCode,
+	MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+	(LPTSTR)&buffer,
+	0,
+	NULL);
 
-   errorMessage = AnsiString(buffer, strlen(buffer));
+   UnicodeString errorMessage = buffer != NULL ? *buffer : UnicodeString("");
 
-   delete [] buffer;
+   //delete [] buffer;
+   LocalFree(buffer);
+
    delete [] data;
    delete gLoad;
    throw EInvalidGraphic(errorMessage);
