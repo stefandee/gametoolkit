@@ -18,16 +18,16 @@ This contains systems to develop games and tools. Note that some of the classes 
 
 The notable parts are:
 
-System: a wrapper over various interfaces/libraries like SDL/DirectX (Allegro was, at some point, planned to be added). These are, in theory, exchangeable.
-GUI: a GUI library, providing a framework and graphical elements to develop any stand-alone graphical applications.
-MiniCSL: a scripting language, a reduced version of CSL (C Scripting Language by Peter Koch), which is seamlessly integrated into the toolkit.
-String Manager: support for localization.
-Virtual File System: it is possible to mount various methods, like directories or archieves (zip, wad, etc). This part uses the physfs library.
-Fx: support for full screen effects (software)
-Math: along with the usual math support, there's also fixed math and curves (including scripted through MiniCSL curves)
-Mot: a particle effect system
-GLoad: support to load various graphical files and to convert between internal formats. Some of these formats are long obsolete, with only PNG/JPG/BMP still applicable in the modern world.
-Terrain Generator/Eco System Generator: exactly what their names are. for 2D games only.
+* System: a wrapper over various interfaces/libraries like SDL/DirectX (Allegro was, at some point, planned to be added). These are, in theory, exchangeable.
+* GUI: a GUI library, providing a framework and graphical elements to develop any stand-alone graphical applications.
+* MiniCSL: a scripting language, a reduced version of CSL (C Scripting Language by Peter Koch), which is seamlessly integrated into the toolkit.
+* String Manager: support for localization.
+* Virtual File System: it is possible to mount various methods, like directories or archieves (zip, wad, etc). This part uses the physfs library.
+* Fx: support for full screen effects (software)
+* Math: along with the usual math support, there's also fixed math and curves (including scripted through MiniCSL curves)
+* Mot: a particle effect system
+* GLoad: support to load various graphical files and to convert between internal formats. Some of these formats are long obsolete, with only PNG/JPG/BMP still applicable in the modern world.
+* Terrain Generator/Eco System Generator: exactly what their names are. for 2D games only.
 
 ## Tools
 
