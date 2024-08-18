@@ -293,13 +293,15 @@ void __fastcall TFormMain::ReplaceEntry1Click(TObject *Sender)
 
 void TFormMain::PrintHelp()
 {
-  VLOG(5) << "Command line usage for DataGrowth tool:";
-  VLOG(5) << "datagrowth inputbatchfile outputdatafile";
+  LOG(INFO) << "Command line usage for DataGrowth tool:";
+  LOG(INFO) << "datagrowth inputbatchfile outputdatafile";
 }
 //---------------------------------------------------------------------------
 
 void TFormMain::HandleCommandLine()
 {
+  el::Loggers::setVerboseLevel(5);
+
   VLOG(5) << "DataGrowth Tool";
   VLOG(5) << "---------------";
 

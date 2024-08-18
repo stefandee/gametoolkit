@@ -25,7 +25,7 @@
 #include "physfs.h"
 #include "PP_String.h"
 #include "basepath.h"
-#include "tinyxml.h"
+#include "tinyxml2.h"
 #include "Paths.h"
 #include "Stream_PhysFS.h"
 #include "easylogging++.h"

@@ -6,7 +6,7 @@
 
 #include <string>
 #include <vector>
-#include "tinyxml.h"
+#include "tinyxml2.h"
 //---------------------------------------------------------------------------
 
 enum TAppConfigState { APP_CONFIG_STATE_NEW, APP_CONFIG_STATE_SAVED, APP_CONFIG_STATE_CLOSED };

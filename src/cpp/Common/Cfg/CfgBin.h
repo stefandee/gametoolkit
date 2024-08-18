@@ -79,7 +79,7 @@ class CCfgBin : public CCfg
     // header
     bool Verify();
     bool GetInfo(char *description, int *versionMajor, int *versionMinor);
-    bool SetInfo(char *description);
+    bool SetInfo(const char *description);
 
     // resources
     virtual bool GetResource(const char *resName, void *value);

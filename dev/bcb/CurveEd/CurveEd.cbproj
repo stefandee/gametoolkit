@@ -64,8 +64,8 @@
         <Icon_MainIcon>$(BDS)\bin\cbuilder_PROJECTICON.ico</Icon_MainIcon>
         <UWP_CppLogo44>$(BDS)\bin\Artwork\Windows\UWP\cppreg_UwpDefault_44.png</UWP_CppLogo44>
         <UWP_CppLogo150>$(BDS)\bin\Artwork\Windows\UWP\cppreg_UwpDefault_150.png</UWP_CppLogo150>
-        <IncludePath>..\..\..\src\cpp\Common\MiniCsl\RegEx\;..\..\..\src\cpp\Common\MiniCsl\NativeLib\;..\..\..\src\cpp\Common\MiniCsl\Csl\;..\..\..\src\cpp\Common\MiniCsl\Base\;..\..\..\lib\easyloggingpp-9.95.0\;..\..\..\src\cpp\Common\math\;..\..\..\src\cpp\Common\Archive\;..\..\..\src\cpp\CurveEd\;E:\Projects\github\gametoolkit\dev\bcb\CurveEd\;..\..\..\src\cpp\Common\;..\..\..\src\cpp\Common\Archive;E:\Projects\github\gametoolkit\src\cpp\Components;..\..\..\src\cpp\Common\math;E:\Projects\github\gametoolkit\lib\tinyxml;$(IncludePath)</IncludePath>
-        <ILINK_LibraryPath>..\..\..\src\cpp\Common\;..\..\..\lib\physfs-2.0.3\zlib123\;..\..\..\lib\physfs-2.0.3\test\;..\..\..\lib\physfs-2.0.3\platform\;..\..\..\lib\physfs-2.0.3\;..\..\..\lib\physfs-2.0.3\lzma\CPP\Windows\;..\..\..\lib\physfs-2.0.3\lzma\CPP\Common\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\UI\Console\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\UI\Common\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\UI\Client7z\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\Compress\RangeCoder\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\Compress\LZMA_Alone\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\Compress\LZMA\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\Compress\LZ\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\Compress\Copy\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\Compress\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\Compress\ByteSwap\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\Compress\Branch\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\Common\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\Bundles\Format7zR\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\Bundles\Format7zExtractR\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\Bundles\Alone7z\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\Archive\Common\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\Archive\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\Archive\7z\;..\..\..\lib\physfs-2.0.3\lzma\C\Compress\Lzma\;..\..\..\lib\physfs-2.0.3\lzma\C\Compress\Lz\;..\..\..\lib\physfs-2.0.3\lzma\C\Compress\Huffman\;..\..\..\lib\physfs-2.0.3\lzma\C\Compress\Branch\;..\..\..\lib\physfs-2.0.3\lzma\C\Archive\7z\;..\..\..\lib\physfs-2.0.3\lzma\C\;..\..\..\lib\physfs-2.0.3\extras\physfs_rb\physfs\;..\..\..\lib\physfs-2.0.3\extras\;..\..\..\lib\physfs-2.0.3\archivers\;..\..\..\src\cpp\Common\MiniCsl\RegEx\;..\..\..\src\cpp\Common\MiniCsl\NativeLib\;..\..\..\src\cpp\Common\MiniCsl\Csl\;..\..\..\src\cpp\Common\MiniCsl\Base\;..\..\..\lib\easyloggingpp-9.95.0\;..\..\..\src\cpp\Common\math\;..\..\..\src\cpp\Common\Archive\;..\..\..\src\cpp\CurveEd\;E:\Projects\github\gametoolkit\dev\bcb\CurveEd\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
+        <IncludePath>..\..\..\lib\easyloggingpp-9.97.1\;..\..\..\src\cpp\Common\MiniCsl\RegEx\;..\..\..\src\cpp\Common\MiniCsl\NativeLib\;..\..\..\src\cpp\Common\MiniCsl\Csl\;..\..\..\src\cpp\Common\MiniCsl\Base\;..\..\..\lib\easyloggingpp-9.97.1\;..\..\..\src\cpp\Common\math\;..\..\..\src\cpp\Common\Archive\;..\..\..\src\cpp\CurveEd\;E:\Projects\github\gametoolkit\dev\bcb\CurveEd\;..\..\..\src\cpp\Common\;..\..\..\src\cpp\Common\Archive;E:\Projects\github\gametoolkit\src\cpp\Components;..\..\..\src\cpp\Common\math;E:\Projects\github\gametoolkit\lib\tinyxml2;$(IncludePath)</IncludePath>
+        <ILINK_LibraryPath>..\..\..\lib\easyloggingpp-9.97.1\;..\..\..\src\cpp\Common\;..\..\..\lib\physfs-2.0.3\zlib123\;..\..\..\lib\physfs-2.0.3\test\;..\..\..\lib\physfs-2.0.3\platform\;..\..\..\lib\physfs-2.0.3\;..\..\..\lib\physfs-2.0.3\lzma\CPP\Windows\;..\..\..\lib\physfs-2.0.3\lzma\CPP\Common\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\UI\Console\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\UI\Common\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\UI\Client7z\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\Compress\RangeCoder\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\Compress\LZMA_Alone\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\Compress\LZMA\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\Compress\LZ\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\Compress\Copy\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\Compress\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\Compress\ByteSwap\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\Compress\Branch\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\Common\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\Bundles\Format7zR\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\Bundles\Format7zExtractR\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\Bundles\Alone7z\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\Archive\Common\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\Archive\;..\..\..\lib\physfs-2.0.3\lzma\CPP\7zip\Archive\7z\;..\..\..\lib\physfs-2.0.3\lzma\C\Compress\Lzma\;..\..\..\lib\physfs-2.0.3\lzma\C\Compress\Lz\;..\..\..\lib\physfs-2.0.3\lzma\C\Compress\Huffman\;..\..\..\lib\physfs-2.0.3\lzma\C\Compress\Branch\;..\..\..\lib\physfs-2.0.3\lzma\C\Archive\7z\;..\..\..\lib\physfs-2.0.3\lzma\C\;..\..\..\lib\physfs-2.0.3\extras\physfs_rb\physfs\;..\..\..\lib\physfs-2.0.3\extras\;..\..\..\lib\physfs-2.0.3\archivers\;..\..\..\src\cpp\Common\MiniCsl\RegEx\;..\..\..\src\cpp\Common\MiniCsl\NativeLib\;..\..\..\src\cpp\Common\MiniCsl\Csl\;..\..\..\src\cpp\Common\MiniCsl\Base\;..\..\..\lib\easyloggingpp-9.97.1\;..\..\..\src\cpp\Common\math\;..\..\..\src\cpp\Common\Archive\;..\..\..\src\cpp\CurveEd\;E:\Projects\github\gametoolkit\dev\bcb\CurveEd\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
         <SanitizedProjectName>CurveEd</SanitizedProjectName>
         <VerInfo_Locale>2057</VerInfo_Locale>
         <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
@@ -132,11 +132,11 @@
             <BuildOrder>1</BuildOrder>
             <PCH>true</PCH>
         </PCHCompile>
-        <CppCompile Include="..\..\..\lib\easyloggingpp-9.95.0\easylogging++.cc">
-            <BuildOrder>57</BuildOrder>
+        <CppCompile Include="..\..\..\lib\easyloggingpp-9.97.1\easylogging++.cc">
+            <BuildOrder>92</BuildOrder>
         </CppCompile>
-        <None Include="..\..\..\lib\easyloggingpp-9.95.0\easylogging++.h">
-            <BuildOrder>58</BuildOrder>
+        <None Include="..\..\..\lib\easyloggingpp-9.97.1\easylogging++.h">
+            <BuildOrder>93</BuildOrder>
         </None>
         <None Include="..\..\..\src\cpp\Common\Archive\ObjectStream.cpp">
             <Exclude>True</Exclude>
@@ -440,9 +440,9 @@
             <DependentOn>..\..\..\src\cpp\CurveEd\FVisualFactory.h</DependentOn>
             <BuildOrder>16</BuildOrder>
         </CppCompile>
+        <FormResources Include="..\..\..\src\cpp\CurveEd\FVisualFactory.dfm"/>
         <FormResources Include="..\..\..\src\cpp\CurveEd\FEditCurveStream.dfm"/>
         <FormResources Include="..\..\..\src\cpp\CurveEd\FEditCurve2D.dfm"/>
-        <FormResources Include="..\..\..\src\cpp\CurveEd\FVisualFactory.dfm"/>
         <FormResources Include="..\..\..\src\cpp\CurveEd\FAbout.dfm"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
@@ -538,7 +538,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\lib\easyloggingpp-9.95.0\easylogging++.cc" Configuration="Debug" Class="ProjectFile">
+                <DeployFile LocalName="..\..\..\lib\easyloggingpp-9.97.1\easylogging++.cc" Configuration="Debug" Class="ProjectFile">
                     <Platform Name="Win32">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>

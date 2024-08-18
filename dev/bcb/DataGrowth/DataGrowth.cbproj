@@ -64,8 +64,8 @@
         <Icon_MainIcon>$(BDS)\bin\cbuilder_PROJECTICON.ico</Icon_MainIcon>
         <UWP_CppLogo44>$(BDS)\bin\Artwork\Windows\UWP\cppreg_UwpDefault_44.png</UWP_CppLogo44>
         <UWP_CppLogo150>$(BDS)\bin\Artwork\Windows\UWP\cppreg_UwpDefault_150.png</UWP_CppLogo150>
-        <IncludePath>..\..\..\lib\easyloggingpp-9.95.0\;..\..\..\src\cpp\Common\;..\..\..\src\cpp\DataGrowth\;.\;..\..\..\src\cpp\Common;..\..\..\lib\easyloggingpp-9.95.0;$(IncludePath)</IncludePath>
-        <ILINK_LibraryPath>..\..\..\lib\easyloggingpp-9.95.0\;..\..\..\src\cpp\Common\;..\..\..\src\cpp\DataGrowth\;E:\Projects\github\gametoolkit\dev\bcb\DataGrowth\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
+        <IncludePath>..\..\..\lib\easyloggingpp-9.97.1\;..\..\..\src\cpp\Common\;..\..\..\src\cpp\DataGrowth\;.\;..\..\..\src\cpp\Common;..\..\..\lib\easyloggingpp-9.95.0;$(IncludePath)</IncludePath>
+        <ILINK_LibraryPath>..\..\..\lib\easyloggingpp-9.97.1\;..\..\..\src\cpp\Common\;..\..\..\src\cpp\DataGrowth\;E:\Projects\github\gametoolkit\dev\bcb\DataGrowth\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
         <SanitizedProjectName>DataGrowth</SanitizedProjectName>
         <VerInfo_Locale>2057</VerInfo_Locale>
         <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
@@ -132,10 +132,10 @@
             <BuildOrder>1</BuildOrder>
             <PCH>true</PCH>
         </PCHCompile>
-        <CppCompile Include="..\..\..\lib\easyloggingpp-9.95.0\easylogging++.cc">
+        <CppCompile Include="..\..\..\lib\easyloggingpp-9.97.1\easylogging++.cc">
             <BuildOrder>5</BuildOrder>
         </CppCompile>
-        <None Include="..\..\..\lib\easyloggingpp-9.95.0\easylogging++.h">
+        <None Include="..\..\..\lib\easyloggingpp-9.97.1\easylogging++.h">
             <BuildOrder>6</BuildOrder>
         </None>
         <CppCompile Include="..\..\..\src\cpp\Common\PP_String.cpp">
@@ -246,7 +246,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\lib\easyloggingpp-9.95.0\easylogging++.cc" Configuration="Debug" Class="ProjectFile">
+                <DeployFile LocalName="..\..\..\lib\easyloggingpp-9.97.1\easylogging++.cc" Configuration="Debug" Class="ProjectFile">
                     <Platform Name="Win32">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>

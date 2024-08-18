@@ -8,9 +8,9 @@
 INITIALIZE_EASYLOGGINGPP
 
 //---------------------------------------------------------------------------
+USEFORM("..\..\..\src\cpp\CurveEd\FVisualFactory.cpp", FormVisualFactory);
 USEFORM("..\..\..\src\cpp\CurveEd\FEditCurveStream.cpp", FormEditObjectStream);
 USEFORM("..\..\..\src\cpp\CurveEd\FEditCurve2D.cpp", FormEditCurve2D);
-USEFORM("..\..\..\src\cpp\CurveEd\FVisualFactory.cpp", FormVisualFactory);
 USEFORM("..\..\..\src\cpp\CurveEd\FAbout.cpp", FormAbout);
 //---------------------------------------------------------------------------
 int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)

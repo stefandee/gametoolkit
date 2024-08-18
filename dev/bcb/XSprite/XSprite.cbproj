@@ -1,10 +1,10 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
-        <ProjectGuid>{78280BAF-9882-4763-9150-1E77DC6164F3}</ProjectGuid>
+        <ProjectGuid>{8B4AFECB-CEAD-4AE8-A8A9-09B3632F5E57}</ProjectGuid>
         <ProjectVersion>19.5</ProjectVersion>
         <FrameworkType>VCL</FrameworkType>
         <AppType>Application</AppType>
-        <MainSource>SprEd.cpp</MainSource>
+        <MainSource>XSprite.cpp</MainSource>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Debug</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
@@ -50,25 +50,23 @@
         <DCC_CBuilderOutput>JPHNE</DCC_CBuilderOutput>
         <DynamicRTL>true</DynamicRTL>
         <UsePackages>true</UsePackages>
-        <IntermediateOutputDir>..\..\..\tmp\SprEd\$(Platform)\$(Config)</IntermediateOutputDir>
-        <FinalOutputDir>..\..\..\bin\SprEd\$(Platform)\$(Config)</FinalOutputDir>
+        <IntermediateOutputDir>.\$(Platform)\$(Config)</IntermediateOutputDir>
+        <FinalOutputDir>.\$(Platform)\$(Config)</FinalOutputDir>
         <BCC_wpar>false</BCC_wpar>
         <BCC_OptimizeForSpeed>true</BCC_OptimizeForSpeed>
         <BCC_ExtendedErrorInfo>true</BCC_ExtendedErrorInfo>
         <ILINK_TranslatedLibraryPath>$(BDSLIB)\$(PLATFORM)\release\$(LANGDIR);$(ILINK_TranslatedLibraryPath)</ILINK_TranslatedLibraryPath>
         <ProjectType>CppVCLApplication</ProjectType>
         <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;$(DCC_Namespace)</DCC_Namespace>
-        <AllPackageLibs>rtl.lib;vcl.lib;PironGamesComponents.lib</AllPackageLibs>
+        <AllPackageLibs>rtl.lib;vcl.lib</AllPackageLibs>
         <_TCHARMapping>wchar_t</_TCHARMapping>
         <Multithreaded>true</Multithreaded>
         <Icon_MainIcon>$(BDS)\bin\cbuilder_PROJECTICON.ico</Icon_MainIcon>
         <UWP_CppLogo44>$(BDS)\bin\Artwork\Windows\UWP\cppreg_UwpDefault_44.png</UWP_CppLogo44>
         <UWP_CppLogo150>$(BDS)\bin\Artwork\Windows\UWP\cppreg_UwpDefault_150.png</UWP_CppLogo150>
-        <IncludePath>..\..\..\src\cpp\Common\Archive\;..\..\..\src\cpp\Common\GLoad\;..\..\..\src\cpp\Components\;..\..\..\lib\easyloggingpp-9.97.1\;..\..\..\src\cpp\Common\;..\..\..\src\cpp\Common\Cfg\;..\..\..\src\cpp\SprEd\;.\;..\..\..\src\cpp\Components;..\..\..\src\cpp\Common\Cfg;..\..\..\src\cpp\Common\GLoad;..\..\..\src\cpp\Common\Archive;$(IncludePath)</IncludePath>
-        <ILINK_LibraryPath>..\..\..\src\cpp\Common\Archive\;..\..\..\src\cpp\Common\GLoad\;..\..\..\src\cpp\Components\;..\..\..\lib\easyloggingpp-9.97.1\;..\..\..\src\cpp\Common\;..\..\..\src\cpp\Common\Cfg\;..\..\..\src\cpp\SprEd\;E:\Projects\github\gametoolkit\dev\bcb\SprEd\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
-        <SanitizedProjectName>SprEd</SanitizedProjectName>
-        <VerInfo_Locale>2057</VerInfo_Locale>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <IncludePath>..\..\..\lib\easyloggingpp-9.97.1\;..\..\..\src\cpp\XSprite\;E:\Projects\github\gametoolkit\dev\bcb\XSprite\;$(IncludePath)</IncludePath>
+        <ILINK_LibraryPath>..\..\..\lib\easyloggingpp-9.97.1\;..\..\..\src\cpp\XSprite\;E:\Projects\github\gametoolkit\dev\bcb\XSprite\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
+        <SanitizedProjectName>XSprite</SanitizedProjectName>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
         <PackageImports>adortl;appanalytics;bcbie;bcbsmp;bindcomp;bindcompdbx;bindcompfmx;bindcompvcl;bindcompvclsmp;bindcompvclwinx;bindengine;CloudService;CustomIPTransport;dbexpress;dbrtl;dbxcds;DbxClientDriver;DbxCommonDriver;DBXInterBaseDriver;DBXMySQLDriver;DBXSqliteDriver;dsnap;dsnapcon;dsnapxml;FireDAC;FireDACADSDriver;FireDACCommon;FireDACCommonDriver;FireDACCommonODBC;FireDACIBDriver;FireDACMSAccDriver;FireDACMySQLDriver;FireDACPgDriver;FireDACSqliteDriver;fmx;fmxase;fmxdae;fmxFireDAC;fmxobj;FMXTee;FmxTeeUI;IndyCore;IndyIPClient;IndyIPCommon;IndyIPServer;IndyProtocols;IndySystem;inet;inetdb;inetdbxpress;PironGames;PironGamesComponents;RESTBackendComponents;RESTComponents;rtl;soapmidas;soaprtl;soapserver;Tee;TeeDB;TeeUI;tethering;vcl;vclactnband;vcldb;vcldsnap;vcledge;vclFireDAC;vclie;vclimg;VCLRESTComponents;VclSmp;vcltouch;vclwinx;vclx;xmlrtl;$(PackageImports)</PackageImports>
@@ -79,12 +77,12 @@
         <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
-        <BCC_PCHName_Clang>SprEdPCH1.h</BCC_PCHName_Clang>
+        <BCC_PCHName_Clang>XSpritePCH1.h</BCC_PCHName_Clang>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win64)'!=''">
         <PackageImports>adortl;appanalytics;bcbie;bcbsmp;bindcomp;bindcompdbx;bindcompfmx;bindcompvcl;bindcompvclsmp;bindcompvclwinx;bindengine;CloudService;CustomIPTransport;dbexpress;dbrtl;dbxcds;DbxClientDriver;DbxCommonDriver;DBXInterBaseDriver;DBXMySQLDriver;DBXSqliteDriver;dsnap;dsnapcon;dsnapxml;FireDAC;FireDACADSDriver;FireDACCommon;FireDACCommonDriver;FireDACCommonODBC;FireDACIBDriver;FireDACMSAccDriver;FireDACMySQLDriver;FireDACPgDriver;FireDACSqliteDriver;fmx;fmxase;fmxdae;fmxFireDAC;fmxobj;FMXTee;FmxTeeUI;IndyCore;IndyIPClient;IndyIPCommon;IndyIPServer;IndyProtocols;IndySystem;inet;inetdb;inetdbxpress;RESTBackendComponents;RESTComponents;rtl;soapmidas;soaprtl;soapserver;Tee;TeeDB;TeeUI;tethering;vcl;vclactnband;vcldb;vcldsnap;vcledge;vclFireDAC;vclie;vclimg;VCLRESTComponents;VclSmp;vcltouch;vclwinx;vclx;xmlrtl;$(PackageImports)</PackageImports>
         <IncludePath>$(BDSINCLUDE)\windows\vcl;$(IncludePath)</IncludePath>
-        <BCC_PCHName_Clang>SprEdPCH1.h</BCC_PCHName_Clang>
+        <BCC_PCHName_Clang>XSpritePCH1.h</BCC_PCHName_Clang>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1)'!=''">
         <BCC_OptimizeForSpeed>false</BCC_OptimizeForSpeed>
@@ -112,7 +110,9 @@
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <BCC_UseClassicCompiler>false</BCC_UseClassicCompiler>
         <ILINK_LibraryPath>$(BDSLIB)\$(PLATFORM)$(CC_SUFFIX)\debug;$(ILINK_LibraryPath)</ILINK_LibraryPath>
-        <LinkPackageImports>rtl.bpi;vcl.bpi;PironGamesComponents.bpi</LinkPackageImports>
+        <LinkPackageImports>rtl.bpi;vcl.bpi</LinkPackageImports>
+        <IntermediateOutputDir>..\..\..\tmp\XSprite\$(Platform)\$(Config)</IntermediateOutputDir>
+        <FinalOutputDir>..\..\..\bin\$(Platform)\$(Config)</FinalOutputDir>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
     </PropertyGroup>
@@ -125,104 +125,55 @@
         <BCC_UseClassicCompiler>false</BCC_UseClassicCompiler>
     </PropertyGroup>
     <ItemGroup>
-        <CppCompile Include="SprEd.cpp">
+        <CppCompile Include="XSprite.cpp">
             <BuildOrder>0</BuildOrder>
         </CppCompile>
-        <PCHCompile Include="SprEdPCH1.h">
+        <PCHCompile Include="XSpritePCH1.h">
             <BuildOrder>1</BuildOrder>
             <PCH>true</PCH>
         </PCHCompile>
         <CppCompile Include="..\..\..\lib\easyloggingpp-9.97.1\easylogging++.cc">
             <BuildOrder>11</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\..\src\cpp\Common\Archive\Stream.cpp">
-            <BuildOrder>21</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="..\..\..\src\cpp\Common\Archive\Stream_ANSI_C.cpp">
-            <BuildOrder>20</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="..\..\..\src\cpp\Common\BitOp.cpp">
-            <DependentOn>..\..\..\src\cpp\Common\BitOp.h</DependentOn>
-            <BuildOrder>19</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="..\..\..\src\cpp\Common\Cfg\Cfg.cpp">
+        <None Include="..\..\..\lib\easyloggingpp-9.97.1\easylogging++.h">
+            <BuildOrder>12</BuildOrder>
+        </None>
+        <CppCompile Include="..\..\..\src\cpp\XSprite\Action.cpp">
+            <DependentOn>..\..\..\src\cpp\XSprite\Action.h</DependentOn>
             <BuildOrder>7</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\..\src\cpp\Common\Cfg\CfgBin.cpp">
+        <CppCompile Include="..\..\..\src\cpp\XSprite\Cell.cpp">
+            <DependentOn>..\..\..\src\cpp\XSprite\Cell.h</DependentOn>
             <BuildOrder>8</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\..\src\cpp\Common\ExprEval.cpp">
-            <DependentOn>..\..\..\src\cpp\Common\ExprEval.h</DependentOn>
+        <CppCompile Include="..\..\..\src\cpp\XSprite\EditorDef.cpp">
+            <DependentOn>..\..\..\src\cpp\XSprite\EditorDef.h</DependentOn>
             <BuildOrder>9</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\..\src\cpp\Common\GLoad\GBmpLoad.cpp">
-            <DependentOn>..\..\..\src\cpp\Common\GLoad\GBmpLoad.h</DependentOn>
-            <BuildOrder>14</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="..\..\..\src\cpp\Common\GLoad\GILbmLoad.cpp">
-            <DependentOn>..\..\..\src\cpp\Common\GLoad\GILbmLoad.h</DependentOn>
-            <BuildOrder>15</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="..\..\..\src\cpp\Common\GLoad\GLoad.cpp">
-            <DependentOn>..\..\..\src\cpp\Common\GLoad\GLoad.h</DependentOn>
-            <BuildOrder>18</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="..\..\..\src\cpp\Common\GLoad\GPcxLoad.cpp">
-            <DependentOn>..\..\..\src\cpp\Common\GLoad\GPcxLoad.h</DependentOn>
-            <BuildOrder>16</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="..\..\..\src\cpp\Common\GLoad\GSgiLoad.cpp">
-            <DependentOn>..\..\..\src\cpp\Common\GLoad\GSgiLoad.h</DependentOn>
-            <BuildOrder>17</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="..\..\..\src\cpp\Common\PP_Stdlib.cpp">
+        <CppCompile Include="..\..\..\src\cpp\XSprite\FActions.cpp">
+            <Form>FormActions</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>..\..\..\src\cpp\XSprite\FActions.h</DependentOn>
             <BuildOrder>10</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\..\src\cpp\Common\PP_String.cpp">
-            <BuildOrder>22</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="..\..\..\src\cpp\Components\ImageEx.cpp">
-            <DependentOn>..\..\..\src\cpp\Components\ImageEx.h</DependentOn>
-            <BuildOrder>12</BuildOrder>
-        </CppCompile>
-        <None Include="..\..\..\src\cpp\Components\ImageEx.h">
-            <BuildOrder>13</BuildOrder>
-        </None>
-        <CppCompile Include="..\..\..\src\cpp\SprEd\cell.cpp">
-            <Form>CellForm</Form>
+        <None Include="..\..\..\src\cpp\XSprite\FActions.dfm"/>
+        <CppCompile Include="..\..\..\src\cpp\XSprite\FMain.cpp">
+            <Form>FormMain</Form>
             <FormType>dfm</FormType>
-            <DependentOn>..\..\..\src\cpp\SprEd\cell.h</DependentOn>
-            <BuildOrder>2</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="..\..\..\src\cpp\SprEd\FAbout.cpp">
-            <Form>FormAbout</Form>
-            <FormType>dfm</FormType>
-            <DependentOn>..\..\..\src\cpp\SprEd\FAbout.h</DependentOn>
+            <DependentOn>..\..\..\src\cpp\XSprite\FMain.h</DependentOn>
             <BuildOrder>3</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\..\src\cpp\SprEd\m_spred.cpp">
-            <Form>MainForm</Form>
+        <None Include="..\..\..\src\cpp\XSprite\FMain.dfm"/>
+        <CppCompile Include="..\..\..\src\cpp\XSprite\FName.cpp">
+            <Form>FormName</Form>
             <FormType>dfm</FormType>
-            <DependentOn>..\..\..\src\cpp\SprEd\m_spred.h</DependentOn>
-            <BuildOrder>4</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="..\..\..\src\cpp\SprEd\newbmp.cpp">
-            <Form>NewForm</Form>
-            <FormType>dfm</FormType>
-            <DependentOn>..\..\..\src\cpp\SprEd\newbmp.h</DependentOn>
+            <DependentOn>..\..\..\src\cpp\XSprite\FName.h</DependentOn>
             <BuildOrder>5</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\..\src\cpp\SprEd\SpecReplace.cpp">
-            <Form>FormReplace</Form>
-            <FormType>dfm</FormType>
-            <DependentOn>..\..\..\src\cpp\SprEd\SpecReplace.h</DependentOn>
-            <BuildOrder>6</BuildOrder>
-        </CppCompile>
-        <FormResources Include="..\..\..\src\cpp\SprEd\cell.dfm"/>
-        <FormResources Include="..\..\..\src\cpp\SprEd\SpecReplace.dfm"/>
-        <FormResources Include="..\..\..\src\cpp\SprEd\newbmp.dfm"/>
-        <FormResources Include="..\..\..\src\cpp\SprEd\m_spred.dfm"/>
-        <FormResources Include="..\..\..\src\cpp\SprEd\FAbout.dfm"/>
+        <None Include="..\..\..\src\cpp\XSprite\FName.dfm"/>
+        <FormResources Include="..\..\..\src\cpp\XSprite\FMain.dfm"/>
+        <FormResources Include="..\..\..\src\cpp\XSprite\FName.dfm"/>
+        <FormResources Include="..\..\..\src\cpp\XSprite\FActions.dfm"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -247,7 +198,7 @@
                     <ProjectProperties Name="IndexFiles">False</ProjectProperties>
                 </ProjectProperties>
                 <Source>
-                    <Source Name="MainSource">SprEd.cpp</Source>
+                    <Source Name="MainSource">XSprite.cpp</Source>
                 </Source>
                 <Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\bcboffice2k280.bpl">Embarcadero C++Builder Office 2000 Servers Package</Excluded_Packages>
@@ -305,19 +256,37 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\bin\SprEd\Win32\Debug\SprEd.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="..\..\..\bin\Win32\Debug\XSprite.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
-                        <RemoteName>SprEd.exe</RemoteName>
+                        <RemoteName>XSprite.exe</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\bin\SprEd\Win32\Debug\SprEd.tds" Configuration="Debug" Class="DebugSymbols">
+                <DeployFile LocalName="..\..\..\bin\Win32\Debug\XSprite.tds" Configuration="Debug" Class="DebugSymbols">
                     <Platform Name="Win32">
-                        <RemoteName>SprEd.tds</RemoteName>
+                        <RemoteName>XSprite.tds</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="..\..\..\lib\easyloggingpp-9.97.1\easylogging++.cc" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="..\..\..\src\cpp\XSprite\FActions.dfm" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="..\..\..\src\cpp\XSprite\FMain.dfm" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="..\..\..\src\cpp\XSprite\FName.dfm" Configuration="Debug" Class="ProjectFile">
                     <Platform Name="Win32">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>

@@ -4,18 +4,18 @@
 #define StringManagerH
 //---------------------------------------------------------------------------
 
-#include "tinyxml.h"
+#include "tinyxml2.h"
 #include <string>
 
 class StringManager
 {
   public:
-    StringManager() : mErrors(L"") {}
+    StringManager() : mErrors("") {}
     ~StringManager() {}
 
   public:
-    bool LoadFile(std::wstring fileName);
-	std::wstring GetErrors();
+    bool LoadFile(std::string fileName);
+	std::string GetErrors();
 
   public:
     int         GetPackageCount();
@@ -28,10 +28,10 @@ class StringManager
   protected:
   
   private:
-    TiXmlDocument mDocument;
-	std::wstring   mErrors;
-    
-    TiXmlNode* GetPackage(int index);
+	tinyxml2::XMLDocument mDocument;
+	std::string   mErrors;
+
+	tinyxml2::XMLNode* GetPackage(int index);
 };
 
 #endif

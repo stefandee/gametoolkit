@@ -36,7 +36,7 @@
 #define CfgXmlH
 //---------------------------------------------------------------------------
 
-#include "tinyxml.h"
+#include "tinyxml2.h"
 #include "Cfg.h"
 
 class CCfgXml : public CCfg

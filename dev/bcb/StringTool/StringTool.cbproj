@@ -57,8 +57,8 @@
         <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;$(DCC_Namespace)</DCC_Namespace>
         <AllPackageLibs>rtl.lib;vcl.lib</AllPackageLibs>
         <Multithreaded>true</Multithreaded>
-        <IncludePath>..\..\..\src\cpp\Common\MiniCsl\RegEx\;..\..\..\src\cpp\Common\MiniCsl\NativeLib\;..\..\..\src\cpp\Common\MiniCsl\Csl\;..\..\..\src\cpp\Common\MiniCsl\Base\;..\..\..\src\cpp\Common\StringManager\;..\..\..\lib\tinyxml\;..\..\..\src\cpp\StringTool\;.\;..\..\..\src\cpp\Common;$(IncludePath)</IncludePath>
-        <ILINK_LibraryPath>..\..\..\src\cpp\Common\MiniCsl\RegEx\;..\..\..\src\cpp\Common\MiniCsl\NativeLib\;..\..\..\src\cpp\Common\MiniCsl\Csl\;..\..\..\src\cpp\Common\MiniCsl\Base\;..\..\..\src\cpp\Common\StringManager\;..\..\..\lib\tinyxml\;..\..\..\src\cpp\StringTool\;E:\Projects\github\gametoolkit\dev\bcb\StringTool\;E:\Projects\github\gametoolkit\src\cpp\StringTool\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
+        <IncludePath>..\..\..\src\cpp\Common\;..\..\..\lib\tinyxml2\;..\..\..\src\cpp\Common\MiniCsl\RegEx\;..\..\..\src\cpp\Common\MiniCsl\NativeLib\;..\..\..\src\cpp\Common\MiniCsl\Csl\;..\..\..\src\cpp\Common\MiniCsl\Base\;..\..\..\src\cpp\Common\StringManager\;..\..\..\lib\tinyxml\;..\..\..\src\cpp\StringTool\;.\;..\..\..\src\cpp\Common;$(IncludePath)</IncludePath>
+        <ILINK_LibraryPath>..\..\..\src\cpp\Common\;..\..\..\lib\tinyxml2\;..\..\..\src\cpp\Common\MiniCsl\RegEx\;..\..\..\src\cpp\Common\MiniCsl\NativeLib\;..\..\..\src\cpp\Common\MiniCsl\Csl\;..\..\..\src\cpp\Common\MiniCsl\Base\;..\..\..\src\cpp\Common\StringManager\;..\..\..\lib\tinyxml\;..\..\..\src\cpp\StringTool\;E:\Projects\github\gametoolkit\dev\bcb\StringTool\;E:\Projects\github\gametoolkit\src\cpp\StringTool\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
         <_TCHARMapping>wchar_t</_TCHARMapping>
         <SanitizedProjectName>StringTool</SanitizedProjectName>
         <VerInfo_Locale>2057</VerInfo_Locale>
@@ -111,6 +111,7 @@
         <VerInfo_Locale>1033</VerInfo_Locale>
         <Manifest_File>(None)</Manifest_File>
         <AppDPIAwarenessMode>none</AppDPIAwarenessMode>
+        <Debugger_RunParams> -input E:\Projects\github\gametoolkit\data\StringTool\Strings_EN.xml -script E:\Projects\github\gametoolkit\src\csl\StringTool\StringScript_AS30_ByteArray_Lang.csl -output .\output</Debugger_RunParams>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <Defines>NDEBUG;$(Defines)</Defines>
@@ -124,18 +125,12 @@
             <BuildOrder>0</BuildOrder>
             <PCH>true</PCH>
         </PCHCompile>
-        <CppCompile Include="..\..\..\lib\tinyxml\tinystr.cpp">
-            <BuildOrder>2</BuildOrder>
+        <CppCompile Include="..\..\..\lib\tinyxml2\tinyxml2.cpp">
+            <BuildOrder>51</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\..\lib\tinyxml\tinyxml.cpp">
-            <BuildOrder>3</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="..\..\..\lib\tinyxml\tinyxmlerror.cpp">
-            <BuildOrder>4</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="..\..\..\lib\tinyxml\tinyxmlparser.cpp">
-            <BuildOrder>5</BuildOrder>
-        </CppCompile>
+        <None Include="..\..\..\lib\tinyxml2\tinyxml2.h">
+            <BuildOrder>52</BuildOrder>
+        </None>
         <None Include="..\..\..\src\cpp\Common\MiniCsl\Base\ZBase.h">
             <BuildOrder>7</BuildOrder>
         </None>
@@ -256,6 +251,10 @@
         <None Include="..\..\..\src\cpp\Common\MiniCsl\Csl\ZCss.hpp">
             <BuildOrder>46</BuildOrder>
         </None>
+        <CppCompile Include="..\..\..\src\cpp\Common\MiniCsl\NativeLib\ZFileLib.cpp">
+            <DependentOn>..\..\..\src\cpp\Common\MiniCsl\NativeLib\ZFileLib.h</DependentOn>
+            <BuildOrder>53</BuildOrder>
+        </CppCompile>
         <CppCompile Include="..\..\..\src\cpp\Common\MiniCsl\NativeLib\ZLibrary.cpp">
             <DependentOn>..\..\..\src\cpp\Common\MiniCsl\NativeLib\ZLibrary.h</DependentOn>
             <BuildOrder>47</BuildOrder>
@@ -270,12 +269,19 @@
         <None Include="..\..\..\src\cpp\Common\MiniCsl\NativeLib\ZMathLib.h">
             <BuildOrder>50</BuildOrder>
         </None>
+        <CppCompile Include="..\..\..\src\cpp\Common\MiniCsl\NativeLib\ZStringLib.cpp">
+            <DependentOn>..\..\..\src\cpp\Common\MiniCsl\NativeLib\ZStringLib.h</DependentOn>
+            <BuildOrder>54</BuildOrder>
+        </CppCompile>
         <CppCompile Include="..\..\..\src\cpp\Common\MiniCsl\RegEx\ZRegEx.c">
             <BuildOrder>51</BuildOrder>
         </CppCompile>
         <None Include="..\..\..\src\cpp\Common\MiniCsl\RegEx\ZRegEx.h">
             <BuildOrder>52</BuildOrder>
         </None>
+        <CppCompile Include="..\..\..\src\cpp\Common\PP_Stdlib.cpp">
+            <BuildOrder>52</BuildOrder>
+        </CppCompile>
         <CppCompile Include="..\..\..\src\cpp\Common\StringManager\StringManager.cpp">
             <DependentOn>..\..\..\src\cpp\Common\StringManager\StringManager.h</DependentOn>
             <BuildOrder>6</BuildOrder>

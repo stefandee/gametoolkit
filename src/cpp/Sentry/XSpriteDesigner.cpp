@@ -1,4 +1,4 @@
-#include "tinyxml.h"
+#include "tinyxml2.h"
 //---------------------------------------------------------------------------
 
 #include <SysUtils.hpp>

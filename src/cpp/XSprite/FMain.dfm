@@ -1,9 +1,9 @@
 object FormMain: TFormMain
   Left = 245
   Top = 214
-  Width = 870
-  Height = 640
   Caption = 'XSprite'
+  ClientHeight = 581
+  ClientWidth = 854
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,15 +11,13 @@ object FormMain: TFormMain
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   Menu = MainMenu1
-  OldCreateOrder = False
   OnResize = FormResize
-  PixelsPerInch = 96
   TextHeight = 13
   object GroupBox1: TGroupBox
-    Left = 604
+    Left = 596
     Top = 0
     Width = 258
-    Height = 575
+    Height = 562
     Align = alRight
     Caption = 'XSprite Tools'
     TabOrder = 0
@@ -37,7 +35,6 @@ object FormMain: TFormMain
         Width = 237
         Height = 21
         Style = csDropDownList
-        ItemHeight = 13
         TabOrder = 0
         OnChange = cbCellsChange
       end
@@ -112,15 +109,10 @@ object FormMain: TFormMain
         Height = 45
         Max = 16
         Min = 1
-        Orientation = trHorizontal
         PageSize = 0
-        Frequency = 1
         Position = 2
-        SelEnd = 0
-        SelStart = 0
         TabOrder = 0
         TickMarks = tmBoth
-        TickStyle = tsAuto
         OnChange = trackZoomChange
       end
     end
@@ -140,35 +132,36 @@ object FormMain: TFormMain
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 575
-    Width = 862
+    Top = 562
+    Width = 854
     Height = 19
     Panels = <>
-    SimplePanel = False
   end
   object GroupBox2: TGroupBox
     Left = 0
     Top = 0
-    Width = 604
-    Height = 575
+    Width = 596
+    Height = 562
     Align = alClient
     Caption = 'XSprite'
     TabOrder = 2
     object paintSprite: TPaintBox
       Left = 2
       Top = 15
-      Width = 582
-      Height = 540
+      Width = 574
+      Height = 527
       Align = alClient
       OnMouseDown = paintSpriteMouseDown
       OnMouseMove = paintSpriteMouseMove
       OnMouseUp = paintSpriteMouseUp
       OnPaint = paintSpritePaint
+      ExplicitWidth = 582
+      ExplicitHeight = 540
     end
     object sbH: TScrollBar
       Left = 2
-      Top = 555
-      Width = 600
+      Top = 542
+      Width = 592
       Height = 18
       Align = alBottom
       PageSize = 0
@@ -176,10 +169,10 @@ object FormMain: TFormMain
       OnChange = sbHChange
     end
     object sbV: TScrollBar
-      Left = 584
+      Left = 576
       Top = 15
       Width = 18
-      Height = 540
+      Height = 527
       Align = alRight
       Kind = sbVertical
       PageSize = 0
@@ -248,7 +241,6 @@ object FormMain: TFormMain
     Top = 20
   end
   object dlgColor: TColorDialog
-    Ctl3D = True
     Left = 72
     Top = 20
   end

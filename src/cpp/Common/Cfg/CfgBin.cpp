@@ -120,7 +120,7 @@ bool CCfgBin::GetInfo(char* description, int* versionMajor, int* versionMinor)
 // Param       : description - descrierea fisierului de configurare
 // Rezultat    :
 // Comentarii  :
-bool CCfgBin::SetInfo(char* description)
+bool CCfgBin::SetInfo(const char* description)
 {
   if (fileHandle > 0)
   {

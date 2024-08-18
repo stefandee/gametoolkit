@@ -5,7 +5,7 @@
 
 #include "FMain.h"
 #include "FAbout.h"
-#include "tinyxml.h"
+#include "tinyxml2.h"
 #include "Unit1.cpp"
 #include "FOptions.h"
 #include "Script.h"

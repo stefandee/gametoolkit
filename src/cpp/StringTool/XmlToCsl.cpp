@@ -8,6 +8,7 @@
 #include "PP_StdLib.h"
 #include "ZFileLib.h"
 #include "ZStringLib.h"
+#include "tinyxml2.h"
 
 using std::wstring;
 using std::ifstream;
@@ -28,13 +29,13 @@ CXmlToCsl::~CXmlToCsl()
 
 bool CXmlToCsl::Run(std::wstring inputFile, std::wstring outputDir, std::wstring scriptFile)
 {
-  bool loadOk = mStringManager.LoadFile(inputFile);
+  bool loadOk = mStringManager.LoadFile(WStringToString(inputFile)) == tinyxml2::XML_SUCCESS;
 
   if ( !loadOk )
   {
-    mErrorDesc = mStringManager.GetErrors();
+    mErrorDesc = StringToWString(mStringManager.GetErrors());
 
-    return false;
+	return false;
   }
 
   mOutputDir = outputDir;
@@ -245,7 +246,6 @@ ZString CXmlToCsl::getPackageStringValue(ZCsl* csl)
 
 ZString CXmlToCsl::getOutputDir(ZCsl* csl)
 {
-  // TODO ZString doesn't handle wchar_t yet, this is a workaround
   return ZString(WStringToString(mOutputDir).c_str());
 }
 //---------------------------------------------------------------------------

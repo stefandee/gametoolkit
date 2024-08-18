@@ -29,19 +29,29 @@ The notable parts are:
 * GLoad: support to load various graphical files and to convert between internal formats. Some of these formats are long obsolete, with only PNG/JPG/BMP still applicable in the modern world.
 * Terrain Generator/Eco System Generator: exactly what their names are. for 2D games only.
 
+## Core Issues
+
+File access is not uniform and it uses C and C++ standard API, like handles, FILE* and streams. Goal would be to have everything as a file stream.
+
+String handling is not uniform: CPString (our custom string implementation done cca 1998), ZString (CSL) and std::string. Goal is to use std::string everywhere.
+
+I favour UTF-8, so the core is mostly UTF-8 "aware". There are two exceptions, however:
+* CSL: it uses ZString internally, and while similar to std::string, it may not parse UTF8 correctly. It is advised to keep all CSL scripts (if using external files) as ANSI. Internally, the tools that operate on scripts are converting everything to ANSI;
+* file access: it uses various APIs which don't natively support UTF-8 for file names parameters
+
 ## Tools
 
 The graphical tools were developed using C++ Builder and I've continued to maintain them through-out versions of it. Currently, they build with C++ Builder 11.
 
-In hind-sight, it was not very clever to tie them up with a proprietary software/graphical library. However, in 1998, there weren't a lot of options that allowed for fast development of graphical applications, so it kind of stuck.
+In hind-sight, it wasn't very clever to tie them up with a proprietary software/graphical library like C++ Builder. However, in 1998, there weren't a lot of options that allowed for fast development of graphical applications. We were only 3 developers working on Pure Power and we needed to expand the game tooling in a short period of time, so C++ Builder helped a lot. After all, it's not called RAD for nothing ;)
 
 The following tools are included:
 
 * Sentry: a full-featured sprite editor (see separate chapter below)
-* StringTool: tool to convert/transform a localization XML to a custom format by means of a CSL script (usable for games where parsing a xml would otherwise not be available/efficient - J2ME, Flash games)
+* StringTool: convert/transform a localization XML to a custom format by means of a CSL script (usable for games where parsing a xml would otherwise not be available/efficient - J2ME, Flash games)
 * Curve Editor: a graphical wrapper over the curve library, with support to visualize and save a "library" of curves
-* Data Growth: support to edit data packages (used in Lethal Metal). Has both a graphical mode and a command-line mode 
-* JadUpdate: small command line application to update versions in jad/manifest files (relevant for J2ME games)
+* Data Growth: support to edit data packages (for J2ME games). Has both a graphical mode and a command-line mode 
+* JadUpdate: small command line application to update versions in jad/manifest files (for J2ME games)
 * SprEd: a sprite editor originally used by Pure Power and PPTactical Engine (obsolete, superseded by Sentry)
 * XSprite: a sprite editor used by Lethal Metal/CyberNinja (obsolete, superseded by Sentry)
 

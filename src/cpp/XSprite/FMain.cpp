@@ -11,7 +11,7 @@ using namespace std;
 #include "FMain.h"
 #include "FName.h"
 #include "FActions.h"
-#include "logFile.h"
+#include "easylogging++.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
@@ -38,7 +38,7 @@ void __fastcall TFormMain::Open1Click(TObject *Sender)
     }
     catch(...)
     {
-      Application->MessageBox("Cannot create bitmap!", "Error", MB_OK);
+      Application->MessageBox(L"Cannot create bitmap!", L"Error", MB_OK);
       return;
     }
 
@@ -409,7 +409,7 @@ bool TFormMain::Load(std::string _fileName)
 }
 //---------------------------------------------------------------------------
 
-bool TFormMain::ExportAsDefinition(std::string _fileName)
+bool TFormMain::ExportAsDefinition(std::wstring _fileName)
 {
   // open the file
   std::fstream lFile;
@@ -425,9 +425,9 @@ bool TFormMain::ExportAsDefinition(std::string _fileName)
   // write the number of cell items
   unsigned char lSize = mCells.size();
 
-  lFile.write(&lSize, sizeof(char));
+  lFile << lSize;
 
-  for(unsigned int i = 0; i < mCells.size(); i++)
+  for(unsigned int i = 0; i < lSize; i++)
   {
     TCellRect lRect = mCells[i]->GetRect();
     TCellPoint lPoint = mCells[i]->GetPoint();
@@ -445,7 +445,7 @@ bool TFormMain::ExportAsDefinition(std::string _fileName)
 }
 //---------------------------------------------------------------------------
 
-bool TFormMain::ExportAsSprite(std::string _fileName)
+bool TFormMain::ExportAsSprite(std::wstring _fileName)
 {
   // open the file
   std::fstream lFile;
@@ -461,9 +461,9 @@ bool TFormMain::ExportAsSprite(std::string _fileName)
   // write the number of cell items
   unsigned char lSize = mCells.size();
 
-  lFile.write(&lSize, sizeof(char));
+  lFile << lSize;
 
-  for(unsigned int i = 0; i < mCells.size(); i++)
+  for(unsigned int i = 0; i < lSize; i++)
   {
     TCellRect lRect = mCells[i]->GetRect();
     TCellPoint lPoint = mCells[i]->GetPoint();
@@ -511,7 +511,7 @@ bool TFormMain::ExportAsSprite(std::string _fileName)
 }
 //---------------------------------------------------------------------------
 
-bool TFormMain::ExportAsIndexedSprite(std::string _fileName)
+bool TFormMain::ExportAsIndexedSprite(std::wstring _fileName)
 {
   // open the file
   std::fstream lFile;
@@ -527,7 +527,7 @@ bool TFormMain::ExportAsIndexedSprite(std::string _fileName)
   // write the number of cell items
   unsigned char lSize = mCells.size();
 
-  lFile.write(&lSize, sizeof(char));
+  lFile << lSize;
 
   // compute the pallete for this sprite
   int lPallete[256];
@@ -557,7 +557,7 @@ bool TFormMain::ExportAsIndexedSprite(std::string _fileName)
     }
   }
 
-  lFile.write(&lColorCount, sizeof(char));
+  lFile << lColorCount;
 
   for(short int j = 0; j < lColorCount; j++)
   {
@@ -565,9 +565,9 @@ bool TFormMain::ExportAsIndexedSprite(std::string _fileName)
     unsigned char lG = (lPallete[j] & 0x00FF00) >> 8;
     unsigned char lB = (lPallete[j] & 0xFF0000) >> 16;
 
-    lFile.write(&lR, sizeof(char));
-    lFile.write(&lG, sizeof(char));
-    lFile.write(&lB, sizeof(char));
+    lFile << lR;
+    lFile << lG;
+    lFile << lB;
   }
 
   for(unsigned int i = 0; i < mCells.size(); i++)
@@ -606,7 +606,7 @@ bool TFormMain::ExportAsIndexedSprite(std::string _fileName)
         }
 
         // and write the index to file
-        lFile.write(&lColorIndex, sizeof(char));
+        lFile << lColorIndex;
       }
     }
   }
@@ -616,7 +616,7 @@ bool TFormMain::ExportAsIndexedSprite(std::string _fileName)
 }
 //---------------------------------------------------------------------------
 
-bool TFormMain::ExportAs4BitIndexedSprite(std::string _fileName)
+bool TFormMain::ExportAs4BitIndexedSprite(std::wstring _fileName)
 {
   // open the file
   std::fstream lFile;
@@ -632,7 +632,7 @@ bool TFormMain::ExportAs4BitIndexedSprite(std::string _fileName)
   // write the number of cell items
   unsigned char lSize = mCells.size();
 
-  lFile.write(&lSize, sizeof(char));
+  lFile << lSize;
 
   // compute the pallete for this sprite
   int lPallete[16];
@@ -664,7 +664,7 @@ bool TFormMain::ExportAs4BitIndexedSprite(std::string _fileName)
     }
   }
 
-  lFile.write(&lColorCount, sizeof(char));
+  lFile << lColorCount;
 
   // output the pallete
   for(short int j = 0; j < lColorCount; j++)
@@ -673,9 +673,9 @@ bool TFormMain::ExportAs4BitIndexedSprite(std::string _fileName)
     unsigned char lG = (lPallete[j] & 0x00FF00) >> 8;
     unsigned char lB = (lPallete[j] & 0xFF0000) >> 16;
 
-    lFile.write(&lR, sizeof(char));
-    lFile.write(&lG, sizeof(char));
-    lFile.write(&lB, sizeof(char));
+    lFile << lR;
+    lFile << lG;
+    lFile << lB;
   }
 
   for(unsigned int i = 0; i < mCells.size(); i++)
@@ -731,7 +731,8 @@ bool TFormMain::ExportAs4BitIndexedSprite(std::string _fileName)
           lOutputColor |= (lColorIndex << 4);
 
           // and write the composed to file
-          lFile.write(&lOutputColor, sizeof(char));
+          lFile << lOutputColor;
+
           lOutputColor = 0;
           lNibbleCount = 0;
           lBytesWrote++;
@@ -741,7 +742,7 @@ bool TFormMain::ExportAs4BitIndexedSprite(std::string _fileName)
 
     if (lNibbleCount == 1)
     {
-      lFile.write(&lOutputColor, sizeof(char));
+      lFile << lOutputColor;
     }
   }
 
@@ -750,7 +751,7 @@ bool TFormMain::ExportAs4BitIndexedSprite(std::string _fileName)
 }
 //---------------------------------------------------------------------------
 
-bool TFormMain::ExportAs4BitIndexedSpriteAndActions(std::string _fileName)
+bool TFormMain::ExportAs4BitIndexedSpriteAndActions(std::wstring _fileName)
 {
   // open the file
   std::fstream lFile;
@@ -766,7 +767,7 @@ bool TFormMain::ExportAs4BitIndexedSpriteAndActions(std::string _fileName)
   // write the number of cell items
   unsigned char lSize = mCells.size();
 
-  lFile.write(&lSize, sizeof(char));
+  lFile << lSize;
 
   // compute the pallete for this sprite
   int lPallete[16];
@@ -798,7 +799,7 @@ bool TFormMain::ExportAs4BitIndexedSpriteAndActions(std::string _fileName)
     }
   }
 
-  lFile.write(&lColorCount, sizeof(char));
+  lFile << lColorCount;
 
   // output the pallete
   for(short int j = 0; j < lColorCount; j++)
@@ -807,9 +808,9 @@ bool TFormMain::ExportAs4BitIndexedSpriteAndActions(std::string _fileName)
     unsigned char lG = (lPallete[j] & 0x00FF00) >> 8;
     unsigned char lB = (lPallete[j] & 0xFF0000) >> 16;
 
-    lFile.write(&lR, sizeof(char));
-    lFile.write(&lG, sizeof(char));
-    lFile.write(&lB, sizeof(char));
+    lFile << lR;
+    lFile << lG;
+    lFile << lB;
   }
 
   for(unsigned int i = 0; i < mCells.size(); i++)
@@ -865,7 +866,7 @@ bool TFormMain::ExportAs4BitIndexedSpriteAndActions(std::string _fileName)
           lOutputColor |= (lColorIndex << 4);
 
           // and write the composed to file
-          lFile.write(&lOutputColor, sizeof(char));
+          lFile << lOutputColor;
           lOutputColor = 0;
           lNibbleCount = 0;
           lBytesWrote++;
@@ -875,13 +876,13 @@ bool TFormMain::ExportAs4BitIndexedSpriteAndActions(std::string _fileName)
 
     if (lNibbleCount == 1)
     {
-      lFile.write(&lOutputColor, sizeof(char));
+      lFile << lOutputColor;
     }
   }
 
   // get the actions data
   int   lActionsDataSize;
-  char* lActionsData = FormActions->GetData(ChangeFileExt(mBmpFileName, ".actions"), &lActionsDataSize);
+  char* lActionsData = FormActions->GetData(ChangeFileExt(mBmpFileName, L".actions"), &lActionsDataSize);
 
   lFile.write(lActionsData, lActionsDataSize);
 
@@ -997,7 +998,7 @@ void __fastcall TFormMain::Exportasindexedsprite1Click(TObject *Sender)
 
 void __fastcall TFormMain::Exit1Click(TObject *Sender)
 {
-  if ( Application->MessageBox("Really exit?", "Question", MB_OKCANCEL) == IDOK)
+  if ( Application->MessageBox(L"Really exit?", L"Question", MB_OKCANCEL) == IDOK)
   {
     Application->Terminate();
   }
@@ -1146,7 +1147,7 @@ void TFormMain::HandleCommandLine()
     }
 
     // load dat from file (if any)
-    Load(ChangeFileExt(line, ".dat").c_str());
+    Load(ChangeFileExt(line, L".dat").c_str());
 
     // output file path
     AnsiString outputFile = outputPath + ChangeFileExt(ExtractFileName(line), ".spr");

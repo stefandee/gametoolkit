@@ -6,7 +6,7 @@
 #include <conio.h>
 #include <string>
 
-#include "tinyxml.h"
+#include "tinyxml2.h"
 #include "XmlToCsl.h"
 //---------------------------------------------------------------------------
 
@@ -44,7 +44,11 @@ int _tmain(int argc, _TCHAR* argv[])
 	{
       printUsage();
       exit(EXIT_FAILURE);
-    }
+	}
+
+	//argv[1] = L"-input E:\\Projects\\github\\gametoolkit\\data\\StringTool\\Strings_EN.xml";
+	//argv[2] = L"-script E:\\Projects\\github\\gametoolkit\\src\\csl\\StringTool\\StringScript_AS30_ByteArray_Lang.csl";
+	//argv[3] = L"-output .\\output";
 
 	std::wstring inputFile, scriptFile, outputDir;
 

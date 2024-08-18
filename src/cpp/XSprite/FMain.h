@@ -95,11 +95,11 @@ private:	// User declarations
     bool Load(std::string _fileName);
     bool Save(std::string _fileName);
 
-    bool ExportAsDefinition(std::string _fileName);
-    bool ExportAsSprite(std::string _fileName);
-    bool ExportAsIndexedSprite(std::string _fileName);
-    bool ExportAs4BitIndexedSprite(std::string _fileName);
-    bool ExportAs4BitIndexedSpriteAndActions(std::string _fileName);
+    bool ExportAsDefinition(std::wstring _fileName);
+    bool ExportAsSprite(std::wstring _fileName);
+    bool ExportAsIndexedSprite(std::wstring _fileName);
+    bool ExportAs4BitIndexedSprite(std::wstring _fileName);
+    bool ExportAs4BitIndexedSpriteAndActions(std::wstring _fileName);
 
     void PrintHelp();
     void HandleCommandLine();

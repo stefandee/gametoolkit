@@ -23,7 +23,7 @@
 #define XMLSERIALIZABLE_H
 
 #include <string>
-#include "tinyxml.h"
+#include "tinyxml2.h"
 #include "PP_String.h"
 
 class BaseDeSerializer

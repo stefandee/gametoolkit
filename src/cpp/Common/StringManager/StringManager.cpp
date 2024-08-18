@@ -4,13 +4,16 @@
 
 #include "StringManager.h"
 #include "PP_StdLib.h"
+#include "tinyxml2.h"
+
+using namespace tinyxml2;
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 
-TiXmlNode* StringManager::GetPackage(int index)
+XMLNode* StringManager::GetPackage(int index)
 {
-  TiXmlNode* node = 0;
-  node = mDocument.FirstChild( "package" );
+  XMLNode* node = 0;
+  node = mDocument.FirstChildElement( "package" );
   int count = 0;
 
   if (!node)
@@ -21,12 +24,12 @@ TiXmlNode* StringManager::GetPackage(int index)
 
   do
   {
-    TiXmlElement* elem = node->ToElement();
+	XMLElement* elem = node->ToElement();
 
     const char* name = elem->Attribute( "name" );
 
 	if (name)
-    {
+	{
       if (count == index)
       {
         return node;
@@ -35,7 +38,7 @@ TiXmlNode* StringManager::GetPackage(int index)
       count++;
     }
 
-    node = node->NextSibling( "package" );
+	node = node->NextSibling();
   }
   while(node);
 
@@ -44,26 +47,22 @@ TiXmlNode* StringManager::GetPackage(int index)
 }
 //---------------------------------------------------------------------------
 
-bool StringManager::LoadFile(std::wstring fileName)
+bool StringManager::LoadFile(std::string fileName)
 {
-  mErrors = L"";
+  mErrors = "";
 
-  // TODO tinyxml can't handle wstring, need to convert to string
-  mDocument = TiXmlDocument( WStringToString(fileName).c_str() );
+  XMLError result = mDocument.LoadFile(fileName.c_str());
 
-  bool result = mDocument.LoadFile();
-
-  if (!result)
+  if (result != XML_SUCCESS)
   {
-    // TODO not quite correct, but until tinyxml is converted to handle wchar_t...
-	mErrors = StringToWString(mDocument.ErrorDesc());
+	mErrors = std::string(mDocument.ErrorStr());
   }
 
   return result;
 }
 //---------------------------------------------------------------------------
 
-std::wstring StringManager::GetErrors()
+std::string StringManager::GetErrors()
 {
   return mErrors;
 }
@@ -71,8 +70,8 @@ std::wstring StringManager::GetErrors()
 
 int         StringManager::GetPackageCount()
 {
-  TiXmlNode* node = 0;
-  node = mDocument.FirstChild( "package" );
+  XMLNode* node = 0;
+  node = mDocument.FirstChildElement( "package" );
   int count = 0;
 
   if (!node)
@@ -82,7 +81,7 @@ int         StringManager::GetPackageCount()
 
   do
   {
-    TiXmlElement* elem = node->ToElement();
+	XMLElement* elem = node->ToElement();
 
     const char* name = elem->Attribute( "name" );
 
@@ -91,7 +90,7 @@ int         StringManager::GetPackageCount()
       count++;
     }
 
-    node = node->NextSibling( "package" );
+    node = node->NextSibling();
   }
   while(node);
 
@@ -101,8 +100,8 @@ int         StringManager::GetPackageCount()
 
 std::string StringManager::GetPackageName(int packageIndex)
 {
-  TiXmlNode* node = 0;
-  node = mDocument.FirstChild( "package" );
+  XMLNode* node = 0;
+  node = mDocument.FirstChildElement( "package" );
   int count = 0;
 
   if (!node)
@@ -113,7 +112,7 @@ std::string StringManager::GetPackageName(int packageIndex)
 
   do
   {
-    TiXmlElement* elem = node->ToElement();
+	XMLElement* elem = node->ToElement();
 
     if (!elem)
     {
@@ -132,7 +131,7 @@ std::string StringManager::GetPackageName(int packageIndex)
       count++;
     }
 
-    node = node->NextSibling( "package" );
+    node = node->NextSibling();
   }
   while(node);
 
@@ -143,8 +142,8 @@ std::string StringManager::GetPackageName(int packageIndex)
 
 std::string StringManager::GetPackageLang(int packageIndex)
 {
-  TiXmlNode* node = 0;
-  node = mDocument.FirstChild( "package" );
+  XMLNode* node = 0;
+  node = mDocument.FirstChildElement( "package" );
   int count = 0;
 
   if (!node)
@@ -155,7 +154,7 @@ std::string StringManager::GetPackageLang(int packageIndex)
 
   do
   {
-    TiXmlElement* elem = node->ToElement();
+	XMLElement* elem = node->ToElement();
 
     if (!elem)
     {
@@ -174,7 +173,7 @@ std::string StringManager::GetPackageLang(int packageIndex)
       count++;
     }
 
-    node = node->NextSibling( "package" );
+    node = node->NextSibling();
   }
   while(node);
 
@@ -185,7 +184,7 @@ std::string StringManager::GetPackageLang(int packageIndex)
 
 int         StringManager::GetPackageStringCount(int packageIndex)
 {
-  TiXmlNode* pkg = GetPackage(packageIndex);
+  XMLNode* pkg = GetPackage(packageIndex);
 
   if (!pkg)
   {
@@ -195,8 +194,8 @@ int         StringManager::GetPackageStringCount(int packageIndex)
   // parse the current packege xmlelement and search for "string" elements with id and value attributes
   int stringCount = -1;
 
-  TiXmlNode* node = 0;
-  node = pkg->FirstChild( "string" );
+  XMLNode* node = 0;
+  node = pkg->FirstChildElement( "string" );
 
   if (!node)
   {
@@ -205,7 +204,7 @@ int         StringManager::GetPackageStringCount(int packageIndex)
 
   do
   {
-    TiXmlElement* elem = node->ToElement();
+	XMLElement* elem = node->ToElement();
 
     if (!elem)
     {
@@ -220,7 +219,7 @@ int         StringManager::GetPackageStringCount(int packageIndex)
       stringCount++;
     }
 
-    node = node->NextSibling( "string" );
+    node = node->NextSibling();
   }
   while(node);
 
@@ -230,7 +229,7 @@ int         StringManager::GetPackageStringCount(int packageIndex)
 
 std::string StringManager::GetPackageStringId(int packageIndex, int stringIndex)
 {
-  TiXmlNode* pkg = GetPackage(packageIndex);
+  XMLNode* pkg = GetPackage(packageIndex);
 
   if (!pkg)
   {
@@ -240,8 +239,8 @@ std::string StringManager::GetPackageStringId(int packageIndex, int stringIndex)
   // parse the current packege xmlelement and search for "string" elements with id and value attributes
   int stringCount = -1;
 
-  TiXmlNode* node = 0;
-  node = pkg->FirstChild( "string" );
+  XMLNode* node = 0;
+  node = pkg->FirstChildElement( "string" );
 
   if (!node)
   {
@@ -250,7 +249,7 @@ std::string StringManager::GetPackageStringId(int packageIndex, int stringIndex)
 
   do
   {
-    TiXmlElement* elem = node->ToElement();
+	XMLElement* elem = node->ToElement();
 
     if (!elem)
     {
@@ -270,7 +269,7 @@ std::string StringManager::GetPackageStringId(int packageIndex, int stringIndex)
       }
     }
 
-    node = node->NextSibling( "string" );
+    node = node->NextSibling();
   }
   while(node);
 
@@ -280,18 +279,18 @@ std::string StringManager::GetPackageStringId(int packageIndex, int stringIndex)
 
 std::string StringManager::GetPackageStringValue(int packageIndex, int stringIndex)
 {
-  TiXmlNode* pkg = GetPackage(packageIndex);
+  XMLNode* pkg = GetPackage(packageIndex);
 
   if (!pkg)
   {
-    return "";
+	return "";
   }
 
   // parse the current packege xmlelement and search for "string" elements with id and value attributes
   int stringCount = -1;
 
-  TiXmlNode* node = 0;
-  node = pkg->FirstChild( "string" );
+  XMLNode* node = 0;
+  node = pkg->FirstChildElement( "string" );
 
   if (!node)
   {
@@ -300,7 +299,7 @@ std::string StringManager::GetPackageStringValue(int packageIndex, int stringInd
 
   do
   {
-    TiXmlElement* elem = node->ToElement();
+    XMLElement* elem = node->ToElement();
 
     if (!elem)
     {
@@ -320,7 +319,7 @@ std::string StringManager::GetPackageStringValue(int packageIndex, int stringInd
       }
     }
 
-    node = node->NextSibling( "string" );
+    node = node->NextSibling();
   }
   while(node);
 

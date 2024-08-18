@@ -2,7 +2,7 @@
 
 #include <vcl.h>
 
-#define STRICT
+// #define STRICT
 #include <windows.h>
 #include <algorithm>
 using std::min;

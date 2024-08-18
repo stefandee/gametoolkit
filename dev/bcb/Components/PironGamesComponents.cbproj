@@ -61,8 +61,8 @@
         <ILINK_GenerateImportLibrary>true</ILINK_GenerateImportLibrary>
         <_TCHARMapping>char</_TCHARMapping>
         <Multithreaded>true</Multithreaded>
-        <IncludePath>..\..\..\lib\easyloggingpp-9.95.0\;..\..\..\src\cpp\Common\;..\..\..\src\cpp\Common\Archive\;..\..\..\src\cpp\Common\GLoad\;.\;..\..\..\src\cpp\Components\;..\..\..\src\cpp\Common;..\..\..\src\cpp\Common\GLoad;..\..\..\src\cpp\Common\Archive;..\..\..\lib\easyloggingpp-9.95.0;$(IncludePath)</IncludePath>
-        <ILINK_LibraryPath>..\..\..\lib\easyloggingpp-9.95.0\;..\..\..\src\cpp\Common\;..\..\..\src\cpp\Common\Archive\;..\..\..\src\cpp\Common\GLoad\;..\..\..\src\cpp\Components\;E:\Projects\github\gametoolkit\dev\bcb\Components\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
+        <IncludePath>..\..\..\lib\easyloggingpp-9.97.1\;..\..\..\src\cpp\Common\;..\..\..\src\cpp\Common\Archive\;..\..\..\src\cpp\Common\GLoad\;.\;..\..\..\src\cpp\Components\;..\..\..\src\cpp\Common;..\..\..\src\cpp\Common\GLoad;..\..\..\src\cpp\Common\Archive;..\..\..\lib\easyloggingpp-9.95.0;$(IncludePath)</IncludePath>
+        <ILINK_LibraryPath>..\..\..\lib\easyloggingpp-9.97.1\;..\..\..\src\cpp\Common\;..\..\..\src\cpp\Common\Archive\;..\..\..\src\cpp\Common\GLoad\;..\..\..\src\cpp\Components\;E:\Projects\github\gametoolkit\dev\bcb\Components\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
         <DCC_UnitSearchPath>E:\Projects\github\gametoolkit\dev\bcb\Components;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <ILINK_Description>Components for C++Builder 11 CE</ILINK_Description>
         <SanitizedProjectName>PironGamesComponents</SanitizedProjectName>
@@ -156,10 +156,10 @@
         <PackageImport Include="xmlrtl.bpi">
             <BuildOrder>8</BuildOrder>
         </PackageImport>
-        <CppCompile Include="..\..\..\lib\easyloggingpp-9.95.0\easylogging++.cc">
+        <CppCompile Include="..\..\..\lib\easyloggingpp-9.97.1\easylogging++.cc">
             <BuildOrder>28</BuildOrder>
         </CppCompile>
-        <None Include="..\..\..\lib\easyloggingpp-9.95.0\easylogging++.h">
+        <None Include="..\..\..\lib\easyloggingpp-9.97.1\easylogging++.h">
             <BuildOrder>29</BuildOrder>
         </None>
         <CppCompile Include="..\..\..\src\cpp\Common\Archive\Stream.cpp">

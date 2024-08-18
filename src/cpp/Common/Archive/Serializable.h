@@ -42,6 +42,7 @@
 #include "Stream_ANSI_C.h"
 #include "PP_Counter.h"
 #include "basic2d.h"
+#include "PP_String.h"
 
 // clasa de baza
 class CSerializable
