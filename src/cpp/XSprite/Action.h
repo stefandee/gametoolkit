@@ -56,11 +56,11 @@ class CAction
     int  mId;
     int  mUpdate;
     //int  mXAlign, mYAlign;
-    std::string mXAlign, mYAlign, mInactive, mEffect;
+    UnicodeString mXAlign, mYAlign, mInactive, mEffect;
     int  mRepeat;
     CSpeedIndex  mSpeedIndex;
 
-    std::string mName;
+    UnicodeString mName;
     std::vector<CSpeed> mSpeeds;
 };
 

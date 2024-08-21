@@ -39,7 +39,7 @@ void TFormActions::ScreenToList()
   {
     // eliminate spaces?
     stringGrid->Cells[0][i + 1].Trim();
-    mActions[i].mName   = std::string(stringGrid->Cells[0][i + 1].c_str());
+    mActions[i].mName   = stringGrid->Cells[0][i + 1];
 
     mActions[i].mId     = stringGrid->Cells[1][i + 1].ToIntDef(0);
     mActions[i].mUpdate = stringGrid->Cells[2][i + 1].ToIntDef(0);
@@ -54,7 +54,7 @@ void TFormActions::ScreenToList()
       stringGrid->Cells[5][i + 1] = "LEFT";
     }
 
-    mActions[i].mXAlign   = std::string(stringGrid->Cells[5][i + 1].c_str());
+    mActions[i].mXAlign   = stringGrid->Cells[5][i + 1];
 
     // y align
     stringGrid->Cells[6][i + 1] = stringGrid->Cells[6][i + 1].UpperCase();
@@ -64,7 +64,7 @@ void TFormActions::ScreenToList()
       stringGrid->Cells[6][i + 1] = "TOP";
     }
 
-    mActions[i].mYAlign   = std::string(stringGrid->Cells[6][i + 1].c_str());
+    mActions[i].mYAlign   = stringGrid->Cells[6][i + 1];
 
     // effect
     stringGrid->Cells[7][i + 1] = stringGrid->Cells[7][i + 1].UpperCase();
@@ -76,7 +76,7 @@ void TFormActions::ScreenToList()
       stringGrid->Cells[7][i + 1] = "NORMAL";
     }
 
-    mActions[i].mEffect   = std::string(stringGrid->Cells[7][i + 1].c_str());
+    mActions[i].mEffect   = stringGrid->Cells[7][i + 1];
 
     // inactive
     stringGrid->Cells[8][i + 1] = stringGrid->Cells[8][i + 1].UpperCase();
@@ -86,7 +86,7 @@ void TFormActions::ScreenToList()
       stringGrid->Cells[8][i + 1] = "NO";
     }
 
-    mActions[i].mInactive   = std::string(stringGrid->Cells[8][i + 1].c_str());
+    mActions[i].mInactive   = stringGrid->Cells[8][i + 1];
 
     mActions[i].mRepeat = stringGrid->Cells[9][i + 1].ToIntDef(0);
 
@@ -293,11 +293,11 @@ void TFormActions::LoadActions(AnsiString _fileName)
       &lA.mRepeat
     );
 
-    lA.mName = std::string(lName);
-    lA.mXAlign = std::string(lXAlign);
-    lA.mYAlign = std::string(lYAlign);
-    lA.mEffect = std::string(lEffect);
-    lA.mInactive = std::string(lInactive);
+    lA.mName = lName;
+    lA.mXAlign = lXAlign;
+    lA.mYAlign = lYAlign;
+    lA.mEffect = lEffect;
+    lA.mInactive = lInactive;
     lA.SetStartFrame(lStartFrame);
     lA.SetEndFrame(lEndFrame);
 
@@ -404,12 +404,11 @@ void __fastcall TFormActions::Correct1Click(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
+// will transform the mActions into a binary form ready to be exported
 char* TFormActions::GetData(AnsiString _fileName, int* _size)
 {
   // load the actions from the file
   LoadActions(_fileName);
-
-  // will transform the mActions into a binary form ready to be exported
 
   // build the speeds list and fill the action index field
   std::vector<CSpeed> lSpeedsToBeSaved;

@@ -29,14 +29,14 @@ class CCell
     TCellPoint GetPoint() { return mPoint; }
     void SetPoint(TCellPoint _v) { mPoint = _v; }
 
-    void SetName(std::string _v) { mName = _v; }
-    std::string GetName() { return mName; }
+    void SetName(UnicodeString _v) { mName = _v; }
+    UnicodeString GetName() { return mName; }
 
   protected:
   private:
     TCellRect  mRect;
     TCellPoint mPoint;
-    std::string mName;  
+    UnicodeString mName;
 };
 
 #endif

@@ -92,8 +92,8 @@ private:	// User declarations
     void ComputeScrollLimits();
     void MakeCombo();
 
-    bool Load(std::string _fileName);
-    bool Save(std::string _fileName);
+    bool Load(std::wstring _fileName);
+    bool Save(std::wstring _fileName);
 
     bool ExportAsDefinition(std::wstring _fileName);
     bool ExportAsSprite(std::wstring _fileName);
@@ -105,7 +105,7 @@ private:	// User declarations
     void HandleCommandLine();
     void MyTerminate();
 
-    AnsiString mBmpFileName, mDatFileName;
+    UnicodeString mBmpFileName, mDatFileName;
 
 public:		// User declarations
         __fastcall TFormMain(TComponent* Owner);

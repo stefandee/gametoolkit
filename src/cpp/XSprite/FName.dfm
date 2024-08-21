@@ -4,16 +4,14 @@ object FormName: TFormName
   BorderIcons = []
   BorderStyle = bsSingle
   Caption = 'Name'
-  ClientHeight = 78
-  ClientWidth = 199
+  ClientHeight = 77
+  ClientWidth = 195
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
-  OldCreateOrder = False
-  PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
     Left = 8

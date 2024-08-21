@@ -18,8 +18,8 @@ __published:	// IDE-managed Components
 private:	// User declarations
 public:		// User declarations
         __fastcall TFormName(TComponent* Owner);
-        AnsiString GetText();
-        void SetText(AnsiString _v);
+        UnicodeString GetText();
+        void SetText(UnicodeString _v);
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TFormName *FormName;

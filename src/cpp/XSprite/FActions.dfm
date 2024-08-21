@@ -1,27 +1,25 @@
 object FormActions: TFormActions
   Left = 264
   Top = 408
-  Width = 990
-  Height = 543
   Caption = 'Actions'
+  ClientHeight = 504
+  ClientWidth = 974
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
-  OldCreateOrder = False
   PopupMenu = popupMenu
   Position = poScreenCenter
   OnClose = FormClose
   OnShow = FormShow
-  PixelsPerInch = 96
   TextHeight = 13
   object stringGrid: TStringGrid
     Left = 0
     Top = 0
-    Width = 982
-    Height = 516
+    Width = 974
+    Height = 504
     Align = alClient
     Color = clCream
     ColCount = 12
@@ -31,6 +29,8 @@ object FormActions: TFormActions
     PopupMenu = popupMenu
     TabOrder = 0
     OnContextPopup = stringGridContextPopup
+    ExplicitWidth = 982
+    ExplicitHeight = 516
     ColWidths = (
       156
       45

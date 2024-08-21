@@ -21,6 +21,8 @@ object FormMain: TFormMain
     Align = alRight
     Caption = 'XSprite Tools'
     TabOrder = 0
+    ExplicitLeft = 592
+    ExplicitHeight = 561
     object GroupBox3: TGroupBox
       Left = 2
       Top = 15
@@ -136,6 +138,8 @@ object FormMain: TFormMain
     Width = 854
     Height = 19
     Panels = <>
+    ExplicitTop = 561
+    ExplicitWidth = 850
   end
   object GroupBox2: TGroupBox
     Left = 0
@@ -145,6 +149,8 @@ object FormMain: TFormMain
     Align = alClient
     Caption = 'XSprite'
     TabOrder = 2
+    ExplicitWidth = 592
+    ExplicitHeight = 561
     object paintSprite: TPaintBox
       Left = 2
       Top = 15
@@ -167,6 +173,8 @@ object FormMain: TFormMain
       PageSize = 0
       TabOrder = 0
       OnChange = sbHChange
+      ExplicitTop = 541
+      ExplicitWidth = 588
     end
     object sbV: TScrollBar
       Left = 576
@@ -178,6 +186,8 @@ object FormMain: TFormMain
       PageSize = 0
       TabOrder = 1
       OnChange = sbVChange
+      ExplicitLeft = 572
+      ExplicitHeight = 526
     end
   end
   object MainMenu1: TMainMenu

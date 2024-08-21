@@ -16,7 +16,7 @@ __fastcall TFormName::TFormName(TComponent* Owner)
 }
 //---------------------------------------------------------------------------
 
-AnsiString TFormName::GetText()
+UnicodeString TFormName::GetText()
 {
   TReplaceFlags lFlags;
 
@@ -26,7 +26,7 @@ AnsiString TFormName::GetText()
 }
 //---------------------------------------------------------------------------
 
-void TFormName::SetText(AnsiString _v)
+void TFormName::SetText(UnicodeString _v)
 {
   TReplaceFlags lFlags;
 
