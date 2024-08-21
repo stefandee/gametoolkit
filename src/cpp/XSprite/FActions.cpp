@@ -293,11 +293,11 @@ void TFormActions::LoadActions(AnsiString _fileName)
       &lA.mRepeat
     );
 
-    lA.mName = lName;
-    lA.mXAlign = lXAlign;
-    lA.mYAlign = lYAlign;
-    lA.mEffect = lEffect;
-    lA.mInactive = lInactive;
+    lA.mName = UTF8Decode(lName);
+    lA.mXAlign = UTF8Decode(lXAlign);
+    lA.mYAlign = UTF8Decode(lYAlign);
+    lA.mEffect = UTF8Decode(lEffect);
+    lA.mInactive = UTF8Decode(lInactive);
     lA.SetStartFrame(lStartFrame);
     lA.SetEndFrame(lEndFrame);
 
@@ -364,15 +364,15 @@ void TFormActions::SaveActions(AnsiString _fileName)
     CAction lA = mActions[i];
 
     fprintf(lFile, "%s\t%d\t%d\t%d\t%d\t%s\t%s\t%s\t%s\t%d\t\n",
-      lA.mName.c_str(),
+      UTF8Encode(lA.mName).c_str(),
       lA.mId,
       lA.mUpdate,
       lA.GetStartFrame(),
       lA.GetEndFrame(),
-      lA.mXAlign.c_str(),
-      lA.mYAlign.c_str(),
-      lA.mEffect.c_str(),
-      lA.mInactive.c_str(),
+      UTF8Encode(lA.mXAlign).c_str(),
+      UTF8Encode(lA.mYAlign).c_str(),
+      UTF8Encode(lA.mEffect).c_str(),
+      UTF8Encode(lA.mInactive).c_str(),
       lA.mRepeat
     );
 

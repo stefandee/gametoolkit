@@ -1,4 +1,4 @@
-# The Piron Games C++ GameToolkit
+# Piron Games C++ GameToolkit
 
 This is a game toolkit that was used for development of several games and game tools by Piron Games. 
 
