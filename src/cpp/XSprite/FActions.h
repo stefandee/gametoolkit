@@ -55,27 +55,27 @@ __published:	// IDE-managed Components
 private:	// User declarations
         TPoint mLastPopupPoint;
         std::vector<CAction> mActions;
-        AnsiString mFileName;
+        UnicodeString mFileName;
 
         void DeleteRow(int _pos);
         void DeleteColumn(int _pos);
 
-        void LoadActions(AnsiString _fileName);
-        void SaveActions(AnsiString _fileName);
+        void LoadActions(UnicodeString _fileName);
+        void SaveActions(UnicodeString _fileName);
 
-        void Export(AnsiString _fileName);
+        void Export(UnicodeString _fileName);
 
         void ListToScreen();
         void ScreenToList();
-        AnsiString BuildSpeedsList(int _action, bool _what);
-        void StringToSpeeds(int, AnsiString, AnsiString);
+        UnicodeString BuildSpeedsList(int _action, bool _what);
+        void StringToSpeeds(int, UnicodeString, UnicodeString);
 
 public:		// User declarations
         __fastcall TFormActions(TComponent* Owner);
 
-        void SetFileName(AnsiString _fileName);
+        void SetFileName(UnicodeString _fileName);
 
-        char* GetData(AnsiString _fileName, int* _size);
+        char* GetData(UnicodeString _fileName, int* _size);
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TFormActions *FormActions;

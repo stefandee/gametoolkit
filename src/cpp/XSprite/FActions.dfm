@@ -29,8 +29,8 @@ object FormActions: TFormActions
     PopupMenu = popupMenu
     TabOrder = 0
     OnContextPopup = stringGridContextPopup
-    ExplicitWidth = 982
-    ExplicitHeight = 516
+    ExplicitWidth = 970
+    ExplicitHeight = 503
     ColWidths = (
       156
       45

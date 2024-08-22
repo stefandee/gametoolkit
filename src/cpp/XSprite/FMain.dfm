@@ -11,6 +11,7 @@ object FormMain: TFormMain
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   Menu = MainMenu1
+  Position = poDesktopCenter
   OnResize = FormResize
   TextHeight = 13
   object GroupBox1: TGroupBox

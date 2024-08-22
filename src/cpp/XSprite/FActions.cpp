@@ -4,8 +4,10 @@
 #include <stdio.h>
 #include <Clipbrd.hpp>
 #include <fstream>
+#include <sstream>
 #pragma hdrstop
 
+#include <system.hpp>
 #include "FActions.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
@@ -69,7 +71,7 @@ void TFormActions::ScreenToList()
     // effect
     stringGrid->Cells[7][i + 1] = stringGrid->Cells[7][i + 1].UpperCase();
 
-    AnsiString x = stringGrid->Cells[7][i + 1];
+    UnicodeString x = stringGrid->Cells[7][i + 1];
 
     if (stringGrid->Cells[7][i + 1] != "NORMAL" && stringGrid->Cells[7][i + 1] != "FLIPPED")
     {
@@ -125,9 +127,6 @@ void __fastcall TFormActions::stringGridContextPopup(TObject *Sender,
   TPoint ScreenPos = ClientToScreen(MousePos);
 
   stringGrid->MouseToCell(MousePos.x, MousePos.y, Column, Row);
-  //stringGrid->MouseToCell(ScreenPos.x, ScreenPos.y, Column, Row);
-
-  //stringGrid->Cells[Column][Row] = AnsiString(Column) + "," + AnsiString(Row);
 
   mLastPopupPoint = TPoint(Column, Row);
 
@@ -174,7 +173,7 @@ void __fastcall TFormActions::FormShow(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-void TFormActions::SetFileName(AnsiString _fileName)
+void TFormActions::SetFileName(UnicodeString _fileName)
 {
   mFileName = _fileName;
 }
@@ -186,37 +185,37 @@ void TFormActions::ListToScreen()
 
   for(unsigned int i = 0; i < mActions.size(); i++)
   {
-    stringGrid->Cells[0][i + 1] = AnsiString(mActions[i].mName.c_str()); //"ACTION NAME";
-    stringGrid->Cells[1][i + 1] = AnsiString(mActions[i].mId); //"ID";
-    stringGrid->Cells[2][i + 1] = AnsiString(mActions[i].mUpdate); //"UPDATE";
-    stringGrid->Cells[3][i + 1] = AnsiString(mActions[i].GetStartFrame()); //"START FRAME";
-    stringGrid->Cells[4][i + 1] = AnsiString(mActions[i].GetEndFrame()); //"END FRAME";
-    stringGrid->Cells[5][i + 1] = AnsiString(mActions[i].mXAlign.c_str()); //"X ALIGN";
-    stringGrid->Cells[6][i + 1] = AnsiString(mActions[i].mYAlign.c_str()); //"Y ALIGN";
-    stringGrid->Cells[7][i + 1] = AnsiString(mActions[i].mEffect.c_str()); //"EFFECT";
-    stringGrid->Cells[8][i + 1] = AnsiString(mActions[i].mInactive.c_str()); //"INACTIVE";
-    stringGrid->Cells[9][i + 1] = AnsiString(mActions[i].mRepeat); //"REPEAT";
+    stringGrid->Cells[0][i + 1] = mActions[i].mName; //"ACTION NAME";
+    stringGrid->Cells[1][i + 1] = UnicodeString(mActions[i].mId); //"ID";
+    stringGrid->Cells[2][i + 1] = UnicodeString(mActions[i].mUpdate); //"UPDATE";
+    stringGrid->Cells[3][i + 1] = UnicodeString(mActions[i].GetStartFrame()); //"START FRAME";
+    stringGrid->Cells[4][i + 1] = UnicodeString(mActions[i].GetEndFrame()); //"END FRAME";
+    stringGrid->Cells[5][i + 1] = mActions[i].mXAlign; //"X ALIGN";
+    stringGrid->Cells[6][i + 1] = mActions[i].mYAlign; //"Y ALIGN";
+    stringGrid->Cells[7][i + 1] = mActions[i].mEffect; //"EFFECT";
+    stringGrid->Cells[8][i + 1] = mActions[i].mInactive; //"INACTIVE";
+    stringGrid->Cells[9][i + 1] = UnicodeString(mActions[i].mRepeat); //"REPEAT";
     stringGrid->Cells[10][i + 1] = BuildSpeedsList(i, true); //"SPEEDS";
     stringGrid->Cells[11][i + 1] = BuildSpeedsList(i, false); //"SPEEDS";
   }
 }
 //---------------------------------------------------------------------------
 
-AnsiString TFormActions::BuildSpeedsList(int _action, bool _what)
+UnicodeString TFormActions::BuildSpeedsList(int _action, bool _what)
 {
-  AnsiString lResult = "";
+  UnicodeString lResult = "";
 
   for(unsigned int i = 0; i < mActions[_action].mSpeeds.size(); i++)
   {
-    AnsiString lToAdd;
+    UnicodeString lToAdd;
 
     if (_what)
     {
-      lToAdd = AnsiString(mActions[_action].mSpeeds[i].GetX()) + ",";
+      lToAdd = UnicodeString(mActions[_action].mSpeeds[i].GetX()) + ",";
     }
     else
     {
-      lToAdd = AnsiString(mActions[_action].mSpeeds[i].GetY()) + ",";
+      lToAdd = UnicodeString(mActions[_action].mSpeeds[i].GetY()) + ",";
     }
 
     lResult = lResult + lToAdd;
@@ -228,19 +227,19 @@ AnsiString TFormActions::BuildSpeedsList(int _action, bool _what)
 }
 //---------------------------------------------------------------------------
 
-void TFormActions::StringToSpeeds(int _action, AnsiString _xString, AnsiString _yString)
+void TFormActions::StringToSpeeds(int _action, UnicodeString _xString, UnicodeString _yString)
 {
   // build a vector by selecting values in the string
-  int lPosX = _xString.AnsiPos(",");
-  int lPosY = _yString.AnsiPos(",");
+  int lPosX = _xString.Pos(L",");
+  int lPosY = _yString.Pos(L",");
 
   mActions[_action].mSpeeds.clear();
 
   while(lPosX != 0 && lPosY != 0)
   {
     // get the possible integer
-    AnsiString lValueX = _xString.SubString(1, lPosX - 1);
-    AnsiString lValueY = _yString.SubString(1, lPosY - 1);
+    UnicodeString lValueX = _xString.SubString(1, lPosX - 1);
+    UnicodeString lValueY = _yString.SubString(1, lPosY - 1);
 
     CSpeed lSpeed = CSpeed(lValueX.ToIntDef(0), lValueY.ToIntDef(0));
 
@@ -250,8 +249,8 @@ void TFormActions::StringToSpeeds(int _action, AnsiString _xString, AnsiString _
     _xString = _xString.Delete(1, lPosX);
     _yString = _yString.Delete(1, lPosY);
 
-    lPosX = _xString.AnsiPos(",");
-    lPosY = _yString.AnsiPos(",");
+    lPosX = _xString.Pos(L",");
+    lPosY = _yString.Pos(L",");
   }
 
   mActions[_action].mSpeeds.push_back(CSpeed(_xString.ToIntDef(0), _yString.ToIntDef(0)));
@@ -260,20 +259,105 @@ void TFormActions::StringToSpeeds(int _action, AnsiString _xString, AnsiString _
 }
 //---------------------------------------------------------------------------
 
-void TFormActions::LoadActions(AnsiString _fileName)
+void TFormActions::LoadActions(UnicodeString _fileName)
 {
-  FILE* lFile;
-
-  lFile = fopen(_fileName.c_str(), "r+t");
-
-  if (!lFile)
-  {
-    ListToScreen();
-    return;
-  }
-
   mActions.clear();
 
+  ifstream infile(_fileName.c_str());
+
+  if (!infile.is_open())
+  {
+      ListToScreen();
+      return;
+  }
+
+  std::string line;
+
+  while (std::getline(infile, line))
+  {
+    std::string lName, lXAlign, lYAlign, lInactive, lEffect;
+    int  lStartFrame, lEndFrame;
+    CAction lA;
+
+    std::istringstream iss(line);
+
+    getline(iss, lName, '\t');
+
+    iss
+      >> lA.mId
+      >> lA.mUpdate
+      >> lStartFrame
+      >> lEndFrame
+      >> lXAlign
+      >> lYAlign
+      >> lEffect
+      >> lInactive
+      >> lA.mRepeat;
+
+    lA.mName = UTF8Decode(lName.c_str());
+    lA.mXAlign = UTF8Decode(lXAlign.c_str());
+    lA.mYAlign = UTF8Decode(lYAlign.c_str());
+    lA.mEffect = UTF8Decode(lEffect.c_str());
+    lA.mInactive = UTF8Decode(lInactive.c_str());
+    lA.SetStartFrame(lStartFrame);
+    lA.SetEndFrame(lEndFrame);
+
+    // correct these values?
+    if (lA.mXAlign != "LEFT" && lA.mXAlign != "RIGHT")
+    {
+      lA.mXAlign = "LEFT";
+    }
+
+    if (lA.mYAlign != "TOP" && lA.mYAlign != "BOTTOM")
+    {
+      lA.mYAlign = "TOP";
+    }
+
+    if (lA.mEffect != "NORMAL" && lA.mEffect != "FLIPPED")
+    {
+      lA.mEffect = "NORMAL";
+    }
+
+    if (lA.mInactive != "YES" && lA.mInactive != "NO")
+    {
+      lA.mInactive = "NO";
+    }
+
+    // read the speeds
+    lA.mSpeeds.clear();
+
+    if (!std::getline(infile, line))
+    {
+        break;
+    }
+
+    // read the speeds
+    int lSpeedNo;
+
+    std::istringstream iss2(line);
+    iss2 >> lSpeedNo;
+
+    for(int i = 0; i < lSpeedNo; i++)
+    {
+      if (!std::getline(infile, line))
+      {
+        break;
+      }
+
+      std::istringstream iss3(line);
+
+      std::string strSpeedX, strSpeedY;
+
+      getline(iss3, strSpeedX, '\t');
+      getline(iss3, strSpeedY, '\t');
+
+      lA.mSpeeds.push_back(CSpeed(UnicodeString(UTF8Decode(strSpeedX.c_str())).ToIntDef(0), UnicodeString(UTF8Decode(strSpeedY.c_str())).ToIntDef(0)));
+    }
+
+    mActions.push_back(lA);
+  }
+
+  /*
   while(!feof(lFile))
   {
     char lName[200], lXAlign[200], lYAlign[200], lInactive[200], lEffect[200];
@@ -340,61 +424,68 @@ void TFormActions::LoadActions(AnsiString _fileName)
 
     mActions.push_back(lA);
   }
+  */
 
   ListToScreen();
 
-  fclose(lFile);
+  infile.close();
+
+  //fclose(lFile);
 }
 //---------------------------------------------------------------------------
 
-void TFormActions::SaveActions(AnsiString _fileName)
+void TFormActions::SaveActions(UnicodeString _fileName)
 {
-  // open the file for writing
-  FILE* lFile;
+    ofstream outfile(_fileName.c_str());
 
-  lFile = fopen(_fileName.c_str(), "w+t");
-
-  if (!lFile)
-  {
-    return;
-  }
-
-  for(unsigned int i = 0; i < mActions.size(); i++)
-  {
-    CAction lA = mActions[i];
-
-    fprintf(lFile, "%s\t%d\t%d\t%d\t%d\t%s\t%s\t%s\t%s\t%d\t\n",
-      UTF8Encode(lA.mName).c_str(),
-      lA.mId,
-      lA.mUpdate,
-      lA.GetStartFrame(),
-      lA.GetEndFrame(),
-      UTF8Encode(lA.mXAlign).c_str(),
-      UTF8Encode(lA.mYAlign).c_str(),
-      UTF8Encode(lA.mEffect).c_str(),
-      UTF8Encode(lA.mInactive).c_str(),
-      lA.mRepeat
-    );
-
-    // write the speeds number
-    fprintf(lFile, "%d\n", lA.mSpeeds.size());
-
-    // write the speeds vector
-    for(unsigned int j = 0; j < lA.mSpeeds.size(); j++)
-    {
-      fprintf(lFile, "%d\t%d\n", lA.mSpeeds[j].GetX(), lA.mSpeeds[j].GetY()); 
+    if (!outfile.is_open()) {
+        return;
     }
-  }
 
-    /*
-    int  mUpdate;
-    int  mStartFrame, mEndFrame;
-    int  mXAlign, mYAlign;
-    bool mInactive;
-    int  mRepeat;
-    */
+      for(unsigned int i = 0; i < mActions.size(); i++)
+      {
+        CAction lA = mActions[i];
 
-  fclose(lFile);
+        // fprintf(lFile, "%s\t%d\t%d\t%d\t%d\t%s\t%s\t%s\t%s\t%d\t\n",
+
+        outfile <<
+          UTF8Encode(lA.mName).c_str() <<
+          "\t" <<
+          lA.mId <<
+          "\t" <<
+          lA.mUpdate <<
+          "\t" <<
+          lA.GetStartFrame() <<
+          "\t" <<
+          lA.GetEndFrame() <<
+          "\t" <<
+          UTF8Encode(lA.mXAlign).c_str() <<
+          "\t" <<
+          UTF8Encode(lA.mYAlign).c_str() <<
+          "\t" <<
+          UTF8Encode(lA.mEffect).c_str() <<
+          "\t" <<
+          UTF8Encode(lA.mInactive).c_str() <<
+          "\t" <<
+          lA.mRepeat <<
+          "\n";
+
+        // write the speeds number
+        auto speedsSize = lA.mSpeeds.size();
+
+        outfile << speedsSize << "\n";
+
+        // write the speeds vector
+        for(unsigned int j = 0; j < speedsSize; j++)
+        {
+          auto speedX = lA.mSpeeds[j].GetX();
+          auto speedY = lA.mSpeeds[j].GetY();
+
+          outfile << speedX << "\t" << speedY << "\n";
+        }
+      }
+
+    outfile.close();
 }
 //---------------------------------------------------------------------------
 
@@ -405,7 +496,7 @@ void __fastcall TFormActions::Correct1Click(TObject *Sender)
 //---------------------------------------------------------------------------
 
 // will transform the mActions into a binary form ready to be exported
-char* TFormActions::GetData(AnsiString _fileName, int* _size)
+char* TFormActions::GetData(UnicodeString _fileName, int* _size)
 {
   // load the actions from the file
   LoadActions(_fileName);
@@ -561,11 +652,11 @@ void __fastcall TFormActions::PastefromClipboard1Click(TObject *Sender)
   }
 
   // clipboard has some text in it, let's transform it
-  AnsiString lText = Clipboard()->AsText;
+  UnicodeString lText = Clipboard()->AsText;
 
-  AnsiString lType = "final static byte";
+  UnicodeString lType = "final static byte";
 
-  int lPos = lText.AnsiPos(lType);
+  int lPos = lText.Pos(lType);
 
   mActions.clear();
 
@@ -574,7 +665,7 @@ void __fastcall TFormActions::PastefromClipboard1Click(TObject *Sender)
     // cut the string of the type definition
     lText.Delete(lPos, lType.Length());
 
-    int lDelimiterPos = lText.AnsiPos(";");
+    int lDelimiterPos = lText.Pos(";");
 
     if (lDelimiterPos == 0)
     {
@@ -582,23 +673,20 @@ void __fastcall TFormActions::PastefromClipboard1Click(TObject *Sender)
     }
 
     // extract the string from the start to ";" pos
-    AnsiString lNameValue = lText.SubString(1, lDelimiterPos - 1);
+    UnicodeString lNameValue = lText.SubString(1, lDelimiterPos - 1);
 
     lNameValue.Trim();
 
     // search the "="
-    int lEqualPos = lNameValue.AnsiPos("=");
-
-    AnsiString lName = lNameValue.SubString(1, lEqualPos - 1).Trim();
-    AnsiString lValue = lNameValue.SubString(lEqualPos + 1, lText.Length() - lEqualPos - 1).Trim();
-
-    int lValueAsInt = lValue.ToIntDef(0);
+    int lEqualPos = lNameValue.Pos("=");
 
     // create and add the action
     CAction lA;
 
-    lA.mName = std::string(lName.c_str());
-    lA.mId   = lValueAsInt;
+    lA.mName = lNameValue.SubString(1, lEqualPos - 1).Trim();
+
+    UnicodeString lValue = lNameValue.SubString(lEqualPos + 1, lText.Length() - lEqualPos - 1).Trim();
+    lA.mId   = lValue.ToIntDef(0);
 
     mActions.push_back(lA);
 
@@ -606,7 +694,7 @@ void __fastcall TFormActions::PastefromClipboard1Click(TObject *Sender)
     lText.Delete(1, lDelimiterPos);
 
     // restart the process ;)
-    lPos = lText.AnsiPos(lType);
+    lPos = lText.Pos(lType);
   }
 
   ListToScreen();
@@ -623,7 +711,7 @@ void __fastcall TFormActions::Export1Click(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-void TFormActions::Export(AnsiString _fileName)
+void TFormActions::Export(UnicodeString _fileName)
 {
   // open the file
   std::fstream lFile;
