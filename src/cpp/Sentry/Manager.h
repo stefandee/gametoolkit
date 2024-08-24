@@ -108,7 +108,7 @@ template <class T>int CManager<T>::Clone(int index)
 
 template <class T>int CManager<T>::Delete(int index)
 {
-  std::vector<T>::iterator it = mList.begin() + index;
+  auto it = mList.begin() + index;
 
   mList.erase(it);
 

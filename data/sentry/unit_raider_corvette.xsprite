@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xsprite version="1.0">
     <images>
-        <image id="4096" file="E:\Home\Karg\Projects\Haxe\OrbitalDecay\data\sprites\game\unit_raider_corvette.bmp" transparent="16711935" info="No Info" />
+        <image id="4096" file="unit_raider_corvette.bmp" transparent="16711935" info="No Info" />
     </images>
     <modules>
         <module id="4096" imageid="4096" x="7" y="2" width="33" height="45" info="No info" />

@@ -9,7 +9,7 @@
         <Projects Include="jadupdate\JadUpdate.cbproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="..\..\src\cpp\TestPNG\TestPNG.cbproj">
+        <Projects Include="TestPNG\TestPNG.cbproj">
             <Dependencies/>
         </Projects>
         <Projects Include="DataGrowth\DataGrowth.cbproj">
@@ -25,6 +25,9 @@
             <Dependencies/>
         </Projects>
         <Projects Include="XSprite\XSprite.cbproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Sentry\Sentry.cbproj">
             <Dependencies/>
         </Projects>
     </ItemGroup>
@@ -54,13 +57,13 @@
         <MSBuild Projects="jadupdate\JadUpdate.cbproj" Targets="Make"/>
     </Target>
     <Target Name="TestPNG">
-        <MSBuild Projects="..\..\src\cpp\TestPNG\TestPNG.cbproj"/>
+        <MSBuild Projects="TestPNG\TestPNG.cbproj"/>
     </Target>
     <Target Name="TestPNG:Clean">
-        <MSBuild Projects="..\..\src\cpp\TestPNG\TestPNG.cbproj" Targets="Clean"/>
+        <MSBuild Projects="TestPNG\TestPNG.cbproj" Targets="Clean"/>
     </Target>
     <Target Name="TestPNG:Make">
-        <MSBuild Projects="..\..\src\cpp\TestPNG\TestPNG.cbproj" Targets="Make"/>
+        <MSBuild Projects="TestPNG\TestPNG.cbproj" Targets="Make"/>
     </Target>
     <Target Name="DataGrowth">
         <MSBuild Projects="DataGrowth\DataGrowth.cbproj"/>
@@ -107,14 +110,23 @@
     <Target Name="XSprite:Make">
         <MSBuild Projects="XSprite\XSprite.cbproj" Targets="Make"/>
     </Target>
+    <Target Name="Sentry">
+        <MSBuild Projects="Sentry\Sentry.cbproj"/>
+    </Target>
+    <Target Name="Sentry:Clean">
+        <MSBuild Projects="Sentry\Sentry.cbproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Sentry:Make">
+        <MSBuild Projects="Sentry\Sentry.cbproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="PironGamesComponents;JadUpdate;TestPNG;DataGrowth;CurveEd;StringTool;SprEd;XSprite"/>
+        <CallTarget Targets="PironGamesComponents;JadUpdate;TestPNG;DataGrowth;CurveEd;StringTool;SprEd;XSprite;Sentry"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="PironGamesComponents:Clean;JadUpdate:Clean;TestPNG:Clean;DataGrowth:Clean;CurveEd:Clean;StringTool:Clean;SprEd:Clean;XSprite:Clean"/>
+        <CallTarget Targets="PironGamesComponents:Clean;JadUpdate:Clean;TestPNG:Clean;DataGrowth:Clean;CurveEd:Clean;StringTool:Clean;SprEd:Clean;XSprite:Clean;Sentry:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="PironGamesComponents:Make;JadUpdate:Make;TestPNG:Make;DataGrowth:Make;CurveEd:Make;StringTool:Make;SprEd:Make;XSprite:Make"/>
+        <CallTarget Targets="PironGamesComponents:Make;JadUpdate:Make;TestPNG:Make;DataGrowth:Make;CurveEd:Make;StringTool:Make;SprEd:Make;XSprite:Make;Sentry:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

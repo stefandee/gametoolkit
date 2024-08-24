@@ -1,10 +1,10 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
-        <ProjectGuid>{59116095-7A40-49B5-AD85-3CA1A41483A9}</ProjectGuid>
+        <ProjectGuid>{3DB72CC4-1312-4886-A798-760B2E894C77}</ProjectGuid>
         <ProjectVersion>19.5</ProjectVersion>
         <FrameworkType>VCL</FrameworkType>
         <AppType>Application</AppType>
-        <MainSource>TestPNG.cpp</MainSource>
+        <MainSource>Sentry.cpp</MainSource>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Debug</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
@@ -50,23 +50,23 @@
         <DCC_CBuilderOutput>JPHNE</DCC_CBuilderOutput>
         <DynamicRTL>true</DynamicRTL>
         <UsePackages>true</UsePackages>
-        <IntermediateOutputDir>..\..\..\tmp\DataGrowth\$(Platform)\$(Config)</IntermediateOutputDir>
-        <FinalOutputDir>..\..\..\bin\TestPNG\$(Platform)\$(Config)</FinalOutputDir>
+        <IntermediateOutputDir>..\..\..\tmp\Sentry\$(Platform)\$(Config)</IntermediateOutputDir>
+        <FinalOutputDir>..\..\..\bin\Sentry\$(Platform)\$(Config)</FinalOutputDir>
         <BCC_wpar>false</BCC_wpar>
         <BCC_OptimizeForSpeed>true</BCC_OptimizeForSpeed>
         <BCC_ExtendedErrorInfo>true</BCC_ExtendedErrorInfo>
         <ILINK_TranslatedLibraryPath>$(BDSLIB)\$(PLATFORM)\release\$(LANGDIR);$(ILINK_TranslatedLibraryPath)</ILINK_TranslatedLibraryPath>
         <ProjectType>CppVCLApplication</ProjectType>
         <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;$(DCC_Namespace)</DCC_Namespace>
-        <AllPackageLibs>rtl.lib;vcl.lib</AllPackageLibs>
+        <AllPackageLibs>rtl.lib;vcl.lib;bcbsmp.lib;vclx.lib;PironGamesComponents.lib</AllPackageLibs>
         <_TCHARMapping>wchar_t</_TCHARMapping>
         <Multithreaded>true</Multithreaded>
         <Icon_MainIcon>$(BDS)\bin\cbuilder_PROJECTICON.ico</Icon_MainIcon>
         <UWP_CppLogo44>$(BDS)\bin\Artwork\Windows\UWP\cppreg_UwpDefault_44.png</UWP_CppLogo44>
         <UWP_CppLogo150>$(BDS)\bin\Artwork\Windows\UWP\cppreg_UwpDefault_150.png</UWP_CppLogo150>
-        <IncludePath>..\..\..\lib\pngdib\;E:\Projects\github\gametoolkit\src\cpp\TestPNG\;E:\Projects\github\gametoolkit\src\cpp\include\zlib;E:\Projects\github\gametoolkit\lib\pngdib;E:\Projects\github\gametoolkit\src\cpp\include\pnglib;$(IncludePath)</IncludePath>
-        <ILINK_LibraryPath>..\..\..\lib\pngdib\;..\pngdib\;E:\Projects\github\gametoolkit\src\cpp\TestPNG\;E:\Projects\github\gametoolkit\lib\bcb6;$(ILINK_LibraryPath)</ILINK_LibraryPath>
-        <SanitizedProjectName>TestPNG</SanitizedProjectName>
+        <SanitizedProjectName>Sentry</SanitizedProjectName>
+        <IncludePath>..\..\..\src\cpp\Common\MiniCsl\NativeLib\;..\..\..\src\cpp\Common\MiniCsl\Base\;..\..\..\src\cpp\Common\MiniCsl\Csl\;..\..\..\lib\tinyxml2\;..\..\..\src\cpp\Sentry\;.\;..\..\..\src\cpp\Common;$(IncludePath)</IncludePath>
+        <ILINK_LibraryPath>..\..\..\src\cpp\Common\MiniCsl\NativeLib\;..\..\..\src\cpp\Common\MiniCsl\Base\;..\..\..\src\cpp\Common\MiniCsl\Csl\;..\..\..\lib\tinyxml2\;..\..\..\src\cpp\Sentry\;E:\Projects\github\gametoolkit\dev\bcb\Sentry\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
         <VerInfo_Locale>2057</VerInfo_Locale>
         <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
     </PropertyGroup>
@@ -79,13 +79,12 @@
         <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
-        <BCC_PCHName_Clang>TestPNGPCH1.h</BCC_PCHName_Clang>
-        <ILINK_LibraryPath>E:\Projects\github\gametoolkit\lib\bcb6\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
+        <BCC_PCHName_Clang>SentryPCH1.h</BCC_PCHName_Clang>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win64)'!=''">
         <PackageImports>adortl;appanalytics;bcbie;bcbsmp;bindcomp;bindcompdbx;bindcompfmx;bindcompvcl;bindcompvclsmp;bindcompvclwinx;bindengine;CloudService;CustomIPTransport;dbexpress;dbrtl;dbxcds;DbxClientDriver;DbxCommonDriver;DBXInterBaseDriver;DBXMySQLDriver;DBXSqliteDriver;dsnap;dsnapcon;dsnapxml;FireDAC;FireDACADSDriver;FireDACCommon;FireDACCommonDriver;FireDACCommonODBC;FireDACIBDriver;FireDACMSAccDriver;FireDACMySQLDriver;FireDACPgDriver;FireDACSqliteDriver;fmx;fmxase;fmxdae;fmxFireDAC;fmxobj;FMXTee;FmxTeeUI;IndyCore;IndyIPClient;IndyIPCommon;IndyIPServer;IndyProtocols;IndySystem;inet;inetdb;inetdbxpress;RESTBackendComponents;RESTComponents;rtl;soapmidas;soaprtl;soapserver;Tee;TeeDB;TeeUI;tethering;vcl;vclactnband;vcldb;vcldsnap;vcledge;vclFireDAC;vclie;vclimg;VCLRESTComponents;VclSmp;vcltouch;vclwinx;vclx;xmlrtl;$(PackageImports)</PackageImports>
         <IncludePath>$(BDSINCLUDE)\windows\vcl;$(IncludePath)</IncludePath>
-        <BCC_PCHName_Clang>TestPNGPCH1.h</BCC_PCHName_Clang>
+        <BCC_PCHName_Clang>SentryPCH1.h</BCC_PCHName_Clang>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1)'!=''">
         <BCC_OptimizeForSpeed>false</BCC_OptimizeForSpeed>
@@ -113,7 +112,7 @@
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <BCC_UseClassicCompiler>false</BCC_UseClassicCompiler>
         <ILINK_LibraryPath>$(BDSLIB)\$(PLATFORM)$(CC_SUFFIX)\debug;$(ILINK_LibraryPath)</ILINK_LibraryPath>
-        <LinkPackageImports>rtl.bpi;vcl.bpi</LinkPackageImports>
+        <LinkPackageImports>rtl.bpi;vcl.bpi;bcbsmp.bpi;vclx.bpi;PironGamesComponents.bpi</LinkPackageImports>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
     </PropertyGroup>
@@ -126,31 +125,168 @@
         <BCC_UseClassicCompiler>false</BCC_UseClassicCompiler>
     </PropertyGroup>
     <ItemGroup>
-        <LibFiles Include="..\..\..\lib\bcb6\libpng.lib" Condition="'$(Platform)'=='Win32'">
-            <BuildOrder>4</BuildOrder>
-            <IgnorePath>true</IgnorePath>
-        </LibFiles>
-        <LibFiles Include="..\..\..\lib\bcb6\zlib.lib" Condition="'$(Platform)'=='Win32'">
-            <BuildOrder>5</BuildOrder>
-            <IgnorePath>true</IgnorePath>
-        </LibFiles>
-        <CppCompile Include="..\..\..\lib\pngdib\pngdib.cpp">
-            <BuildOrder>5</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="TestPNG.cpp">
+        <CppCompile Include="Sentry.cpp">
             <BuildOrder>0</BuildOrder>
         </CppCompile>
-        <PCHCompile Include="TestPNGPCH1.h">
+        <PCHCompile Include="SentryPCH1.h">
             <BuildOrder>1</BuildOrder>
             <PCH>true</PCH>
         </PCHCompile>
-        <CppCompile Include="Unit1.cpp">
-            <Form>Form1</Form>
+        <CppCompile Include="..\..\..\lib\tinyxml2\tinyxml2.cpp">
+            <BuildOrder>14</BuildOrder>
+        </CppCompile>
+        <None Include="..\..\..\lib\tinyxml2\tinyxml2.h">
+            <BuildOrder>43</BuildOrder>
+        </None>
+        <CppCompile Include="..\..\..\src\cpp\Common\MiniCsl\Base\ZCallback.cpp">
+            <BuildOrder>33</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Common\MiniCsl\Base\ZDate.cpp">
+            <BuildOrder>38</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Common\MiniCsl\Base\ZExcept.cpp">
+            <BuildOrder>22</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Common\MiniCsl\Base\ZFile.cpp">
+            <BuildOrder>36</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Common\MiniCsl\Base\ZPlatfrm.cpp">
+            <BuildOrder>35</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Common\MiniCsl\Base\ZProcess.cpp">
+            <BuildOrder>24</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Common\MiniCsl\Base\ZPtrlist.cpp">
+            <BuildOrder>25</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Common\MiniCsl\Base\ZRegular.cpp">
+            <BuildOrder>26</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Common\MiniCsl\Base\ZResrce.cpp">
+            <BuildOrder>34</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Common\MiniCsl\Base\ZString.cpp">
+            <BuildOrder>27</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Common\MiniCsl\Base\ZTrace.cpp">
+            <BuildOrder>28</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Common\MiniCsl\Csl\Block.cpp">
+            <BuildOrder>15</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Common\MiniCsl\Csl\Compile.cpp">
+            <BuildOrder>16</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Common\MiniCsl\Csl\Function.cpp">
+            <BuildOrder>17</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Common\MiniCsl\Csl\Input.cpp">
+            <BuildOrder>31</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Common\MiniCsl\Csl\Instruct.cpp">
+            <BuildOrder>18</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Common\MiniCsl\Csl\Interprt.cpp">
+            <BuildOrder>32</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Common\MiniCsl\Csl\Library.cpp">
+            <BuildOrder>19</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Common\MiniCsl\Csl\Parametr.cpp">
+            <BuildOrder>20</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Common\MiniCsl\Csl\Utility.cpp">
+            <BuildOrder>30</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Common\MiniCsl\Csl\Variable.cpp">
+            <BuildOrder>21</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Common\MiniCsl\Csl\ZCsl.cpp">
+            <BuildOrder>41</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Common\MiniCsl\NativeLib\ZcStrLib.cpp">
+            <BuildOrder>29</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Common\MiniCsl\NativeLib\ZFileLib.cpp">
+            <DependentOn>..\..\..\src\cpp\Common\MiniCsl\NativeLib\ZFileLib.h</DependentOn>
+            <BuildOrder>39</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Common\MiniCsl\NativeLib\ZLibrary.cpp">
+            <DependentOn>..\..\..\src\cpp\Common\MiniCsl\NativeLib\ZLibrary.h</DependentOn>
+            <BuildOrder>23</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Common\MiniCsl\NativeLib\ZMathLib.cpp">
+            <DependentOn>..\..\..\src\cpp\Common\MiniCsl\NativeLib\ZMathLib.h</DependentOn>
+            <BuildOrder>42</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Common\MiniCsl\NativeLib\ZPixelLib.cpp">
+            <DependentOn>..\..\..\src\cpp\Common\MiniCsl\NativeLib\ZPixelLib.h</DependentOn>
+            <BuildOrder>37</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Common\MiniCsl\NativeLib\ZStringLib.cpp">
+            <DependentOn>..\..\..\src\cpp\Common\MiniCsl\NativeLib\ZStringLib.h</DependentOn>
+            <BuildOrder>40</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Sentry\AppConfig.cpp">
+            <DependentOn>..\..\..\src\cpp\Sentry\AppConfig.h</DependentOn>
+            <BuildOrder>6</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Sentry\Defines.cpp">
+            <DependentOn>..\..\..\src\cpp\Sentry\Defines.h</DependentOn>
+            <BuildOrder>12</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Sentry\FAbout.cpp">
+            <Form>FormAbout</Form>
             <FormType>dfm</FormType>
-            <DependentOn>Unit1.h</DependentOn>
+            <DependentOn>..\..\..\src\cpp\Sentry\FAbout.h</DependentOn>
+            <BuildOrder>9</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Sentry\FMain.cpp">
+            <Form>FormMain</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>..\..\..\src\cpp\Sentry\FMain.h</DependentOn>
+            <BuildOrder>3</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Sentry\FOptions.cpp">
+            <Form>FormOptions</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>..\..\..\src\cpp\Sentry\FOptions.h</DependentOn>
+            <BuildOrder>7</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Sentry\FScript.cpp">
+            <Form>FormScript</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>..\..\..\src\cpp\Sentry\FScript.h</DependentOn>
+            <BuildOrder>8</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Sentry\ImageCache.cpp">
+            <DependentOn>..\..\..\src\cpp\Sentry\ImageCache.h</DependentOn>
+            <BuildOrder>5</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Sentry\Manager.cpp">
+            <DependentOn>..\..\..\src\cpp\Sentry\Manager.h</DependentOn>
+            <BuildOrder>13</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Sentry\MouseWork.cpp">
+            <DependentOn>..\..\..\src\cpp\Sentry\MouseWork.h</DependentOn>
+            <BuildOrder>11</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Sentry\Script.cpp">
+            <DependentOn>..\..\..\src\cpp\Sentry\Script.h</DependentOn>
+            <BuildOrder>4</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Sentry\Unit1.cpp">
+            <DependentOn>..\..\..\src\cpp\Sentry\Unit1.h</DependentOn>
+            <BuildOrder>10</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Sentry\XSpriteDesigner.cpp">
+            <DependentOn>..\..\..\src\cpp\Sentry\XSpriteDesigner.h</DependentOn>
             <BuildOrder>2</BuildOrder>
         </CppCompile>
-        <FormResources Include="Unit1.dfm"/>
+        <FormResources Include="..\..\..\src\cpp\Sentry\FMain.dfm"/>
+        <FormResources Include="..\..\..\src\cpp\Sentry\FOptions.dfm"/>
+        <FormResources Include="..\..\..\src\cpp\Sentry\FScript.dfm"/>
+        <FormResources Include="..\..\..\src\cpp\Sentry\FAbout.dfm"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -175,7 +311,7 @@
                     <ProjectProperties Name="IndexFiles">False</ProjectProperties>
                 </ProjectProperties>
                 <Source>
-                    <Source Name="MainSource">TestPNG.cpp</Source>
+                    <Source Name="MainSource">Sentry.cpp</Source>
                 </Source>
                 <Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\bcboffice2k280.bpl">Embarcadero C++Builder Office 2000 Servers Package</Excluded_Packages>
@@ -233,27 +369,15 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\bin\TestPNG\Win32\Debug\TestPNG.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="..\..\..\bin\Sentry\Win32\Debug\Sentry.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
-                        <RemoteName>TestPNG.exe</RemoteName>
+                        <RemoteName>Sentry.exe</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\bin\TestPNG\Win32\Debug\TestPNG.tds" Configuration="Debug" Class="DebugSymbols">
+                <DeployFile LocalName="..\..\..\bin\Sentry\Win32\Debug\Sentry.tds" Configuration="Debug" Class="DebugSymbols">
                     <Platform Name="Win32">
-                        <RemoteName>TestPNG.tds</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="..\..\..\lib\bcb6\libpng.lib" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win32">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="..\..\..\lib\bcb6\zlib.lib" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win32">
-                        <RemoteDir>.\</RemoteDir>
+                        <RemoteName>Sentry.tds</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>

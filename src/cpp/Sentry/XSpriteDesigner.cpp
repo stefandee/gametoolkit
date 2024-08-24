@@ -1,12 +1,12 @@
-#include "tinyxml2.h"
-//---------------------------------------------------------------------------
-
 #include <SysUtils.hpp>
 #pragma hdrstop
+//---------------------------------------------------------------------------
 
+#include "tinyxml2.h"
 #include "XSpriteDesigner.h"
 #include "Script.h"
 
+using namespace tinyxml2;
 //---------------------------------------------------------------------------
 
 void CImage::SetFileName(std::string filename)
@@ -90,18 +90,18 @@ bool CXSpriteDesigner::Save(std::string fileName)
 {
   mState = SPR_DOC_STATE_SAVED;
 
-  TiXmlDocument doc;
+  tinyxml2::XMLDocument doc;
 
   doc.Parse("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
 
-  TiXmlElement root("xsprite");
-  root.SetAttribute("version", "1.0");
+  XMLElement* root = doc.NewElement("xsprite");
+  root->SetAttribute("version", "1.0");
 
   //
   // Write images tag
   //
 
-  TiXmlElement images("images");
+  XMLElement* images = doc.NewElement("images");
 
   for(int i = 0; i < mImagesManager.Size(); i++)
   {
