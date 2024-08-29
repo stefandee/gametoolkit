@@ -1,27 +1,25 @@
 object FormOptions: TFormOptions
   Left = 746
   Top = 312
-  Width = 411
-  Height = 325
   Caption = 'Options'
+  ClientHeight = 286
+  ClientWidth = 395
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
-  OldCreateOrder = False
-  PixelsPerInch = 96
   TextHeight = 13
   object PageControl1: TPageControl
     Left = 0
     Top = 0
-    Width = 403
+    Width = 395
     Height = 261
     ActivePage = TabColorMap
     Align = alTop
-    TabIndex = 5
     TabOrder = 0
+    ExplicitWidth = 403
     object TabGeneral: TTabSheet
       Caption = 'General'
     end
@@ -637,7 +635,6 @@ object FormOptions: TFormOptions
     OnClick = btnResetClick
   end
   object ColorDialog: TColorDialog
-    Ctl3D = True
     Left = 372
   end
 end

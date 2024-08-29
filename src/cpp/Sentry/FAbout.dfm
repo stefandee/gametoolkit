@@ -13,9 +13,7 @@ object FormAbout: TFormAbout
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   FormStyle = fsStayOnTop
-  OldCreateOrder = True
   Position = poDesktopCenter
-  PixelsPerInch = 96
   TextHeight = 13
   object MemoInfo: TMemo
     Left = 4
@@ -51,15 +49,15 @@ object FormAbout: TFormAbout
     object HttpLabel1: THttpLabel
       Left = 52
       Top = 36
-      Width = 51
+      Width = 87
       Height = 13
-      Link = 'http://sourceforge.net/projects/lethalmetal'
+      Link = 'https://www.pirongames.com'
       FontMouseOver.Charset = DEFAULT_CHARSET
       FontMouseOver.Color = clWindowText
       FontMouseOver.Height = -11
       FontMouseOver.Name = 'MS Sans Serif'
       FontMouseOver.Style = []
-      Caption = 'Karg/Piron'
+      Caption = 'Karg/Piron Games'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlue
       Font.Height = -11

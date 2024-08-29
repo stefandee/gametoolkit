@@ -4,10 +4,10 @@
 #pragma hdrstop
 #include <tchar.h>
 //---------------------------------------------------------------------------
+USEFORM("..\..\..\src\cpp\Sentry\FAbout.cpp", FormAbout);
 USEFORM("..\..\..\src\cpp\Sentry\FMain.cpp", FormMain);
 USEFORM("..\..\..\src\cpp\Sentry\FOptions.cpp", FormOptions);
 USEFORM("..\..\..\src\cpp\Sentry\FScript.cpp", FormScript);
-USEFORM("..\..\..\src\cpp\Sentry\FAbout.cpp", FormAbout);
 //---------------------------------------------------------------------------
 int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 {

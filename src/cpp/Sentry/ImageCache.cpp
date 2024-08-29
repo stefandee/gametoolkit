@@ -50,9 +50,9 @@ bool ImageCache::Add(std::string fileName)
     return false;
   }
 
-  std::wstring tmpFileName = std::wstring(fileName.begin(), fileName.end());
+  auto tmpFileName = UTF8ToUnicodeString(fileName.c_str());
 
-  Gdiplus::Bitmap* tmpBmp = Gdiplus::Bitmap::FromFile(tmpFileName.c_str(), true);
+  Gdiplus::Bitmap* tmpBmp = Gdiplus::Bitmap::FromFile(tmpFileName.c_str());
 
   if (!tmpBmp)
   {

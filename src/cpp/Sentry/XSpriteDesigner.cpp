@@ -94,202 +94,202 @@ bool CXSpriteDesigner::Save(std::string fileName)
 
   doc.Parse("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
 
-  XMLElement* root = doc.NewElement("xsprite");
+  auto root = doc.NewElement("xsprite");
   root->SetAttribute("version", "1.0");
 
   //
   // Write images tag
   //
 
-  XMLElement* images = doc.NewElement("images");
+  auto images = doc.NewElement("images");
 
   for(int i = 0; i < mImagesManager.Size(); i++)
   {
     CImage image = mImagesManager.Get(i);
 
-    TiXmlElement imageElem("image");
-    imageElem.SetAttribute("id", image.GetId());
-    imageElem.SetAttribute("file", image.GetFileName().c_str());
-    imageElem.SetAttribute("transparent", image.GetTransparentColor());
-    imageElem.SetAttribute("info", image.GetInfo().c_str());
+    auto imageElem = doc.NewElement("image");
+    imageElem->SetAttribute("id", image.GetId());
+    imageElem->SetAttribute("file", image.GetFileName().c_str());
+    imageElem->SetAttribute("transparent", image.GetTransparentColor());
+    imageElem->SetAttribute("info", image.GetInfo().c_str());
 
     //
     // build colormaps tag for this image
     //
-    TiXmlElement colorMapsElem("colormaps");
+    auto colorMapsElem = doc.NewElement("colormaps");
 
     for(int i = 0; i < image.mColorMaps.Size(); i++)
     {
       CColorMap colorMap = image.mColorMaps.Get(i);
 
-      TiXmlElement colorMapElem("colormap");
+      auto colorMapElem = doc.NewElement("colormap");
 
-      colorMapElem.SetAttribute("id",       colorMap.GetId());
+      colorMapElem->SetAttribute("id",       colorMap.GetId());
       //colorMapElem.SetAttribute("mImageId", colorMap.GetImageId());
-      colorMapElem.SetAttribute("info",     colorMap.GetInfo().c_str());
+      colorMapElem->SetAttribute("info",     colorMap.GetInfo().c_str());
 
       for(int j = 0; j < colorMap.mItems.Size(); j++)
       {
         CColorMapItem colorMapItem = colorMap.mItems.Get(j);
 
-        TiXmlElement colorMapItemElem("colormapitem");
+        auto colorMapItemElem = doc.NewElement("colormapitem");
 
-        colorMapItemElem.SetAttribute("id",  colorMapItem.GetId());
-        colorMapItemElem.SetAttribute("src", colorMapItem.GetSrcColor());
-        colorMapItemElem.SetAttribute("dst", colorMapItem.GetDstColor());
+        colorMapItemElem->SetAttribute("id",  colorMapItem.GetId());
+        colorMapItemElem->SetAttribute("src", colorMapItem.GetSrcColor());
+        colorMapItemElem->SetAttribute("dst", colorMapItem.GetDstColor());
 
-        colorMapElem.InsertEndChild(colorMapItemElem);
+        colorMapElem->InsertEndChild(colorMapItemElem);
       }
 
-      colorMapsElem.InsertEndChild(colorMapElem);
+      colorMapsElem->InsertEndChild(colorMapElem);
     }
 
-    root.InsertEndChild(colorMapsElem);
+    root->InsertEndChild(colorMapsElem);
 
-    images.InsertEndChild(imageElem);
+    images->InsertEndChild(imageElem);
   }
 
-  root.InsertEndChild(images);
+  root->InsertEndChild(images);
 
   //
   // Write modules tag
   //
-  TiXmlElement modules("modules");
+  auto modules = doc.NewElement("modules");
 
   for(int i = 0; i < mModulesManager.Size(); i++)
   {
     CModule item = mModulesManager.Get(i);
 
-    TiXmlElement module("module");
-    module.SetAttribute("id", item.GetId());
-    module.SetAttribute("imageid", item.GetImageId());
-    module.SetAttribute("x", item.GetX());
-    module.SetAttribute("y", item.GetY());
-    module.SetAttribute("width", item.GetWidth());
-    module.SetAttribute("height", item.GetHeight());
-    module.SetAttribute("info", item.GetInfo().c_str());
+    auto module = doc.NewElement("module");
+    module->SetAttribute("id", item.GetId());
+    module->SetAttribute("imageid", item.GetImageId());
+    module->SetAttribute("x", item.GetX());
+    module->SetAttribute("y", item.GetY());
+    module->SetAttribute("width", item.GetWidth());
+    module->SetAttribute("height", item.GetHeight());
+    module->SetAttribute("info", item.GetInfo().c_str());
 
-    modules.InsertEndChild(module);
+    modules->InsertEndChild(module);
   }
 
-  root.InsertEndChild(modules);
+  root->InsertEndChild(modules);
 
   //
   // Write frames tag
   //
-  TiXmlElement frames("frames");
+  auto frames = doc.NewElement("frames");
 
   for(int i = 0; i < mFramesManager.Size(); i++)
   {
     CFrame item = mFramesManager.Get(i);
 
-    TiXmlElement frame("frame");
+    auto frame = doc.NewElement("frame");
 
-    frame.SetAttribute("id", item.GetId());
-    frame.SetAttribute("info", item.GetInfo().c_str());
+    frame->SetAttribute("id", item.GetId());
+    frame->SetAttribute("info", item.GetInfo().c_str());
 
     // build the frame modules tag
-    TiXmlElement fmodules("fmodules");
+    XMLElement* fmodules = doc.NewElement("fmodules");
 
     for(int j = 0; j < item.mFModules.Size(); j++)
     {
       CFrameModule fmoduleItem = item.mFModules.Get(j);
 
-      TiXmlElement fmodule("fmodule");
+      auto fmodule = doc.NewElement("fmodule");
 
-      fmodule.SetAttribute("moduleid", fmoduleItem.GetModuleId());
-      fmodule.SetAttribute("x", fmoduleItem.GetPos().mX);
-      fmodule.SetAttribute("y", fmoduleItem.GetPos().mY);
-      fmodule.SetAttribute("flags", fmoduleItem.GetFlags());
+      fmodule->SetAttribute("moduleid", fmoduleItem.GetModuleId());
+      fmodule->SetAttribute("x", fmoduleItem.GetPos().mX);
+      fmodule->SetAttribute("y", fmoduleItem.GetPos().mY);
+      fmodule->SetAttribute("flags", fmoduleItem.GetFlags());
 
-      fmodules.InsertEndChild(fmodule);
+      fmodules->InsertEndChild(fmodule);
     }
 
-    frame.InsertEndChild(fmodules);
+    frame->InsertEndChild(fmodules);
 
     // build the frame logic tag
-    TiXmlElement flogics("flogics");
+    XMLElement* flogics = doc.NewElement("flogics");
 
     for(int j = 0; j < item.mFLogic.Size(); j++)
     {
       CFrameLogic flogicA = item.mFLogic.Get(j);
 
-      TiXmlElement flogic("flogic");
+      XMLElement* flogic = doc.NewElement("flogic");
 
-      flogic.SetAttribute("id", flogicA.GetId());
-      flogic.SetAttribute("info", flogicA.GetInfo().c_str());
+      flogic->SetAttribute("id", flogicA.GetId());
+      flogic->SetAttribute("info", flogicA.GetInfo().c_str());
 
       for(int k = 0; k < flogicA.mItems.Size(); k++)
       {
         CFrameLogicItem flogicItem = flogicA.mItems.Get(k);
 
-        TiXmlElement xmlElemFLogicItem("flogicitem");
+        auto xmlElemFLogicItem = doc.NewElement("flogicitem");
 
-        xmlElemFLogicItem.SetAttribute("id", flogicItem.GetId());
-        xmlElemFLogicItem.SetAttribute("type", flogicItem.GetType());
+        xmlElemFLogicItem->SetAttribute("id", flogicItem.GetId());
+        xmlElemFLogicItem->SetAttribute("type", flogicItem.GetType());
 
         switch(flogicItem.GetType())
         {
           case FRAME_LOGIC_ITEM_POINT:
-            xmlElemFLogicItem.SetAttribute("x", flogicItem.GetX());
-            xmlElemFLogicItem.SetAttribute("y", flogicItem.GetY());
+            xmlElemFLogicItem->SetAttribute("x", flogicItem.GetX());
+            xmlElemFLogicItem->SetAttribute("y", flogicItem.GetY());
             break;
 
           case FRAME_LOGIC_ITEM_RECT:
-            xmlElemFLogicItem.SetAttribute("x", flogicItem.GetX());
-            xmlElemFLogicItem.SetAttribute("y", flogicItem.GetY());
-            xmlElemFLogicItem.SetAttribute("w", flogicItem.GetWidth());
-            xmlElemFLogicItem.SetAttribute("h", flogicItem.GetHeight());
+            xmlElemFLogicItem->SetAttribute("x", flogicItem.GetX());
+            xmlElemFLogicItem->SetAttribute("y", flogicItem.GetY());
+            xmlElemFLogicItem->SetAttribute("w", flogicItem.GetWidth());
+            xmlElemFLogicItem->SetAttribute("h", flogicItem.GetHeight());
             break;
         }
 
-        flogic.InsertEndChild(xmlElemFLogicItem);
+        flogic->InsertEndChild(xmlElemFLogicItem);
       }
 
-      flogics.InsertEndChild(flogic);
+      flogics->InsertEndChild(flogic);
     }
 
-    frame.InsertEndChild(flogics);
+    frame->InsertEndChild(flogics);
 
-    // frame is complete, insert it 
-    frames.InsertEndChild(frame);
+    // frame is complete, insert it
+    frames->InsertEndChild(frame);
   }
 
-  root.InsertEndChild(frames);
+  root->InsertEndChild(frames);
 
   //
   // Write anims tag
   //
-  TiXmlElement anims("anims");
+  auto anims = doc.NewElement("anims");
 
   for(int i = 0; i < mAnimsManager.Size(); i++)
   {
     CAnim item = mAnimsManager.Get(i);
 
-    TiXmlElement anim("anim");
+    auto anim = doc.NewElement("anim");
 
-    anim.SetAttribute("id", item.GetId());
-    anim.SetAttribute("info", item.GetInfo().c_str());
+    anim->SetAttribute("id", item.GetId());
+    anim->SetAttribute("info", item.GetInfo().c_str());
 
     for(int j = 0; j < item.mAFrames.Size(); j++)
     {
       CAnimFrame aFrameItem = item.mAFrames.Get(j);
 
-      TiXmlElement aFrame("aframe");
+      auto aFrame = doc.NewElement("aframe");
 
-      aFrame.SetAttribute("frameid", aFrameItem.GetFrameId());
-      aFrame.SetAttribute("time", aFrameItem.GetTime());
-      aFrame.SetAttribute("x", aFrameItem.GetPos().mX);
-      aFrame.SetAttribute("y", aFrameItem.GetPos().mY);
-      aFrame.SetAttribute("flags", aFrameItem.GetFlags());
+      aFrame->SetAttribute("frameid", aFrameItem.GetFrameId());
+      aFrame->SetAttribute("time", aFrameItem.GetTime());
+      aFrame->SetAttribute("x", aFrameItem.GetPos().mX);
+      aFrame->SetAttribute("y", aFrameItem.GetPos().mY);
+      aFrame->SetAttribute("flags", aFrameItem.GetFlags());
 
-      anim.InsertEndChild(aFrame);
+      anim->InsertEndChild(aFrame);
     }
 
-    anims.InsertEndChild(anim);
+    anims->InsertEndChild(anim);
   }
 
-  root.InsertEndChild(anims);
+  root->InsertEndChild(anims);
 
   doc.InsertEndChild(root);
   
@@ -307,16 +307,16 @@ bool CXSpriteDesigner::Load(std::string fileName)
 {
   Close();
 
-  TiXmlDocument doc = TiXmlDocument( fileName.c_str() );
-  bool loadResult = doc.LoadFile();
+  tinyxml2::XMLDocument doc;
+  auto loadResult = doc.LoadFile(fileName.c_str());
 
-  if (!loadResult)
+  if (loadResult != XML_SUCCESS)
   {
     mFileMessages.push_back("Fatal: error reading document.");
     return false;
   }
 
-  TiXmlNode* nodeXSprite = doc.FirstChild( "xsprite" );
+  auto nodeXSprite = doc.FirstChildElement( "xsprite" );
 
   if (!nodeXSprite)
   {
@@ -327,19 +327,19 @@ bool CXSpriteDesigner::Load(std::string fileName)
   //
   // Read images
   //
-  TiXmlNode* nodeImages = nodeXSprite->FirstChild( "images" );
+  auto nodeImages = nodeXSprite->FirstChildElement( "images" );
 
   if (nodeImages)
   {
     do
     {
-      TiXmlNode* nodeImageItem = nodeImages->FirstChild( "image" );
+      auto nodeImageItem = nodeImages->FirstChildElement( "image" );
 
       if (nodeImageItem)
       {
         do
         {
-          TiXmlElement* elem = nodeImageItem->ToElement();
+          auto elem = nodeImageItem->ToElement();
 
           if (!elem)
           {
@@ -363,7 +363,7 @@ bool CXSpriteDesigner::Load(std::string fileName)
             // folder as the sprite definition file
             if (ExtractFileDir(imageFile.c_str()) == "")
             {
-              imageFile = std::string(ExtractFileDir(fileName.c_str()).c_str()) + "\\" + imageFile;
+              imageFile = std::string(UTF8Encode(ExtractFileDir(fileName.c_str())).c_str()) + "\\" + imageFile;
             }
 
             image.SetFileName(imageFile);
@@ -376,19 +376,19 @@ bool CXSpriteDesigner::Load(std::string fileName)
             //
             // Read palette maps
             //
-            TiXmlNode* nodeColorMaps = nodeImageItem->FirstChild( "colormaps" );
+            auto nodeColorMaps = nodeImageItem->FirstChildElement( "colormaps" );
 
             if (nodeColorMaps)
             {
               do
               {
-                TiXmlNode* nodeColorMap = nodeColorMaps->FirstChild( "colormap" );
+                auto nodeColorMap = nodeColorMaps->FirstChildElement( "colormap" );
 
                 if (nodeColorMap)
                 {
                   do
                   {
-                    TiXmlElement* elem = nodeColorMap->ToElement();
+                    auto elem = nodeColorMap->ToElement();
 
                     if (!elem)
                     {
@@ -410,13 +410,13 @@ bool CXSpriteDesigner::Load(std::string fileName)
                       //
                       // Read items (color mappings) for this colormap
                       //
-                      TiXmlNode* nodeColorMapItem = nodeColorMap->FirstChild( "cmitem" );
+                      auto nodeColorMapItem = nodeColorMap->FirstChildElement( "cmitem" );
 
                       if (nodeColorMapItem)
                       {
                         do
                         {
-                          TiXmlElement* elem = nodeColorMapItem->ToElement();
+                          auto elem = nodeColorMapItem->ToElement();
 
                           if (!elem)
                           {
@@ -444,7 +444,7 @@ bool CXSpriteDesigner::Load(std::string fileName)
                             mFileMessages.push_back("Warning: <colormapitem> ignored - missing attributes.");
                           }
                         }
-                        while((nodeColorMapItem = nodeColorMapItem->NextSibling( "cmitem" )) != 0);
+                        while((nodeColorMapItem = nodeColorMapItem->NextSiblingElement( "cmitem" )) != 0);
                       }
 
                       int index = image.mColorMaps.New();
@@ -456,14 +456,14 @@ bool CXSpriteDesigner::Load(std::string fileName)
                        mFileMessages.push_back("Warning: <colormap> ignored - missing attributes.");
                     }
                   }
-                  while((nodeColorMap = nodeColorMap->NextSibling( "colormap" )) != 0);
+                  while((nodeColorMap = nodeColorMap->NextSiblingElement( "colormap" )) != 0);
                 }
                 else
                 {
                    mFileMessages.push_back("Warning: no <colormap> tags found.");
                 }
               }
-              while((nodeColorMaps = nodeColorMaps->NextSibling( "colormaps" )) != 0);
+              while((nodeColorMaps = nodeColorMaps->NextSiblingElement( "colormaps" )) != 0);
             }
             else
             {
@@ -476,14 +476,14 @@ bool CXSpriteDesigner::Load(std::string fileName)
             mImagesManager.Set(index, image);
           }
         }
-        while((nodeImageItem = nodeImageItem->NextSibling( "image" )) != 0);
+        while((nodeImageItem = nodeImageItem->NextSiblingElement( "image" )) != 0);
       }
       else
       {
          mFileMessages.push_back("Warning: no <images> tags found.");
       }
     }
-    while((nodeImages = nodeImages->NextSibling( "images" )) != 0);
+    while((nodeImages = nodeImages->NextSiblingElement( "images" )) != 0);
   }
   else
   {
@@ -493,19 +493,19 @@ bool CXSpriteDesigner::Load(std::string fileName)
   //
   // Read modules
   //
-  TiXmlNode* nodeModules = nodeXSprite->FirstChild( "modules" );
+  auto nodeModules = nodeXSprite->FirstChildElement( "modules" );
 
   if (nodeModules)
   {
     do
     {
-      TiXmlNode* nodeModuleItem = nodeModules->FirstChild( "module" );
+      auto nodeModuleItem = nodeModules->FirstChildElement( "module" );
 
       if (nodeModuleItem)
       {
         do
         {
-          TiXmlElement* elem = nodeModuleItem->ToElement();
+          auto elem = nodeModuleItem->ToElement();
 
           if (!elem)
           {
@@ -541,14 +541,14 @@ bool CXSpriteDesigner::Load(std::string fileName)
              mFileMessages.push_back("Warning: <module> ignored - missing attributes.");
           }
         }
-        while((nodeModuleItem = nodeModuleItem->NextSibling( "module" )) != 0);
+        while((nodeModuleItem = nodeModuleItem->NextSiblingElement( "module" )) != 0);
       }
       else
       {
          mFileMessages.push_back("Warning: no <module> tags found.");
       }
     }
-    while((nodeModules = nodeModules->NextSibling( "modules" )) != 0);
+    while((nodeModules = nodeModules->NextSiblingElement( "modules" )) != 0);
   }
   else
   {
@@ -558,19 +558,19 @@ bool CXSpriteDesigner::Load(std::string fileName)
   //
   // Read frames
   //
-  TiXmlNode* nodeFrames = nodeXSprite->FirstChild( "frames" );
+  auto nodeFrames = nodeXSprite->FirstChildElement( "frames" );
 
   if (nodeFrames)
   {
     do
     {
-      TiXmlNode* nodeFrameItem = nodeFrames->FirstChild( "frame" );
+      auto nodeFrameItem = nodeFrames->FirstChildElement( "frame" );
 
       if (nodeFrameItem)
       {
         do
         {
-          TiXmlElement* elem = nodeFrameItem->ToElement();
+          auto elem = nodeFrameItem->ToElement();
 
           if (!elem)
           {
@@ -587,20 +587,20 @@ bool CXSpriteDesigner::Load(std::string fileName)
             frame.SetId(atoi(id));
             frame.SetInfo(info);
 
-            TiXmlNode* nodeFModules = nodeFrameItem->FirstChild( "fmodules" );
+            auto nodeFModules = nodeFrameItem->FirstChildElement( "fmodules" );
 
             if (nodeFModules)
             {
               //
               // Read fmodules for this frame
               //
-              TiXmlNode* nodeFModuleItem = nodeFModules->FirstChild( "fmodule" );
+              auto nodeFModuleItem = nodeFModules->FirstChildElement( "fmodule" );
 
               if (nodeFModuleItem)
               {
                 do
                 {
-                  TiXmlElement* elem = nodeFModuleItem->ToElement();
+                  auto elem = nodeFModuleItem->ToElement();
 
                   if (!elem)
                   {
@@ -629,7 +629,7 @@ bool CXSpriteDesigner::Load(std::string fileName)
                     mFileMessages.push_back("Warning: <fmodule> ignored - missing attributes.");
                   }
                 }
-                while((nodeFModuleItem = nodeFModuleItem->NextSibling( "fmodule" )) != 0);
+                while((nodeFModuleItem = nodeFModuleItem->NextSiblingElement( "fmodule" )) != 0);
               }
             }
             else
@@ -640,20 +640,20 @@ bool CXSpriteDesigner::Load(std::string fileName)
             //
             // TODO: Read the frame logics for this frame
             //
-            TiXmlNode* nodeFLogics = nodeFrameItem->FirstChild( "flogics" );
+            auto nodeFLogics = nodeFrameItem->FirstChildElement( "flogics" );
 
             if (nodeFLogics)
             {
               //
               // Read flogics for this frame
               //
-              TiXmlNode* nodeFLogicItem = nodeFLogics->FirstChild( "flogic" );
+              auto nodeFLogicItem = nodeFLogics->FirstChildElement( "flogic" );
 
               if (nodeFLogicItem)
               {
                 do
                 {
-                  TiXmlElement* elem = nodeFLogicItem->ToElement();
+                  auto elem = nodeFLogicItem->ToElement();
 
                   if (!elem)
                   {
@@ -671,13 +671,13 @@ bool CXSpriteDesigner::Load(std::string fileName)
                     fLogic.SetInfo(flogicInfo);
 
                     // get the items for this flogic
-                    TiXmlNode* nodeFLogicItems = nodeFLogicItem->FirstChild( "flogicitem" );
+                    auto nodeFLogicItems = nodeFLogicItem->FirstChildElement( "flogicitem" );
 
                     if (nodeFLogicItems)
                     {
                       do
                       {
-                        TiXmlElement* elem = nodeFLogicItems->ToElement();
+                        auto elem = nodeFLogicItems->ToElement();
 
                         if (!elem)
                         {
@@ -740,7 +740,7 @@ bool CXSpriteDesigner::Load(std::string fileName)
                           }
                         }
                       }
-                      while((nodeFLogicItems = nodeFLogicItems->NextSibling("flogicitem")) != 0);
+                      while((nodeFLogicItems = nodeFLogicItems->NextSiblingElement("flogicitem")) != 0);
                     }
 
                     int index = frame.mFLogic.New();
@@ -752,7 +752,7 @@ bool CXSpriteDesigner::Load(std::string fileName)
                     mFileMessages.push_back("Warning: <fmodule> ignored - missing attributes.");
                   }
                 }
-                while((nodeFLogicItem = nodeFLogicItem->NextSibling( "flogic" )) != 0);
+                while((nodeFLogicItem = nodeFLogicItem->NextSiblingElement( "flogic" )) != 0);
               }
             }
             else
@@ -769,14 +769,14 @@ bool CXSpriteDesigner::Load(std::string fileName)
              mFileMessages.push_back("Warning: <Frame> ignored - missing attributes.");
           }
         }
-        while((nodeFrameItem = nodeFrameItem->NextSibling( "frame" )) != 0);
+        while((nodeFrameItem = nodeFrameItem->NextSiblingElement( "frame" )) != 0);
       }
       else
       {
          mFileMessages.push_back("Warning: no <Frame> tags found.");
       }
     }
-    while((nodeFrames = nodeFrames->NextSibling( "frames" )) != 0);
+    while((nodeFrames = nodeFrames->NextSiblingElement( "frames" )) != 0);
   }
   else
   {
@@ -786,19 +786,19 @@ bool CXSpriteDesigner::Load(std::string fileName)
   //
   // Read anims
   //
-  TiXmlNode* nodeAnims = nodeXSprite->FirstChild( "anims" );
+  auto nodeAnims = nodeXSprite->FirstChildElement( "anims" );
 
   if (nodeAnims)
   {
     do
     {
-      TiXmlNode* nodeAnimItem = nodeAnims->FirstChild( "anim" );
+      auto nodeAnimItem = nodeAnims->FirstChildElement( "anim" );
 
       if (nodeAnimItem)
       {
         do
         {
-          TiXmlElement* elem = nodeAnimItem->ToElement();
+          auto elem = nodeAnimItem->ToElement();
 
           if (!elem)
           {
@@ -818,13 +818,13 @@ bool CXSpriteDesigner::Load(std::string fileName)
             //
             // Read aframes for this anim
             //
-            TiXmlNode* nodeAFrameItem = nodeAnimItem->FirstChild( "aframe" );
+            auto nodeAFrameItem = nodeAnimItem->FirstChildElement( "aframe" );
 
             if (nodeAFrameItem)
             {
               do
               {
-                TiXmlElement* elem = nodeAFrameItem->ToElement();
+                auto elem = nodeAFrameItem->ToElement();
 
                 if (!elem)
                 {
@@ -855,7 +855,7 @@ bool CXSpriteDesigner::Load(std::string fileName)
                   mFileMessages.push_back("Warning: <aframe> ignored - missing attributes.");
                 }
               }
-              while((nodeAFrameItem = nodeAFrameItem->NextSibling( "aframe" )) != 0);
+              while((nodeAFrameItem = nodeAFrameItem->NextSiblingElement( "aframe" )) != 0);
             }
 
             int index = mAnimsManager.New();
@@ -867,14 +867,14 @@ bool CXSpriteDesigner::Load(std::string fileName)
              mFileMessages.push_back("Warning: <AFrame> ignored - missing attributes.");
           }
         }
-        while((nodeAnimItem = nodeAnimItem->NextSibling( "anim" )) != 0);
+        while((nodeAnimItem = nodeAnimItem->NextSiblingElement( "anim" )) != 0);
       }
       else
       {
          mFileMessages.push_back("Warning: no <Anim> tags found.");
       }
     }
-    while((nodeAnims = nodeAnims->NextSibling( "anims" )) != 0);
+    while((nodeAnims = nodeAnims->NextSiblingElement( "anims" )) != 0);
   }
   else
   {

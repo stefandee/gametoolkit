@@ -219,7 +219,7 @@ void __fastcall TFormScript::OnScriptStringEditChange(TObject *Sender)
 
   if (edit)
   {
-    mSprite->SetScriptParam(edit->Tag, 1, edit->Text.c_str());
+    mSprite->SetScriptParam(edit->Tag, 1, UTF8Encode(edit->Text).c_str());
   }
 }
 //---------------------------------------------------------------------------
@@ -263,7 +263,7 @@ void __fastcall TFormScript::OnScriptFileBrowse(TObject *Sender)
   
   if (OpenDialog->Execute())
   {
-    mSprite->SetScriptParam(btn->Tag, 1, OpenDialog->FileName.c_str());
+    mSprite->SetScriptParam(btn->Tag, 1, UTF8Encode(OpenDialog->FileName).c_str());
     
     edit->Text = OpenDialog->FileName;
   }

@@ -1,35 +1,35 @@
 object FormScript: TFormScript
   Left = 362
   Top = 215
-  Width = 546
-  Height = 660
   Caption = 'Script'
+  ClientHeight = 621
+  ClientWidth = 530
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
-  OldCreateOrder = False
-  PixelsPerInch = 96
   TextHeight = 13
   object gbParams: TGroupBox
     Left = 0
     Top = 0
-    Width = 538
+    Width = 530
     Height = 253
     Align = alTop
     Caption = 'Script Parameters'
     TabOrder = 0
+    ExplicitWidth = 538
   end
   object GroupBox1: TGroupBox
     Left = 0
     Top = 253
-    Width = 538
+    Width = 530
     Height = 340
     Align = alTop
     Caption = 'Script'
     TabOrder = 1
+    ExplicitWidth = 538
     object memoScript: TMemo
       Left = 2
       Top = 15

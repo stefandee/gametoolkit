@@ -1,9 +1,9 @@
 object FormMain: TFormMain
   Left = 321
   Top = 45
-  Width = 1089
-  Height = 932
   Caption = 'Sentry Sprite Editor'
+  ClientHeight = 873
+  ClientWidth = 1073
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,18 +11,17 @@ object FormMain: TFormMain
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   Menu = MainMenu
-  OldCreateOrder = False
+  Position = poDesktopCenter
   ShowHint = True
   OnClose = FormClose
   OnMouseWheelDown = FormMouseWheelDown
   OnMouseWheelUp = FormMouseWheelUp
   OnResize = FormResize
-  PixelsPerInch = 96
   TextHeight = 13
   object StatusBar: TStatusBar
     Left = 0
-    Top = 864
-    Width = 1081
+    Top = 851
+    Width = 1073
     Height = 22
     Panels = <
       item
@@ -31,61 +30,67 @@ object FormMain: TFormMain
       item
         Width = 50
       end>
-    SimplePanel = False
+    ExplicitTop = 850
+    ExplicitWidth = 1069
   end
   object ToolBar: TToolBar
     Left = 0
     Top = 0
-    Width = 1081
+    Width = 1073
     Height = 29
     Caption = 'ToolBar'
     Color = clBtnFace
     ParentColor = False
     TabOrder = 1
+    ExplicitWidth = 1069
   end
   object PanelSpriteEditor: TPanel
     Left = 0
     Top = 29
-    Width = 1081
-    Height = 835
+    Width = 1073
+    Height = 822
     Align = alClient
     BevelInner = bvRaised
     BevelOuter = bvLowered
     TabOrder = 2
+    ExplicitWidth = 1069
+    ExplicitHeight = 821
     object Splitter4: TSplitter
       Left = 2
-      Top = 754
-      Width = 1077
+      Top = 734
+      Width = 1069
       Height = 3
       Cursor = crVSplit
       Align = alTop
       OnMoved = Splitter4Moved
+      ExplicitTop = 754
+      ExplicitWidth = 1077
     end
     object PageControl1: TPageControl
       Left = 2
       Top = 2
-      Width = 1077
-      Height = 752
+      Width = 1069
+      Height = 732
       ActivePage = TabSheetColorMapping
       Align = alTop
       Anchors = [akLeft, akTop, akRight, akBottom]
-      TabIndex = 4
       TabOrder = 0
       TabPosition = tpBottom
+      ExplicitWidth = 1065
+      ExplicitHeight = 731
       object TabSheetModules: TTabSheet
         Caption = 'Modules'
         object Splitter1: TSplitter
           Left = 297
           Top = 0
-          Width = 3
-          Height = 726
-          Cursor = crHSplit
+          Height = 706
+          ExplicitHeight = 726
         end
         object PanelModules: TPanel
           Left = 0
           Top = 0
           Width = 297
-          Height = 726
+          Height = 706
           Align = alLeft
           BevelInner = bvLowered
           BevelOuter = bvNone
@@ -147,13 +152,13 @@ object FormMain: TFormMain
             Left = 1
             Top = 364
             Width = 295
-            Height = 361
+            Height = 341
             Align = alClient
             Caption = 'Images'
             TabOrder = 1
             DesignSize = (
               295
-              361)
+              341)
             object gridImages: TStringGridX
               Left = 2
               Top = 15
@@ -189,8 +194,8 @@ object FormMain: TFormMain
         object PanelModulesCanvas: TPanel
           Left = 300
           Top = 0
-          Width = 769
-          Height = 726
+          Width = 761
+          Height = 706
           Align = alClient
           BevelInner = bvLowered
           BevelOuter = bvNone
@@ -198,40 +203,43 @@ object FormMain: TFormMain
           object GroupBoxCanvas: TGroupBox
             Left = 1
             Top = 1
-            Width = 767
-            Height = 724
+            Width = 759
+            Height = 704
             Align = alClient
             Caption = 'Modules Canvas'
             TabOrder = 0
             object paintModules: TPaintBox
               Left = 2
               Top = 109
-              Width = 763
-              Height = 613
+              Width = 755
+              Height = 593
               Align = alClient
               OnMouseDown = paintModulesMouseDown
               OnMouseMove = paintModulesMouseMove
               OnMouseUp = paintModulesMouseUp
               OnPaint = paintModulesPaint
+              ExplicitWidth = 763
+              ExplicitHeight = 613
             end
             object PanelModulesSetup: TPanel
               Left = 2
               Top = 15
-              Width = 763
+              Width = 755
               Height = 94
               Align = alTop
               BevelInner = bvLowered
               TabOrder = 0
               DesignSize = (
-                763
+                755
                 94)
               object Label1: TLabel
-                Left = 577
+                Left = 569
                 Top = 68
                 Width = 30
                 Height = 13
                 Anchors = [akRight, akBottom]
                 Caption = 'Zoom:'
+                ExplicitLeft = 577
               end
               object cbModulesAxis: TCheckBox
                 Left = 8
@@ -270,22 +278,19 @@ object FormMain: TFormMain
                 OnClick = cbModulesAllClick
               end
               object trackModulesZoom: TTrackBar
-                Left = 609
+                Left = 601
                 Top = 52
                 Width = 150
                 Height = 37
                 Anchors = [akRight, akBottom]
                 Max = 1600
                 Min = 10
-                Orientation = trHorizontal
                 Frequency = 100
                 Position = 100
-                SelEnd = 0
-                SelStart = 0
                 TabOrder = 4
                 TickMarks = tmBoth
-                TickStyle = tsAuto
                 OnChange = trackModulesZoomChange
+                ExplicitLeft = 609
               end
             end
           end
@@ -298,16 +303,15 @@ object FormMain: TFormMain
         object Splitter5: TSplitter
           Left = 281
           Top = 0
-          Width = 3
-          Height = 726
-          Cursor = crHSplit
+          Height = 706
           OnMoved = Splitter5Moved
+          ExplicitHeight = 726
         end
         object PanelFrames: TPanel
           Left = 0
           Top = 0
           Width = 281
-          Height = 726
+          Height = 706
           Align = alLeft
           BevelInner = bvLowered
           BevelOuter = bvNone
@@ -369,13 +373,13 @@ object FormMain: TFormMain
             Left = 1
             Top = 364
             Width = 279
-            Height = 361
+            Height = 341
             Align = alClient
             Caption = 'Frame Modules'
             TabOrder = 1
             DesignSize = (
               279
-              361)
+              341)
             object gridFModules: TStringGridX
               Left = 2
               Top = 15
@@ -411,8 +415,8 @@ object FormMain: TFormMain
         object PanelFramesCanvas: TPanel
           Left = 284
           Top = 0
-          Width = 785
-          Height = 726
+          Width = 777
+          Height = 706
           Align = alClient
           BevelInner = bvLowered
           BevelOuter = bvNone
@@ -420,16 +424,17 @@ object FormMain: TFormMain
           object Splitter7: TSplitter
             Left = 1
             Top = 581
-            Width = 783
+            Width = 775
             Height = 3
             Cursor = crVSplit
             Align = alTop
             OnMoved = Splitter7Moved
+            ExplicitWidth = 783
           end
           object GroupBoxFramesCanvas: TGroupBox
             Left = 1
             Top = 1
-            Width = 783
+            Width = 775
             Height = 580
             Align = alTop
             Caption = 'Frame Canvas'
@@ -437,32 +442,34 @@ object FormMain: TFormMain
             object paintFrames: TPaintBox
               Left = 2
               Top = 69
-              Width = 779
+              Width = 771
               Height = 509
               Align = alClient
               OnMouseDown = paintFramesMouseDown
               OnMouseMove = paintFramesMouseMove
               OnMouseUp = paintFramesMouseUp
               OnPaint = paintFramesPaint
+              ExplicitWidth = 779
             end
             object Panel2: TPanel
               Left = 2
               Top = 15
-              Width = 779
+              Width = 771
               Height = 54
               Align = alTop
               BevelInner = bvLowered
               TabOrder = 0
               DesignSize = (
-                779
+                771
                 54)
               object Label2: TLabel
-                Left = 589
+                Left = 581
                 Top = 24
                 Width = 30
                 Height = 13
                 Anchors = [akRight, akBottom]
                 Caption = 'Zoom:'
+                ExplicitLeft = 589
               end
               object cbFramesAxis: TCheckBox
                 Left = 8
@@ -492,22 +499,19 @@ object FormMain: TFormMain
                 OnClick = cbFramesTransClick
               end
               object trackFramesZoom: TTrackBar
-                Left = 625
+                Left = 617
                 Top = 8
                 Width = 150
                 Height = 37
                 Anchors = [akRight, akBottom]
                 Max = 1600
                 Min = 10
-                Orientation = trHorizontal
                 Frequency = 100
                 Position = 100
-                SelEnd = 0
-                SelStart = 0
                 TabOrder = 3
                 TickMarks = tmBoth
-                TickStyle = tsAuto
                 OnChange = trackFramesZoomChange
+                ExplicitLeft = 625
               end
               object cbFramesOffset: TCheckBox
                 Left = 98
@@ -532,11 +536,13 @@ object FormMain: TFormMain
           object GroupBoxModulesQuickSelection: TGroupBox
             Left = 1
             Top = 584
-            Width = 783
-            Height = 141
+            Width = 775
+            Height = 121
             Align = alClient
             Caption = 'Modules Quick Selection'
             TabOrder = 1
+            ExplicitWidth = 783
+            ExplicitHeight = 141
             object paintQuickModules: TPaintBox
               Left = 2
               Top = 15
@@ -567,16 +573,15 @@ object FormMain: TFormMain
         object Splitter9: TSplitter
           Left = 309
           Top = 0
-          Width = 3
-          Height = 726
-          Cursor = crHSplit
+          Height = 706
           OnMoved = Splitter9Moved
+          ExplicitHeight = 726
         end
         object PanelAnims: TPanel
           Left = 0
           Top = 0
           Width = 309
-          Height = 726
+          Height = 706
           Align = alLeft
           BevelInner = bvLowered
           BevelOuter = bvNone
@@ -638,13 +643,13 @@ object FormMain: TFormMain
             Left = 1
             Top = 364
             Width = 307
-            Height = 361
+            Height = 341
             Align = alClient
             Caption = 'Anim Frames'
             TabOrder = 1
             DesignSize = (
               307
-              361)
+              341)
             object gridAFrames: TStringGridX
               Left = 2
               Top = 15
@@ -681,8 +686,8 @@ object FormMain: TFormMain
         object Panel1: TPanel
           Left = 312
           Top = 0
-          Width = 757
-          Height = 726
+          Width = 749
+          Height = 706
           Align = alClient
           BevelInner = bvLowered
           BevelOuter = bvNone
@@ -690,16 +695,17 @@ object FormMain: TFormMain
           object Splitter10: TSplitter
             Left = 1
             Top = 581
-            Width = 755
+            Width = 747
             Height = 3
             Cursor = crVSplit
             Align = alTop
             OnMoved = Splitter10Moved
+            ExplicitWidth = 755
           end
           object GroupBoxAnimsCanvas: TGroupBox
             Left = 1
             Top = 1
-            Width = 755
+            Width = 747
             Height = 580
             Align = alTop
             Caption = 'Anim Canvas'
@@ -707,76 +713,83 @@ object FormMain: TFormMain
             object paintAnims: TPaintBox
               Left = 2
               Top = 109
-              Width = 751
+              Width = 743
               Height = 469
               Align = alClient
               OnMouseDown = paintAnimsMouseDown
               OnMouseMove = paintAnimsMouseMove
               OnMouseUp = paintAnimsMouseUp
               OnPaint = paintAnimsPaint
+              ExplicitWidth = 751
             end
             object Panel3: TPanel
               Left = 2
               Top = 15
-              Width = 751
+              Width = 743
               Height = 94
               Align = alTop
               BevelInner = bvLowered
               TabOrder = 0
               DesignSize = (
-                751
+                743
                 94)
               object Label3: TLabel
-                Left = 565
+                Left = 557
                 Top = 68
                 Width = 30
                 Height = 13
                 Anchors = [akRight, akBottom]
                 Caption = 'Zoom:'
+                ExplicitLeft = 565
               end
               object btnPlay: TSpeedButton
-                Left = 421
+                Left = 413
                 Top = 60
                 Width = 23
                 Height = 22
                 Anchors = [akRight, akBottom]
                 Caption = '>'
                 OnClick = btnPlayClick
+                ExplicitLeft = 421
               end
               object btnPause: TSpeedButton
-                Left = 397
+                Left = 389
                 Top = 60
                 Width = 23
                 Height = 22
                 Anchors = [akRight, akBottom]
                 Caption = '| |'
                 OnClick = btnPauseClick
+                ExplicitLeft = 397
               end
               object btnRewind: TSpeedButton
-                Left = 373
+                Left = 365
                 Top = 60
                 Width = 23
                 Height = 22
                 Anchors = [akRight, akBottom]
                 Caption = '| <'
                 OnClick = btnRewindClick
+                ExplicitLeft = 373
               end
               object btnFastFwd: TSpeedButton
-                Left = 445
+                Left = 437
                 Top = 60
                 Width = 23
                 Height = 22
                 Anchors = [akRight, akBottom]
                 Caption = '| >'
                 OnClick = btnFastFwdClick
+                ExplicitLeft = 445
               end
               object Label4: TLabel
-                Left = 481
+                Left = 473
                 Top = 68
                 Width = 23
                 Height = 13
                 Anchors = [akRight, akBottom]
                 Caption = 'FPS:'
+                ExplicitLeft = 481
               end
               object cbAnimsAxis: TCheckBox
                 Left = 8
@@ -815,22 +828,19 @@ object FormMain: TFormMain
                 OnClick = cbAnimsFMOffsetClick
               end
               object trackAnimsZoom: TTrackBar
-                Left = 597
+                Left = 589
                 Top = 52
                 Width = 150
                 Height = 37
                 Anchors = [akRight, akBottom]
                 Max = 1600
                 Min = 10
-                Orientation = trHorizontal
                 Frequency = 100
                 Position = 100
-                SelEnd = 0
-                SelStart = 0
                 TabOrder = 4
                 TickMarks = tmBoth
-                TickStyle = tsAuto
                 OnChange = trackAnimsZoomChange
+                ExplicitLeft = 597
               end
               object cbAnimsAFOffset: TCheckBox
                 Left = 112
@@ -858,7 +868,7 @@ object FormMain: TFormMain
                 TabOrder = 7
               end
               object cbFPS: TCSpinEdit
-                Left = 513
+                Left = 505
                 Top = 60
                 Width = 41
                 Height = 22
@@ -868,17 +878,20 @@ object FormMain: TFormMain
                 TabOrder = 8
                 Value = 10
                 OnChange = cbFPSChange
+                ExplicitLeft = 513
               end
             end
           end
           object GroupBoxFramesQuickSelection: TGroupBox
             Left = 1
             Top = 584
-            Width = 755
-            Height = 141
+            Width = 747
+            Height = 121
             Align = alClient
             Caption = 'Frames Quick Selection'
             TabOrder = 1
+            ExplicitWidth = 755
+            ExplicitHeight = 141
             object paintQuickFrames: TPaintBox
               Left = 2
               Top = 15
@@ -908,7 +921,7 @@ object FormMain: TFormMain
         object Label7: TLabel
           Left = 460
           Top = 320
-          Width = 229
+          Width = 228
           Height = 30
           Align = alCustom
           Alignment = taCenter
@@ -928,29 +941,31 @@ object FormMain: TFormMain
         object Panel6: TPanel
           Left = 0
           Top = 0
-          Width = 1069
-          Height = 726
+          Width = 1061
+          Height = 706
           Align = alClient
           BevelInner = bvLowered
           BevelOuter = bvNone
           TabOrder = 0
+          ExplicitWidth = 1057
+          ExplicitHeight = 705
           object Splitter12: TSplitter
             Left = 270
             Top = 1
-            Width = 3
-            Height = 724
-            Cursor = crHSplit
+            Height = 704
             OnMoved = Splitter12Moved
+            ExplicitHeight = 724
           end
           object Panel5: TPanel
             Left = 1
             Top = 1
             Width = 269
-            Height = 724
+            Height = 704
             Align = alLeft
             BevelInner = bvLowered
             BevelOuter = bvNone
             TabOrder = 0
+            ExplicitHeight = 703
             object Splitter3: TSplitter
               Left = 1
               Top = 202
@@ -1016,13 +1031,14 @@ object FormMain: TFormMain
               Left = 1
               Top = 465
               Width = 267
-              Height = 258
+              Height = 238
               Align = alClient
               Caption = 'Color Map Items'
               TabOrder = 1
+              ExplicitHeight = 237
               DesignSize = (
                 267
-                258)
+                238)
               object gridColorMapItems: TStringGridX
                 Left = 4
                 Top = 16
@@ -1081,49 +1097,57 @@ object FormMain: TFormMain
           object Panel7: TPanel
             Left = 273
             Top = 1
-            Width = 795
-            Height = 724
+            Width = 787
+            Height = 704
             Align = alClient
             BevelInner = bvLowered
             BevelOuter = bvNone
             TabOrder = 1
+            ExplicitWidth = 783
+            ExplicitHeight = 703
             object GroupBoxColorMapCanvas: TGroupBox
               Left = 1
               Top = 1
-              Width = 793
-              Height = 722
+              Width = 785
+              Height = 702
               Align = alClient
               Caption = 'Color Map Canvas'
               TabOrder = 0
+              ExplicitWidth = 781
+              ExplicitHeight = 701
               object paintColorMap: TPaintBox
                 Left = 2
                 Top = 69
-                Width = 789
-                Height = 651
+                Width = 781
+                Height = 631
                 Align = alClient
                 OnMouseDown = paintColorMapMouseDown
                 OnMouseMove = paintColorMapMouseMove
                 OnMouseUp = paintColorMapMouseUp
                 OnPaint = paintColorMapPaint
+                ExplicitWidth = 789
+                ExplicitHeight = 651
               end
               object Panel8: TPanel
                 Left = 2
                 Top = 15
-                Width = 789
+                Width = 781
                 Height = 54
                 Align = alTop
                 BevelInner = bvLowered
                 TabOrder = 0
+                ExplicitWidth = 777
                 DesignSize = (
-                  789
+                  781
                   54)
                 object Label6: TLabel
-                  Left = 589
+                  Left = 581
                   Top = 24
                   Width = 30
                   Height = 13
                   Anchors = [akRight, akBottom]
                   Caption = 'Zoom:'
+                  ExplicitLeft = 589
                 end
                 object cbColorMapAxis: TCheckBox
                   Left = 8
@@ -1153,22 +1177,19 @@ object FormMain: TFormMain
                   OnClick = cbColorMapTransClick
                 end
                 object trackColorMapZoom: TTrackBar
-                  Left = 625
+                  Left = 617
                   Top = 8
                   Width = 150
                   Height = 37
                   Anchors = [akRight, akBottom]
                   Max = 1600
                   Min = 10
-                  Orientation = trHorizontal
                   Frequency = 100
                   Position = 100
-                  SelEnd = 0
-                  SelStart = 0
                   TabOrder = 3
                   TickMarks = tmBoth
-                  TickStyle = tsAuto
                   OnChange = trackColorMapZoomChange
+                  ExplicitLeft = 613
                 end
               end
             end
@@ -1182,16 +1203,15 @@ object FormMain: TFormMain
         object SplitterFrameLogic3: TSplitter
           Left = 269
           Top = 0
-          Width = 3
-          Height = 726
-          Cursor = crHSplit
+          Height = 706
           OnMoved = SplitterFrameLogic3Moved
+          ExplicitHeight = 726
         end
         object PanelFramesLogic: TPanel
           Left = 0
           Top = 0
           Width = 269
-          Height = 726
+          Height = 706
           Align = alLeft
           BevelInner = bvLowered
           BevelOuter = bvNone
@@ -1260,13 +1280,13 @@ object FormMain: TFormMain
             Left = 1
             Top = 465
             Width = 267
-            Height = 260
+            Height = 240
             Align = alClient
             Caption = 'Frame Logic Item'
             TabOrder = 1
             DesignSize = (
               267
-              260)
+              240)
             object gridFrameLogicItems: TStringGridX
               Left = 4
               Top = 16
@@ -1323,8 +1343,8 @@ object FormMain: TFormMain
         object PanelFrameLogicCanvas: TPanel
           Left = 272
           Top = 0
-          Width = 797
-          Height = 726
+          Width = 789
+          Height = 706
           Align = alClient
           BevelInner = bvLowered
           BevelOuter = bvNone
@@ -1332,40 +1352,43 @@ object FormMain: TFormMain
           object GroupBoxFrameLogicCanvas: TGroupBox
             Left = 1
             Top = 1
-            Width = 795
-            Height = 724
+            Width = 787
+            Height = 704
             Align = alClient
             Caption = 'Frame Logic Canvas'
             TabOrder = 0
             object paintFrameLogic: TPaintBox
               Left = 2
               Top = 69
-              Width = 791
-              Height = 653
+              Width = 783
+              Height = 633
               Align = alClient
               OnMouseDown = paintFrameLogicMouseDown
               OnMouseMove = paintFrameLogicMouseMove
               OnMouseUp = paintFrameLogicMouseUp
               OnPaint = paintFrameLogicPaint
+              ExplicitWidth = 791
+              ExplicitHeight = 653
             end
             object Panel4: TPanel
               Left = 2
               Top = 15
-              Width = 791
+              Width = 783
               Height = 54
               Align = alTop
               BevelInner = bvLowered
               TabOrder = 0
               DesignSize = (
-                791
+                783
                 54)
               object Label5: TLabel
-                Left = 589
+                Left = 581
                 Top = 24
                 Width = 30
                 Height = 13
                 Anchors = [akRight, akBottom]
                 Caption = 'Zoom:'
+                ExplicitLeft = 589
               end
               object cbFrameLogicAxis: TCheckBox
                 Left = 8
@@ -1395,22 +1418,19 @@ object FormMain: TFormMain
                 OnClick = cbFrameLogicTransClick
               end
               object trackFLogicZoom: TTrackBar
-                Left = 625
+                Left = 617
                 Top = 8
                 Width = 150
                 Height = 37
                 Anchors = [akRight, akBottom]
                 Max = 1600
                 Min = 10
-                Orientation = trHorizontal
                 Frequency = 100
                 Position = 100
-                SelEnd = 0
-                SelStart = 0
                 TabOrder = 3
                 TickMarks = tmBoth
-                TickStyle = tsAuto
                 OnChange = trackFLogicZoomChange
+                ExplicitLeft = 625
               end
               object cbFrameLogicOffsetFM: TCheckBox
                 Left = 88
@@ -1428,11 +1448,13 @@ object FormMain: TFormMain
     end
     object MemoMsg: TMemo
       Left = 2
-      Top = 757
-      Width = 1077
-      Height = 76
+      Top = 737
+      Width = 1069
+      Height = 83
       Align = alClient
       TabOrder = 1
+      ExplicitTop = 736
+      ExplicitWidth = 1065
     end
   end
   object MainMenu: TMainMenu
@@ -1584,7 +1606,6 @@ object FormMain: TFormMain
     Left = 904
   end
   object ColorDialog: TColorDialog
-    Ctl3D = True
     Left = 872
   end
 end

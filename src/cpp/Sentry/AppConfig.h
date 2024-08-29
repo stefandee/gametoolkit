@@ -142,7 +142,7 @@ class AppConfig
   private:
     std::string IntToStr(int x);
 
-    TiXmlDocument mDoc;
+    tinyxml2::XMLDocument mDoc;
     TAppConfigState mState;
 };
 

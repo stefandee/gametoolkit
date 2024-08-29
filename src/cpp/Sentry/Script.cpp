@@ -473,7 +473,7 @@ ZString SentryScript::extractPath(ZCsl* csl)
 {
   ZString path = csl->get("path");
 
-  return ExtractFileDir(path.buffer()).c_str();
+  return UTF8Encode(ExtractFileDir(path.buffer())).c_str();
 }
 //---------------------------------------------------------------------------
 
@@ -481,7 +481,7 @@ ZString SentryScript::extractFileName(ZCsl* csl)
 {
   ZString path = csl->get("path");
 
-  return ExtractFileName(path.buffer()).c_str();
+  return UTF8Encode(ExtractFileName(path.buffer())).c_str();
 }
 //---------------------------------------------------------------------------
 
@@ -490,7 +490,7 @@ ZString SentryScript::changeFileExt(ZCsl* csl)
   ZString path = csl->get("path");
   ZString ext = csl->get("ext");
 
-  return ChangeFileExt(path.buffer(), ext.buffer()).c_str();
+  return UTF8Encode(ChangeFileExt(path.buffer(), ext.buffer())).c_str();
 }
 //---------------------------------------------------------------------------
 

@@ -65,8 +65,8 @@
         <UWP_CppLogo44>$(BDS)\bin\Artwork\Windows\UWP\cppreg_UwpDefault_44.png</UWP_CppLogo44>
         <UWP_CppLogo150>$(BDS)\bin\Artwork\Windows\UWP\cppreg_UwpDefault_150.png</UWP_CppLogo150>
         <SanitizedProjectName>Sentry</SanitizedProjectName>
-        <IncludePath>..\..\..\src\cpp\Common\MiniCsl\NativeLib\;..\..\..\src\cpp\Common\MiniCsl\Base\;..\..\..\src\cpp\Common\MiniCsl\Csl\;..\..\..\lib\tinyxml2\;..\..\..\src\cpp\Sentry\;.\;..\..\..\src\cpp\Common;$(IncludePath)</IncludePath>
-        <ILINK_LibraryPath>..\..\..\src\cpp\Common\MiniCsl\NativeLib\;..\..\..\src\cpp\Common\MiniCsl\Base\;..\..\..\src\cpp\Common\MiniCsl\Csl\;..\..\..\lib\tinyxml2\;..\..\..\src\cpp\Sentry\;E:\Projects\github\gametoolkit\dev\bcb\Sentry\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
+        <IncludePath>..\..\..\src\cpp\Common\MiniCsl\RegEx\;..\..\..\src\cpp\Components\;..\..\..\src\cpp\Common\MiniCsl\NativeLib\;..\..\..\src\cpp\Common\MiniCsl\Base\;..\..\..\src\cpp\Common\MiniCsl\Csl\;..\..\..\lib\tinyxml2\;..\..\..\src\cpp\Sentry\;.\;..\..\..\src\cpp\Common;$(IncludePath)</IncludePath>
+        <ILINK_LibraryPath>..\..\..\src\cpp\Common\MiniCsl\RegEx\;..\..\..\src\cpp\Components\;..\..\..\src\cpp\Common\MiniCsl\NativeLib\;..\..\..\src\cpp\Common\MiniCsl\Base\;..\..\..\src\cpp\Common\MiniCsl\Csl\;..\..\..\lib\tinyxml2\;..\..\..\src\cpp\Sentry\;E:\Projects\github\gametoolkit\dev\bcb\Sentry\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
         <VerInfo_Locale>2057</VerInfo_Locale>
         <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
     </PropertyGroup>
@@ -128,6 +128,11 @@
         <CppCompile Include="Sentry.cpp">
             <BuildOrder>0</BuildOrder>
         </CppCompile>
+        <RcItem Include="Sentry.notes">
+            <ContainerId>ResourceItem</ContainerId>
+            <ResourceType>RCDATA</ResourceType>
+            <ResourceId>Notes</ResourceId>
+        </RcItem>
         <PCHCompile Include="SentryPCH1.h">
             <BuildOrder>1</BuildOrder>
             <PCH>true</PCH>
@@ -204,9 +209,6 @@
         <CppCompile Include="..\..\..\src\cpp\Common\MiniCsl\Csl\ZCsl.cpp">
             <BuildOrder>41</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\..\src\cpp\Common\MiniCsl\NativeLib\ZcStrLib.cpp">
-            <BuildOrder>29</BuildOrder>
-        </CppCompile>
         <CppCompile Include="..\..\..\src\cpp\Common\MiniCsl\NativeLib\ZFileLib.cpp">
             <DependentOn>..\..\..\src\cpp\Common\MiniCsl\NativeLib\ZFileLib.h</DependentOn>
             <BuildOrder>39</BuildOrder>
@@ -226,6 +228,13 @@
         <CppCompile Include="..\..\..\src\cpp\Common\MiniCsl\NativeLib\ZStringLib.cpp">
             <DependentOn>..\..\..\src\cpp\Common\MiniCsl\NativeLib\ZStringLib.h</DependentOn>
             <BuildOrder>40</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Common\MiniCsl\RegEx\ZRegEx.c">
+            <BuildOrder>45</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\..\src\cpp\Components\StringGridX.cpp">
+            <DependentOn>..\..\..\src\cpp\Components\StringGridX.h</DependentOn>
+            <BuildOrder>44</BuildOrder>
         </CppCompile>
         <CppCompile Include="..\..\..\src\cpp\Sentry\AppConfig.cpp">
             <DependentOn>..\..\..\src\cpp\Sentry\AppConfig.h</DependentOn>
@@ -283,10 +292,10 @@
             <DependentOn>..\..\..\src\cpp\Sentry\XSpriteDesigner.h</DependentOn>
             <BuildOrder>2</BuildOrder>
         </CppCompile>
+        <FormResources Include="..\..\..\src\cpp\Sentry\FAbout.dfm"/>
         <FormResources Include="..\..\..\src\cpp\Sentry\FMain.dfm"/>
         <FormResources Include="..\..\..\src\cpp\Sentry\FOptions.dfm"/>
         <FormResources Include="..\..\..\src\cpp\Sentry\FScript.dfm"/>
-        <FormResources Include="..\..\..\src\cpp\Sentry\FAbout.dfm"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -378,6 +387,12 @@
                 <DeployFile LocalName="..\..\..\bin\Sentry\Win32\Debug\Sentry.tds" Configuration="Debug" Class="DebugSymbols">
                     <Platform Name="Win32">
                         <RemoteName>Sentry.tds</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Sentry.notes" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>

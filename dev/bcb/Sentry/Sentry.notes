@@ -1,0 +1,19 @@
+Sentry - Advanced Sprite Editor
+----------------------------------
+
+-----> Version 0.0.2
+C++ Builder 11 port
+
+-----> Version 0.0.1
+
+* History
+This tool was coded in spring of 2007 to replace the various custom sprite tools
+used by the Lethal Metal and Pure Power Tactical Engine and several other
+internal projects. The goal is to provide a common sprite platform that will
+be able to support a large variety of projects, from mobile device to PC.
+
+* Changes
+* System Requirements
+* Known Bugs
+* Credits
+* Road Ahead

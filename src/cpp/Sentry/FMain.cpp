@@ -10,11 +10,16 @@
 #include "FOptions.h"
 #include "Script.h"
 #include "FScript.h"
+#include <System.hpp>
+
+using namespace tinyxml2;
 //---------------------------------------------------------------------------
 
 #pragma package(smart_init)
 #pragma link "StringGridX"
 #pragma link "CSPIN"
+#pragma link "cspin"
+#pragma link "StringGridX"
 #pragma resource "*.dfm"
 TFormMain *FormMain;
 //---------------------------------------------------------------------------
@@ -179,7 +184,7 @@ void TFormMain::SaveConfig()
 void __fastcall TFormMain::DisplayHint(TObject* Sender)
 {
   // for some reason, GetShortHint and GetLongHint dont work as expected
-  int sepIndex = Application->Hint.AnsiPos("$");
+  int sepIndex = Application->Hint.Pos("$");
 
   // TODO: dynamic hint (multiple parts)
   if (sepIndex == 0)
@@ -243,7 +248,7 @@ void TFormMain::MakeHistory()
   {
     TMenuItem* menuItem = new TMenuItem(OpenRecent1);
 
-    menuItem->Caption = AnsiString(i + 1) + " " + mAppConfig.mFileHistory[i].c_str();
+    menuItem->Caption = UnicodeString(i + 1) + " " + UTF8ToString(mAppConfig.mFileHistory[i].c_str());
 
     menuItem->OnClick = HistoryClick;
 
@@ -329,12 +334,12 @@ void TFormMain::LoadDocument(std::string fileName)
 void __fastcall TFormMain::HistoryClick(TObject *Sender)
 {
   // TODO: get the file name from history
-  AnsiString lFile = ((TMenuItem*)Sender)->Caption;
+  auto lFile = ((TMenuItem*)Sender)->Caption;
 
   // first 3 chars are eye candy :)
   lFile.Delete(1, 3);
 
-  LoadDocument(std::string(lFile.c_str()));
+  LoadDocument(UTF8Encode(lFile).c_str());
 }
 //---------------------------------------------------------------------------
 
@@ -354,9 +359,11 @@ void __fastcall TFormMain::Saveas1Click(TObject *Sender)
 {
   if (SaveDialogXSprite->Execute())
   {
-    if (mSprite.Save(std::string(SaveDialogXSprite->FileName.c_str())))
+    auto fileNameUTF8 = UTF8Encode(SaveDialogXSprite->FileName).c_str();
+
+    if (mSprite.Save(fileNameUTF8))
     {
-      mAppConfig.AddFileToHistory(std::string(SaveDialogXSprite->FileName.c_str()));
+      mAppConfig.AddFileToHistory(fileNameUTF8);
     }
   }
 }
@@ -369,9 +376,11 @@ void __fastcall TFormMain::Save1Click(TObject *Sender)
     case SPR_DOC_STATE_NEW:
       if (SaveDialogXSprite->Execute())
       {
-        if (mSprite.Save(std::string(SaveDialogXSprite->FileName.c_str())))
+        auto fileNameUTF8 = UTF8Encode(SaveDialogXSprite->FileName).c_str();
+
+        if (mSprite.Save(fileNameUTF8))
         {
-          mAppConfig.AddFileToHistory(std::string(SaveDialogXSprite->FileName.c_str()));
+          mAppConfig.AddFileToHistory(fileNameUTF8);
         }
       }
       break;
@@ -393,12 +402,12 @@ void __fastcall TFormMain::Open1Click(TObject *Sender)
 {
   if (mAppConfig.mFileHistory.size() > 0)
   {
-    OpenDialogXSprite->InitialDir = AnsiString(mAppConfig.mFileHistory[0].c_str()); 
+    OpenDialogXSprite->InitialDir = UTF8ToString(mAppConfig.mFileHistory[0].c_str());
   }
 
   if (OpenDialogXSprite->Execute())
   {
-    LoadDocument(OpenDialogXSprite->FileName.c_str());
+    LoadDocument(UTF8Encode(OpenDialogXSprite->FileName).c_str());
 
     //mAppConfig.AddFileToHistory(std::string(OpenDialogXSprite->FileName.c_str()));
     //MakeHistory();
@@ -849,9 +858,11 @@ void __fastcall TFormMain::edModulesExit(TObject *Sender)
   CModule module = mSprite.mModulesManager.Get(gridModules->Row - 1);
 
   // parse the new attiributes through tinyxml
-  TiXmlElement elem("edit");
+  tinyxml2::XMLDocument doc;
 
-  elem.Parse( (AnsiString("<element ") + edModules->Text + "/>").c_str(), 0, TIXML_ENCODING_UNKNOWN );
+  doc.Parse( UTF8Encode("<element " + edModules->Text + "/>").c_str());
+
+  auto elem = doc.FirstChildElement("element");
 
   int result;
 
@@ -860,30 +871,30 @@ void __fastcall TFormMain::edModulesExit(TObject *Sender)
   //
   int x, y, width, height;
 
-  result = elem.QueryIntAttribute("x", &x);
+  result = elem->QueryIntAttribute("x", &x);
 
-  if (result == TIXML_SUCCESS)
+  if (result == XML_SUCCESS)
   {
     module.SetX(x);
   }
 
-  result = elem.QueryIntAttribute("y", &y);
+  result = elem->QueryIntAttribute("y", &y);
 
-  if (result == TIXML_SUCCESS)
+  if (result == XML_SUCCESS)
   {
     module.SetY(y);
   }
 
-  result = elem.QueryIntAttribute("width", &width);
+  result = elem->QueryIntAttribute("width", &width);
 
-  if (result == TIXML_SUCCESS)
+  if (result == XML_SUCCESS)
   {
     module.SetWidth(width);
   }
 
-  result = elem.QueryIntAttribute("height", &height);
+  result = elem->QueryIntAttribute("height", &height);
 
-  if (result == TIXML_SUCCESS)
+  if (result == XML_SUCCESS)
   {
     module.SetHeight(height);
   }
@@ -891,7 +902,7 @@ void __fastcall TFormMain::edModulesExit(TObject *Sender)
   //
   // Parse hex attributes
   //
-  const char* id = elem.Attribute("id");
+  const char* id = elem->Attribute("id");
 
   if (id)
   {
@@ -907,7 +918,7 @@ void __fastcall TFormMain::edModulesExit(TObject *Sender)
     }
   }
 
-  const char* imageid = elem.Attribute("imageid");
+  const char* imageid = elem->Attribute("imageid");
 
   if (imageid)
   {
@@ -926,7 +937,7 @@ void __fastcall TFormMain::edModulesExit(TObject *Sender)
   //
   // Parse string attributes
   //
-  const char* info = elem.Attribute("info");
+  const char* info = elem->Attribute("info");
 
   if (info)
   {
@@ -938,13 +949,13 @@ void __fastcall TFormMain::edModulesExit(TObject *Sender)
   mSprite.mModulesManager.Set(gridModules->Row - 1, module);
 
   edModules->Text =
-    AnsiString("id=\"") + "0x" + AnsiString::IntToHex(module.GetId(), 32) + "\" " +
-    AnsiString("imageid=\"") + "0x" + AnsiString::IntToHex(module.GetImageId(), 32) + "\" " +
-    AnsiString("x=") + module.GetX() + " " +
-    AnsiString("y=") + module.GetY() + " " +
-    AnsiString("width=") + module.GetWidth() + " " +
-    AnsiString("height=") + module.GetHeight() + " " +
-    AnsiString("info=\"") + module.GetInfo().c_str() + "\""
+    UnicodeString("id=\"") + "0x" + UnicodeString::IntToHex(module.GetId(), 32) + "\" " +
+    UnicodeString("imageid=\"") + "0x" + UnicodeString::IntToHex(module.GetImageId(), 32) + "\" " +
+    UnicodeString("x=") + module.GetX() + " " +
+    UnicodeString("y=") + module.GetY() + " " +
+    UnicodeString("width=") + module.GetWidth() + " " +
+    UnicodeString("height=") + module.GetHeight() + " " +
+    UnicodeString("info=\"") + UTF8ToString(module.GetInfo().c_str()) + "\""
     ;
 
   ModulesToGrid();
@@ -980,16 +991,18 @@ void __fastcall TFormMain::edImagesExit(TObject *Sender)
   CImage image = mSprite.mImagesManager.Get(gridImages->Row - 1);
 
   // parse the new attiributes through tinyxml
-  TiXmlElement elem("edit");
+  tinyxml2::XMLDocument doc;
 
-  elem.Parse( (AnsiString("<element ") + edImages->Text + "/>").c_str(), 0, TIXML_ENCODING_UNKNOWN );
+  doc.Parse( UTF8Encode("<element " + edImages->Text + "/>").c_str());
+
+  auto elem = doc.FirstChildElement("element");
 
   int result;
 
   //
   // Parse hex attributes
   //
-  const char* id = elem.Attribute("id");
+  const char* id = elem->Attribute("id");
 
   if (id)
   {
@@ -1005,7 +1018,7 @@ void __fastcall TFormMain::edImagesExit(TObject *Sender)
     }
   }
 
-  const char* color = elem.Attribute("color");
+  const char* color = elem->Attribute("color");
 
   if (color)
   {
@@ -1024,14 +1037,14 @@ void __fastcall TFormMain::edImagesExit(TObject *Sender)
   //
   // Parse string attributes
   //
-  const char* info = elem.Attribute("info");
+  const char* info = elem->Attribute("info");
 
   if (info)
   {
     image.SetInfo(info);
   }
 
-  const char* fileName = elem.Attribute("filename");
+  const char* fileName = elem->Attribute("filename");
 
   if (fileName)
   {
@@ -1041,10 +1054,10 @@ void __fastcall TFormMain::edImagesExit(TObject *Sender)
   mSprite.mImagesManager.Set(gridImages->Row - 1, image);
 
   edImages->Text =
-    AnsiString("id=\"") + "0x" + IntToHex(image.GetId(), 32) + "\" " +
-    AnsiString("filename=\"") + image.GetFileName().c_str() + "\" " +
-    AnsiString("color=\"") + "0x" + IntToHex(image.GetTransparentColor(), 32) + "\" " +
-    AnsiString("info=\"") + image.GetInfo().c_str() + "\""
+    UnicodeString("id=\"") + "0x" + IntToHex(image.GetId(), 32) + "\" " +
+    UnicodeString("filename=\"") + UTF8ToString(image.GetFileName().c_str()) + "\" " +
+    UnicodeString("color=\"") + "0x" + IntToHex(image.GetTransparentColor(), 32) + "\" " +
+    UnicodeString("info=\"") + image.GetInfo().c_str() + "\""
     ;
 
   ImagesToGrid();
@@ -1502,8 +1515,8 @@ void __fastcall TFormMain::paintModulesMouseUp(TObject *Sender,
         X = X - X % (modulesZoom / 100) + modulesZoom / 100;
         Y = Y - Y % (modulesZoom / 100) + modulesZoom / 100;
 
-        module.SetX((-paintModules->Width / 2 + (int)std::min(X, modulesDefine.x) + (bitmap->GetWidth() / 2) * modulesZoom / 100 + modulesPan.x) * 100 / modulesZoom );
-        module.SetY((-paintModules->Height / 2 + (int)std::min(Y, modulesDefine.y) + (bitmap->GetHeight() / 2) * modulesZoom / 100 + modulesPan.y) * 100 / modulesZoom );
+        module.SetX((-paintModules->Width / 2 + (int)std::min((long)X, modulesDefine.x) + (bitmap->GetWidth() / 2) * modulesZoom / 100 + modulesPan.x) * 100 / modulesZoom );
+        module.SetY((-paintModules->Height / 2 + (int)std::min((long)Y, modulesDefine.y) + (bitmap->GetHeight() / 2) * modulesZoom / 100 + modulesPan.y) * 100 / modulesZoom );
         module.SetWidth(abs(X - modulesDefine.x) * 100 / modulesZoom );
         module.SetHeight(abs(Y - modulesDefine.y) * 100 / modulesZoom );
 
@@ -2071,6 +2084,9 @@ TCursor TFormMain::GetModuleCursor(TMouseMode mmm)
 
     case MMM_PICK_COLOR:
       return crHelp;
+
+    case MMM_NONE:
+      return crDefault;
   }
 
   return crDefault;
@@ -2381,9 +2397,11 @@ void __fastcall TFormMain::edFramesExit(TObject *Sender)
   CFrame frame = mSprite.mFramesManager.Get(gridFrames->Row - 1);
 
   // parse the new attributes through tinyxml
-  TiXmlElement elem("edit");
+  tinyxml2::XMLDocument doc;
 
-  elem.Parse( (AnsiString("<element ") + edFrames->Text + "/>").c_str(), 0, TIXML_ENCODING_UNKNOWN );
+  doc.Parse( (AnsiString("<element ") + edFrames->Text + "/>").c_str());
+
+  auto elem = doc.FirstChildElement("element");
 
   int result;
 
@@ -2394,7 +2412,7 @@ void __fastcall TFormMain::edFramesExit(TObject *Sender)
   //
   // Parse hex attributes
   //
-  const char* id = elem.Attribute("id");
+  const char* id = elem->Attribute("id");
 
   if (id)
   {
@@ -2413,7 +2431,7 @@ void __fastcall TFormMain::edFramesExit(TObject *Sender)
   //
   // Parse string attributes
   //
-  const char* info = elem.Attribute("info");
+  const char* info = elem->Attribute("info");
 
   if (info)
   {
@@ -2425,8 +2443,8 @@ void __fastcall TFormMain::edFramesExit(TObject *Sender)
   mSprite.mFramesManager.Set(gridFrames->Row - 1, frame);
 
   edFrames->Text =
-    AnsiString("id=\"") + "0x" + AnsiString::IntToHex(frame.GetId(), 32) + "\" " +
-    AnsiString("info=\"") + frame.GetInfo().c_str() + "\""
+    UnicodeString("id=\"") + "0x" + UnicodeString::IntToHex(frame.GetId(), 32) + "\" " +
+    UnicodeString("info=\"") + UTF8ToString(frame.GetInfo().c_str()) + "\""
     ;
 
   FramesToGrid();
@@ -2614,9 +2632,11 @@ void __fastcall TFormMain::edFModulesExit(TObject *Sender)
   CFrameModule fmodule = frame.mFModules.Get(gridFModules->Row - 1);
 
   // parse the new attiributes through tinyxml
-  TiXmlElement elem("edit");
+  tinyxml2::XMLDocument doc;
 
-  elem.Parse( (AnsiString("<element ") + edFModules->Text + "/>").c_str(), 0, TIXML_ENCODING_UNKNOWN );
+  doc.Parse( UTF8Encode("<element " + edFModules->Text + "/>").c_str() );
+
+  auto elem = doc.FirstChildElement("element");
 
   int result;
 
@@ -2625,23 +2645,23 @@ void __fastcall TFormMain::edFModulesExit(TObject *Sender)
   //
   int x, y, flags;
 
-  result = elem.QueryIntAttribute("x", &x);
+  result = elem->QueryIntAttribute("x", &x);
 
-  if (result == TIXML_SUCCESS)
+  if (result == XML_SUCCESS)
   {
     fmodule.SetX(x);
   }
 
-  result = elem.QueryIntAttribute("y", &y);
+  result = elem->QueryIntAttribute("y", &y);
 
-  if (result == TIXML_SUCCESS)
+  if (result == XML_SUCCESS)
   {
     fmodule.SetY(y);
   }
 
-  result = elem.QueryIntAttribute("flags", &flags);
+  result = elem->QueryIntAttribute("flags", &flags);
 
-  if (result == TIXML_SUCCESS)
+  if (result == XML_SUCCESS)
   {
     fmodule.SetFlags(flags);
   }
@@ -2649,7 +2669,7 @@ void __fastcall TFormMain::edFModulesExit(TObject *Sender)
   //
   // Parse hex attributes
   //
-  const char* moduleid = elem.Attribute("moduleid");
+  const char* moduleid = elem->Attribute("moduleid");
 
   if (moduleid)
   {
@@ -2671,10 +2691,10 @@ void __fastcall TFormMain::edFModulesExit(TObject *Sender)
   mSprite.mFramesManager.Set(gridFrames->Row - 1, frame);
 
   edFModules->Text =
-    AnsiString("moduleid=\"") + "0x" + AnsiString::IntToHex(fmodule.GetModuleId(), 32) + "\" " +
-    AnsiString("x=") + fmodule.GetPos().mX + " " +
-    AnsiString("y=") + fmodule.GetPos().mY + " " +
-    AnsiString("flags=\"") + "0x" + AnsiString::IntToHex(fmodule.GetFlags(), 32) + "\""
+    UnicodeString("moduleid=\"") + "0x" + UnicodeString::IntToHex(fmodule.GetModuleId(), 32) + "\" " +
+    UnicodeString("x=") + fmodule.GetPos().mX + " " +
+    UnicodeString("y=") + fmodule.GetPos().mY + " " +
+    UnicodeString("flags=\"") + "0x" + UnicodeString::IntToHex(fmodule.GetFlags(), 32) + "\""
     ;
 
   FModulesToGrid();
@@ -3755,9 +3775,11 @@ void __fastcall TFormMain::edAnimsExit(TObject *Sender)
   CAnim anim = mSprite.mAnimsManager.Get(gridAnims->Row - 1);
 
   // parse the new attiributes through tinyxml
-  TiXmlElement elem("edit");
+  tinyxml2::XMLDocument doc;
 
-  elem.Parse( (AnsiString("<element ") + edAnims->Text + "/>").c_str(), 0, TIXML_ENCODING_UNKNOWN );
+  doc.Parse( UTF8Encode("<element " + edAnims->Text + "/>").c_str());
+
+  auto elem = doc.FirstChildElement("element");
 
   int result;
 
@@ -3768,7 +3790,7 @@ void __fastcall TFormMain::edAnimsExit(TObject *Sender)
   //
   // Parse hex attributes
   //
-  const char* id = elem.Attribute("id");
+  const char* id = elem->Attribute("id");
 
   if (id)
   {
@@ -3787,7 +3809,7 @@ void __fastcall TFormMain::edAnimsExit(TObject *Sender)
   //
   // Parse string attributes
   //
-  const char* info = elem.Attribute("info");
+  const char* info = elem->Attribute("info");
 
   if (info)
   {
@@ -3799,8 +3821,8 @@ void __fastcall TFormMain::edAnimsExit(TObject *Sender)
   mSprite.mAnimsManager.Set(gridAnims->Row - 1, anim);
 
   edAnims->Text =
-    AnsiString("id=\"") + "0x" + AnsiString::IntToHex(anim.GetId(), 32) + "\" " +
-    AnsiString("info=\"") + anim.GetInfo().c_str() + "\""
+    UnicodeString("id=\"") + "0x" + UnicodeString::IntToHex(anim.GetId(), 32) + "\" " +
+    UnicodeString("info=\"") + UTF8ToString(anim.GetInfo().c_str()) + "\""
     ;
 
   AnimsToGrid();
@@ -3846,9 +3868,11 @@ void __fastcall TFormMain::edAFramesExit(TObject *Sender)
   CAnimFrame aFrame = anim.mAFrames.Get(gridAFrames->Row - 1);
 
   // parse the new attiributes through tinyxml
-  TiXmlElement elem("edit");
+  tinyxml2::XMLDocument doc;
 
-  elem.Parse( (AnsiString("<element ") + edAFrames->Text + "/>").c_str(), 0, TIXML_ENCODING_UNKNOWN );
+  doc.Parse( UTF8Encode("<element " + edAFrames->Text + "/>").c_str() );
+
+  auto elem = doc.FirstChildElement("element");
 
   int result;
 
@@ -3857,30 +3881,30 @@ void __fastcall TFormMain::edAFramesExit(TObject *Sender)
   //
   int x, y, time, flags;
 
-  result = elem.QueryIntAttribute("x", &x);
+  result = elem->QueryIntAttribute("x", &x);
 
-  if (result == TIXML_SUCCESS)
+  if (result == XML_SUCCESS)
   {
     aFrame.SetX(x);
   }
 
-  result = elem.QueryIntAttribute("y", &y);
+  result = elem->QueryIntAttribute("y", &y);
 
-  if (result == TIXML_SUCCESS)
+  if (result == XML_SUCCESS)
   {
     aFrame.SetY(y);
   }
 
-  result = elem.QueryIntAttribute("flags", &flags);
+  result = elem->QueryIntAttribute("flags", &flags);
 
-  if (result == TIXML_SUCCESS)
+  if (result == XML_SUCCESS)
   {
     aFrame.SetFlags(flags);
   }
 
-  result = elem.QueryIntAttribute("time", &time);
+  result = elem->QueryIntAttribute("time", &time);
 
-  if (result == TIXML_SUCCESS)
+  if (result == XML_SUCCESS)
   {
     aFrame.SetTime(time);
   }
@@ -3888,7 +3912,7 @@ void __fastcall TFormMain::edAFramesExit(TObject *Sender)
   //
   // Parse hex attributes
   //
-  const char* frameid = elem.Attribute("frameid");
+  const char* frameid = elem->Attribute("frameid");
 
   if (frameid)
   {
@@ -3910,11 +3934,11 @@ void __fastcall TFormMain::edAFramesExit(TObject *Sender)
   mSprite.mAnimsManager.Set(gridAnims->Row - 1, anim);
 
   edAFrames->Text =
-    AnsiString("frameid=\"") + "0x" + AnsiString::IntToHex(aFrame.GetFrameId(), 32) + "\" " +
-    AnsiString("time=") + aFrame.GetTime() + " " +
-    AnsiString("x=") + aFrame.GetPos().mX + " " +
-    AnsiString("y=") + aFrame.GetPos().mY + " " +
-    AnsiString("flags=\"") + "0x" + AnsiString::IntToHex(aFrame.GetFlags(), 32) + "\""
+    UnicodeString("frameid=\"") + "0x" + UnicodeString::IntToHex(aFrame.GetFrameId(), 32) + "\" " +
+    UnicodeString("time=") + aFrame.GetTime() + " " +
+    UnicodeString("x=") + aFrame.GetPos().mX + " " +
+    UnicodeString("y=") + aFrame.GetPos().mY + " " +
+    UnicodeString("flags=\"") + "0x" + UnicodeString::IntToHex(aFrame.GetFlags(), 32) + "\""
     ;
 
   AFramesToGrid();
@@ -4931,16 +4955,18 @@ void __fastcall TFormMain::edFrameLogicExit(TObject *Sender)
   CFrameLogic fLogic = frame.mFLogic.Get(gridFrameLogic->Row - 1);
 
   // parse the new attributes through tinyxml
-  TiXmlElement elem("edit");
+  tinyxml2::XMLDocument doc;
 
-  elem.Parse( (AnsiString("<element ") + edFrameLogic->Text + "/>").c_str(), 0, TIXML_ENCODING_UNKNOWN );
+  doc.Parse( UTF8Encode("<element " + edFrameLogic->Text + "/>").c_str() );
+
+  auto elem = doc.FirstChildElement("element");
 
   int result;
 
   //
   // Parse string attributes
   //
-  const char* info = elem.Attribute("info");
+  const char* info = elem->Attribute("info");
 
   if (info)
   {
@@ -4953,7 +4979,7 @@ void __fastcall TFormMain::edFrameLogicExit(TObject *Sender)
   mSprite.mFramesManager.Set(gridFramesForLogic->Row - 1, frame);
 
   edFrameLogic->Text =
-    AnsiString("info=\"") + fLogic.GetInfo().c_str() + "\""
+    UnicodeString("info=\"") + UTF8ToString(fLogic.GetInfo().c_str()) + "\""
     ;
 
   FrameLogicToGrid();
@@ -5212,16 +5238,18 @@ void __fastcall TFormMain::edFrameLogicItemExit(TObject *Sender)
   CFrameLogicItem fLogicItem = fLogic.mItems.Get(gridFrameLogicItems->Row - 1);
 
   // parse the new attributes through tinyxml
-  TiXmlElement elem("edit");
+  tinyxml2::XMLDocument doc;
 
-  elem.Parse( (AnsiString("<element ") + edFrameLogicItem->Text + "/>").c_str(), 0, TIXML_ENCODING_UNKNOWN );
+  doc.Parse( UTF8Encode("<element " + edFrameLogicItem->Text + "/>").c_str());
+
+  auto elem = doc.FirstChildElement("element");
 
   int result;
 
   //
   // Parse string attributes
   //
-  const char* type = elem.Attribute("type");
+  const char* type = elem->Attribute("type");
 
   int x, y, width, height;
 
@@ -5231,16 +5259,16 @@ void __fastcall TFormMain::edFrameLogicItemExit(TObject *Sender)
     {
       fLogicItem.SetType(FRAME_LOGIC_ITEM_RECT);
 
-      result = elem.QueryIntAttribute("w", &width);
+      result = elem->QueryIntAttribute("w", &width);
 
-      if (result == TIXML_SUCCESS)
+      if (result == XML_SUCCESS)
       {
         fLogicItem.mWidth = width;
       }
 
-      result = elem.QueryIntAttribute("h", &height);
+      result = elem->QueryIntAttribute("h", &height);
 
-      if (result == TIXML_SUCCESS)
+      if (result == XML_SUCCESS)
       {
         fLogicItem.mHeight = height;
       }
@@ -5251,16 +5279,16 @@ void __fastcall TFormMain::edFrameLogicItemExit(TObject *Sender)
       fLogicItem.SetType(FRAME_LOGIC_ITEM_POINT);
     }
 
-    result = elem.QueryIntAttribute("x", &x);
+    result = elem->QueryIntAttribute("x", &x);
 
-    if (result == TIXML_SUCCESS)
+    if (result == XML_SUCCESS)
     {
       fLogicItem.mX = x;
     }
 
-    result = elem.QueryIntAttribute("y", &y);
+    result = elem->QueryIntAttribute("y", &y);
 
-    if (result == TIXML_SUCCESS)
+    if (result == XML_SUCCESS)
     {
       fLogicItem.mY = y;
     }
@@ -5274,9 +5302,9 @@ void __fastcall TFormMain::edFrameLogicItemExit(TObject *Sender)
 
   // same code as in
   edFrameLogicItem->Text =
-    AnsiString("type=\"") + ((fLogicItem.GetType() == FRAME_LOGIC_ITEM_POINT) ? "POINT" : "RECT") + "\" " +
-    AnsiString("x=") + fLogicItem.mX + " " +
-    AnsiString("y=") + fLogicItem.mY + " "
+    UnicodeString("type=\"") + ((fLogicItem.GetType() == FRAME_LOGIC_ITEM_POINT) ? "POINT" : "RECT") + "\" " +
+    UnicodeString("x=") + fLogicItem.mX + " " +
+    UnicodeString("y=") + fLogicItem.mY + " "
     ;
 
   if (fLogicItem.GetType() == FRAME_LOGIC_ITEM_RECT)
@@ -5939,8 +5967,8 @@ void __fastcall TFormMain::paintFrameLogicMouseUp(TObject *Sender,
     {
       if (fLogicItem.GetType() == FRAME_LOGIC_ITEM_RECT)
       {
-        fLogicItem.SetX(((-paintFrameLogic->Width / 2 + (int)std::min(X, fLogicDefine.x) + fLogicPan.x) * 100) / fLogicZoom );
-        fLogicItem.SetY(((-paintFrameLogic->Height / 2 + (int)std::min(Y, fLogicDefine.y) + fLogicPan.y) * 100) / fLogicZoom );
+        fLogicItem.SetX(((-paintFrameLogic->Width / 2 + (int)std::min((long)X, fLogicDefine.x) + fLogicPan.x) * 100) / fLogicZoom );
+        fLogicItem.SetY(((-paintFrameLogic->Height / 2 + (int)std::min((long)Y, fLogicDefine.y) + fLogicPan.y) * 100) / fLogicZoom );
         fLogicItem.SetWidth(abs(X - fLogicDefine.x) * 100 / fLogicZoom );
         fLogicItem.SetHeight(abs(Y - fLogicDefine.y) * 100 / fLogicZoom );
       }
@@ -6124,24 +6152,24 @@ void TFormMain::RefreshScripts(TMenuItem* menuItem, std::string scriptType)
   bool scriptsAdded = false;
 
   // search all scripts that match the scriptType in the scripts directory
-  if (FindFirst(AnsiString(mAppConfig.mPathScripts.c_str()) + "\\*.csl", faArchive | faReadOnly, sr) == 0)
+  if (FindFirst(UTF8ToString(mAppConfig.mPathScripts.c_str()) + "\\*.csl", faArchive | faReadOnly, sr) == 0)
   {
     do
     {
       // do something
-      if (script->LoadScriptFromFile(mAppConfig.mPathScripts + "\\" + sr.Name.c_str()))
+      if (script->LoadScriptFromFile(mAppConfig.mPathScripts + "\\" + UTF8Encode(sr.Name).c_str()))
       {
         std::string scriptName      = script->GetScriptVar(SCRIPT_VAR_NAME);
         std::string scriptCategory  = script->GetScriptVar(SCRIPT_VAR_CATEGORY);
         std::string paramCountAsStr = script->GetScriptVar(SCRIPT_VAR_PARAM_COUNT);
 
-        if (scriptName != "" && scriptCategory == scriptType)
+        if (!scriptName.empty() && scriptCategory == scriptType)
         {
           childItem = new TMenuItem(menuItem);
 
           int paramCount = 0;
 
-          if (paramCountAsStr != "")
+          if (!paramCountAsStr.empty())
           {
             paramCount = AnsiString(paramCountAsStr.c_str()).ToInt();
           }
@@ -6158,7 +6186,7 @@ void TFormMain::RefreshScripts(TMenuItem* menuItem, std::string scriptType)
       }
       else
       {
-        MemoMsg->Lines->Add((mAppConfig.mPathScripts + "\\" + sr.Name.c_str() + ": " + script->GetError()).c_str());
+        MemoMsg->Lines->Add(UTF8ToString(mAppConfig.mPathScripts.c_str()) + "\\" + sr.Name + ": " + script->GetError().c_str());
       }
     }
     while(FindNext(sr) == 0);
@@ -6201,7 +6229,7 @@ void __fastcall TFormMain::OnScriptMenuItemClick(TObject *Sender)
     return;
   }
 
-  int sepIndex = menuItem->Hint.AnsiPos("$");
+  int sepIndex = menuItem->Hint.Pos("$");
 
   if (sepIndex == 0)
   {
@@ -6665,16 +6693,18 @@ void __fastcall TFormMain::editColorMapExit(TObject *Sender)
   CColorMap colorMap = image.mColorMaps.Get(gridColorMaps->Row - 1);
 
   // parse the new attributes through tinyxml
-  TiXmlElement elem("edit");
+  tinyxml2::XMLDocument doc;
 
-  elem.Parse( (AnsiString("<element ") + editColorMap->Text + "/>").c_str(), 0, TIXML_ENCODING_UNKNOWN );
+  doc.Parse( UTF8Encode("<element " + editColorMap->Text + "/>").c_str() );
+
+  auto elem = doc.FirstChildElement("element");
 
   int result;
 
   //
   // Parse string attributes
   //
-  const char* info = elem.Attribute("info");
+  const char* info = elem->Attribute("info");
 
   if (info)
   {
@@ -6687,7 +6717,7 @@ void __fastcall TFormMain::editColorMapExit(TObject *Sender)
   mSprite.mImagesManager.Set(gridImagesForColorMap->Row - 1, image);
 
   editColorMap->Text =
-    AnsiString("info=\"") + colorMap.GetInfo().c_str() + "\""
+    UnicodeString("info=\"") + UTF8ToString(colorMap.GetInfo().c_str()) + "\""
     ;
 
   ColorMapToGrid();
@@ -6894,17 +6924,19 @@ void __fastcall TFormMain::editColorMapItemExit(TObject *Sender)
   CColorMapItem colorMapItem = GetColorMapItem();
 
   // parse the new attributes through tinyxml
-  TiXmlElement elem("edit");
+  tinyxml2::XMLDocument doc;
 
-  elem.Parse( (AnsiString("<element ") + editColorMapItem->Text + "/>").c_str(), 0, TIXML_ENCODING_UNKNOWN );
+  doc.Parse(UTF8Encode("<element " + editColorMapItem->Text + "/>").c_str() );
+
+  auto elem = doc.FirstChildElement("element");
 
   int result;
 
   //
   // Parse string attributes
   //
-  const char* s = elem.Attribute("s");
-  const char* d = elem.Attribute("d");
+  const char* s = elem->Attribute("s");
+  const char* d = elem->Attribute("d");
 
   if (s)
   {
@@ -6932,8 +6964,8 @@ void __fastcall TFormMain::editColorMapItemExit(TObject *Sender)
 
   // same code as in
   editColorMapItem->Text =
-    AnsiString("s=") + "0x" + AnsiString::IntToHex(colorMapItem.GetSrcColor(), 6) + " " +
-    AnsiString("d=") + "0x" + AnsiString::IntToHex(colorMapItem.GetDstColor(), 6) + " "
+    UnicodeString("s=") + "0x" + UnicodeString::IntToHex(colorMapItem.GetSrcColor(), 6) + " " +
+    UnicodeString("d=") + "0x" + UnicodeString::IntToHex(colorMapItem.GetDstColor(), 6) + " "
     ;
 
   ColorMapItemsToGrid();

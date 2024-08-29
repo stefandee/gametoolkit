@@ -2,7 +2,21 @@
 
 #ifndef FMainH
 #define FMainH
+#include "cspin.h"
+#include "StringGridX.h"
+#include <System.Classes.hpp>
+#include <Vcl.Buttons.hpp>
+#include <Vcl.ComCtrls.hpp>
+#include <Vcl.Controls.hpp>
+#include <Vcl.Dialogs.hpp>
+#include <Vcl.ExtCtrls.hpp>
+#include <Vcl.ExtDlgs.hpp>
+#include <Vcl.Grids.hpp>
+#include <Vcl.Menus.hpp>
+#include <Vcl.StdCtrls.hpp>
+#include <Vcl.ToolWin.hpp>
 //---------------------------------------------------------------------------
+#include <algorithm>
 #include <Classes.hpp>
 #include <Controls.hpp>
 #include <StdCtrls.hpp>
@@ -26,12 +40,11 @@
 #include "CSPIN.h"
 #include "Unit1.h"
 #include <FileCtrl.hpp>
+#include <gdiplus.h>
 //---------------------------------------------------------------------------
 
-#define STRICT
 using std::min;
 using std::max;
-#include <gdiplus.h>
 //---------------------------------------------------------------------------
 
 class TFormMain : public TForm

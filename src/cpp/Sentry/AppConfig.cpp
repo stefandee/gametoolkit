@@ -18,8 +18,8 @@ AppConfig::AppConfig() : mState(APP_CONFIG_STATE_CLOSED)
 
 bool AppConfig::Load(std::string fileName)
 {
-  mDoc = TiXmlDocument( fileName.c_str() );
-  bool loadResult = mDoc.LoadFile();
+  mDoc.Clear();
+  bool loadResult = mDoc.LoadFile(fileName.c_str());
 
   mState = APP_CONFIG_STATE_CLOSED;
 
@@ -75,7 +75,7 @@ bool AppConfig::Save(std::string fileName)
 
   mState = APP_CONFIG_STATE_SAVED;
 
-  mDoc = TiXmlDocument();
+  mDoc.Clear();
 
   std::string xmlDoc = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n";
 
@@ -198,14 +198,14 @@ bool AppConfig::GetStrProperty(std::string category, std::string name, std::stri
     return false;
   }
 
-  TiXmlNode* nodeRoot = mDoc.FirstChild("sentryconfig");
+  auto nodeRoot = mDoc.FirstChildElement("sentryconfig");
 
   if (!nodeRoot)
   {
     return false;
   }
 
-  TiXmlNode* nodeGeneral = nodeRoot->FirstChild();
+  auto nodeGeneral = nodeRoot->FirstChild();
 
   if (nodeGeneral)
   {
@@ -213,13 +213,13 @@ bool AppConfig::GetStrProperty(std::string category, std::string name, std::stri
     {
       if (std::string(nodeGeneral->Value()) == category)
       {
-        TiXmlNode* nodeProperty = nodeGeneral->FirstChild( "property" );
+        auto nodeProperty = nodeGeneral->FirstChildElement( "property" );
 
         if (nodeProperty)
         {
           do
           {
-            TiXmlElement* elem = nodeProperty->ToElement();
+            auto elem = nodeProperty->ToElement();
 
             if (!elem)
             {
@@ -239,7 +239,7 @@ bool AppConfig::GetStrProperty(std::string category, std::string name, std::stri
               }
             }
           }
-          while((nodeProperty = nodeProperty->NextSibling( "property" )) != 0);
+          while((nodeProperty = nodeProperty->NextSiblingElement( "property" )) != 0);
         }  
       }
     }
@@ -274,14 +274,14 @@ bool AppConfig::GetCategoryPropertyCount(std::string category, int& count)
     return false;
   }
 
-  TiXmlNode* nodeRoot = mDoc.FirstChild("sentryconfig");
+  auto nodeRoot = mDoc.FirstChildElement("sentryconfig");
 
   if (!nodeRoot)
   {
     return false;
   }
 
-  TiXmlNode* nodeGeneral = nodeRoot->FirstChild();
+  auto nodeGeneral = nodeRoot->FirstChild();
 
   if (nodeGeneral)
   {
@@ -291,13 +291,13 @@ bool AppConfig::GetCategoryPropertyCount(std::string category, int& count)
       {
         count = 0;
         
-        TiXmlNode* nodeProperty = nodeGeneral->FirstChild( "property" );
+        auto nodeProperty = nodeGeneral->FirstChildElement( "property" );
 
         if (nodeProperty)
         {
           do
           {
-            TiXmlElement* elem = nodeProperty->ToElement();
+            auto elem = nodeProperty->ToElement();
 
             if (!elem)
             {
@@ -312,7 +312,7 @@ bool AppConfig::GetCategoryPropertyCount(std::string category, int& count)
               count++;
             }
           }
-          while((nodeProperty = nodeProperty->NextSibling( "property" )) != 0);
+          while((nodeProperty = nodeProperty->NextSiblingElement( "property" )) != 0);
         }
       }
     }

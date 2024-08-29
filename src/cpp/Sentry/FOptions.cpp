@@ -171,7 +171,7 @@ void __fastcall TFormOptions::BtnOkClick(TObject *Sender)
 
 void __fastcall TFormOptions::btnResetClick(TObject *Sender)
 {
-  if (Application->MessageBox("Reset the configuration to default settings?", "Reset Config", MB_OKCANCEL) == ID_OK)
+  if (Application->MessageBox(L"Reset the configuration to default settings?", L"Reset Config", MB_OKCANCEL) == ID_OK)
   {
     mAppConfig->Default();
     AppConfigToGUI();
