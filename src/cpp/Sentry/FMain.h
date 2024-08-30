@@ -456,7 +456,7 @@ __published:	// IDE-managed Components
           TScrollCode ScrollCode, int &ScrollPos);
 
 private:	// User declarations
-    AnsiString appPath;
+    UnicodeString appPath;
 
     int modulesZoom;
     TPoint modulesPan, oldModulesPan, modulesDefine, modulesCurrentDefine;

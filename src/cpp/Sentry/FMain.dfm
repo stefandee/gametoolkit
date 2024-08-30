@@ -290,7 +290,6 @@ object FormMain: TFormMain
                 TabOrder = 4
                 TickMarks = tmBoth
                 OnChange = trackModulesZoomChange
-                ExplicitLeft = 609
               end
             end
           end
@@ -511,7 +510,6 @@ object FormMain: TFormMain
                 TabOrder = 3
                 TickMarks = tmBoth
                 OnChange = trackFramesZoomChange
-                ExplicitLeft = 625
               end
               object cbFramesOffset: TCheckBox
                 Left = 98
@@ -541,22 +539,22 @@ object FormMain: TFormMain
             Align = alClient
             Caption = 'Modules Quick Selection'
             TabOrder = 1
-            ExplicitWidth = 783
-            ExplicitHeight = 141
             object paintQuickModules: TPaintBox
               Left = 2
               Top = 15
-              Width = 779
-              Height = 108
+              Width = 771
+              Height = 88
               Align = alClient
               OnDblClick = paintQuickModulesDblClick
               OnMouseDown = paintQuickModulesMouseDown
               OnPaint = paintQuickModulesPaint
+              ExplicitWidth = 779
+              ExplicitHeight = 108
             end
             object scrollQuickModules: TScrollBar
               Left = 2
-              Top = 123
-              Width = 779
+              Top = 103
+              Width = 771
               Height = 16
               Align = alBottom
               PageSize = 0
@@ -840,7 +838,6 @@ object FormMain: TFormMain
                 TabOrder = 4
                 TickMarks = tmBoth
                 OnChange = trackAnimsZoomChange
-                ExplicitLeft = 597
               end
               object cbAnimsAFOffset: TCheckBox
                 Left = 112
@@ -878,7 +875,6 @@ object FormMain: TFormMain
                 TabOrder = 8
                 Value = 10
                 OnChange = cbFPSChange
-                ExplicitLeft = 513
               end
             end
           end
@@ -890,22 +886,22 @@ object FormMain: TFormMain
             Align = alClient
             Caption = 'Frames Quick Selection'
             TabOrder = 1
-            ExplicitWidth = 755
-            ExplicitHeight = 141
             object paintQuickFrames: TPaintBox
               Left = 2
               Top = 15
-              Width = 751
-              Height = 108
+              Width = 743
+              Height = 88
               Align = alClient
               OnDblClick = paintQuickFramesDblClick
               OnMouseDown = paintQuickFramesMouseDown
               OnPaint = paintQuickFramesPaint
+              ExplicitWidth = 751
+              ExplicitHeight = 108
             end
             object scrollQuickFrames: TScrollBar
               Left = 2
-              Top = 123
-              Width = 751
+              Top = 103
+              Width = 743
               Height = 16
               Align = alBottom
               PageSize = 0
@@ -1430,7 +1426,6 @@ object FormMain: TFormMain
                 TabOrder = 3
                 TickMarks = tmBoth
                 OnChange = trackFLogicZoomChange
-                ExplicitLeft = 625
               end
               object cbFrameLogicOffsetFM: TCheckBox
                 Left = 88

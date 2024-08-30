@@ -169,7 +169,7 @@ void TFormMain::GUIDefaultConfig()
 
 void TFormMain::LoadConfig()
 {
-  mAppConfig.Load((appPath + "\\Sentry.xml").c_str());
+  mAppConfig.Load(UTF8Encode(appPath + "\\Sentry.xml").c_str());
 
   MakeHistory();
 }
@@ -177,7 +177,7 @@ void TFormMain::LoadConfig()
 
 void TFormMain::SaveConfig()
 {
-  mAppConfig.Save((appPath + "\\Sentry.xml").c_str());
+  mAppConfig.Save(UTF8Encode(appPath + "\\Sentry.xml").c_str());
 }
 //---------------------------------------------------------------------------
 
@@ -237,14 +237,16 @@ void TFormMain::MakeHistory()
 {
   OpenRecent1->Clear();
 
+  auto fileHistorySize = mAppConfig.mFileHistory.size();
+  OpenRecent1->Enabled = fileHistorySize > 0;
+
   // we dont have any recent opened items
-  if (mAppConfig.mFileHistory.size() == 0)
+  if (fileHistorySize == 0)
   {
-    OpenRecent1->Enabled = false;
     return;
   }
 
-  for(int i = 0; i < (int)mAppConfig.mFileHistory.size(); i++)
+  for(int i = 0; i < fileHistorySize; i++)
   {
     TMenuItem* menuItem = new TMenuItem(OpenRecent1);
 
@@ -351,6 +353,7 @@ void __fastcall TFormMain::About1Click(TObject *Sender)
 
 void __fastcall TFormMain::Exit1Click(TObject *Sender)
 {
+  SaveConfig();
   Application->Terminate();
 }
 //---------------------------------------------------------------------------
@@ -534,11 +537,11 @@ void TFormMain::ImagesToGrid()
 
   for(int i = 0; i < mSprite.mImagesManager.Size(); i++)
   {
-    gridImages->Cells[0][i + 1] = AnsiString(i);
-    gridImages->Cells[1][i + 1] = "0x" + AnsiString::IntToHex(mSprite.mImagesManager.Get(i).GetId(), 32);
-    gridImages->Cells[2][i + 1] = mSprite.mImagesManager.Get(i).GetFileName().c_str();
-    gridImages->Cells[3][i + 1] = "0x" + AnsiString::IntToHex(mSprite.mImagesManager.Get(i).GetTransparentColor(), 32);
-    gridImages->Cells[4][i + 1] = mSprite.mImagesManager.Get(i).GetInfo().c_str();
+    gridImages->Cells[0][i + 1] = UnicodeString(i);
+    gridImages->Cells[1][i + 1] = "0x" + UnicodeString::IntToHex(mSprite.mImagesManager.Get(i).GetId(), 0);
+    gridImages->Cells[2][i + 1] = UTF8ToUnicodeString(mSprite.mImagesManager.Get(i).GetFileName().c_str());
+    gridImages->Cells[3][i + 1] = "0x" + UnicodeString::IntToHex(mSprite.mImagesManager.Get(i).GetTransparentColor(), 0);
+    gridImages->Cells[4][i + 1] = UTF8ToUnicodeString(mSprite.mImagesManager.Get(i).GetInfo().c_str());
     gridImages->RowCount++;
   }
 
@@ -566,14 +569,14 @@ void TFormMain::ModulesToGrid()
 
   for(int i = 0; i < mSprite.mModulesManager.Size(); i++)
   {
-    gridModules->Cells[0][i + 1] = AnsiString(i);
-    gridModules->Cells[1][i + 1] = "0x" + AnsiString::IntToHex(mSprite.mModulesManager.Get(i).GetId(), 32);
-    gridModules->Cells[2][i + 1] = "0x" + AnsiString::IntToHex(mSprite.mModulesManager.Get(i).GetImageId(), 32);
-    gridModules->Cells[3][i + 1] = AnsiString(mSprite.mModulesManager.Get(i).GetX());
-    gridModules->Cells[4][i + 1] = AnsiString(mSprite.mModulesManager.Get(i).GetY());
-    gridModules->Cells[5][i + 1] = AnsiString(mSprite.mModulesManager.Get(i).GetWidth());
-    gridModules->Cells[6][i + 1] = AnsiString(mSprite.mModulesManager.Get(i).GetHeight());
-    gridModules->Cells[7][i + 1] = AnsiString(mSprite.mModulesManager.Get(i).GetInfo().c_str());
+    gridModules->Cells[0][i + 1] = UnicodeString(i);
+    gridModules->Cells[1][i + 1] = "0x" + UnicodeString::IntToHex(mSprite.mModulesManager.Get(i).GetId(), 0);
+    gridModules->Cells[2][i + 1] = "0x" + UnicodeString::IntToHex(mSprite.mModulesManager.Get(i).GetImageId(), 0);
+    gridModules->Cells[3][i + 1] = UnicodeString(mSprite.mModulesManager.Get(i).GetX());
+    gridModules->Cells[4][i + 1] = UnicodeString(mSprite.mModulesManager.Get(i).GetY());
+    gridModules->Cells[5][i + 1] = UnicodeString(mSprite.mModulesManager.Get(i).GetWidth());
+    gridModules->Cells[6][i + 1] = UnicodeString(mSprite.mModulesManager.Get(i).GetHeight());
+    gridModules->Cells[7][i + 1] = UnicodeString(mSprite.mModulesManager.Get(i).GetInfo().c_str());
 
     gridModules->RowCount++;
   }
@@ -810,12 +813,12 @@ void __fastcall TFormMain::gridModulesClick(TObject *Sender)
   CModule module = mSprite.mModulesManager.Get(gridModules->Row - 1);
 
   edModules->Text =
-    AnsiString("id=\"") + "0x" + AnsiString::IntToHex(module.GetId(), 32) + "\" " +
-    AnsiString("imageid=\"") + "0x" + AnsiString::IntToHex(module.GetImageId(), 32) + "\" " +
-    AnsiString("x=") + module.GetX() + " " +
-    AnsiString("y=") + module.GetY() + " " +
-    AnsiString("width=") + module.GetWidth() + " " +
-    AnsiString("height=") + module.GetHeight() + " " +
+    AnsiString("id=\"") + "0x" + AnsiString::IntToHex(module.GetId(), 0) + "\" " +
+    AnsiString("imageid=\"") + "0x" + AnsiString::IntToHex(module.GetImageId(), 0) + "\" " +
+    AnsiString("x=\"") + module.GetX() + "\" " +
+    AnsiString("y=\"") + module.GetY() + "\" " +
+    AnsiString("width=\"") + module.GetWidth() + "\" " +
+    AnsiString("height=\"") + module.GetHeight() + "\" " +
     AnsiString("info=\"") + module.GetInfo().c_str() + "\""
     ;
 
@@ -854,17 +857,27 @@ void __fastcall TFormMain::edModulesExit(TObject *Sender)
   // if one attribute is wrong, is ignored, all the others that are correct,
   // will be set
 
+  // parse the new attiributes through tinyxml
+  auto xmlStr = "<module " + edModules->Text + "/>";
+  auto xmlStrUTF8 = std::string(UTF8Encode(xmlStr).c_str());
+
+  tinyxml2::XMLDocument doc;
+  auto result = doc.Parse(xmlStrUTF8.c_str());
+
+  if (result != XML_SUCCESS)
+  {
+    return;
+  }
+
+  auto elem = doc.FirstChildElement("module");
+
+  if (!elem)
+  {
+    return;
+  }
+
   // get the entry that is edited
   CModule module = mSprite.mModulesManager.Get(gridModules->Row - 1);
-
-  // parse the new attiributes through tinyxml
-  tinyxml2::XMLDocument doc;
-
-  doc.Parse( UTF8Encode("<element " + edModules->Text + "/>").c_str());
-
-  auto elem = doc.FirstChildElement("element");
-
-  int result;
 
   //
   // Parse integer attributes
@@ -949,12 +962,12 @@ void __fastcall TFormMain::edModulesExit(TObject *Sender)
   mSprite.mModulesManager.Set(gridModules->Row - 1, module);
 
   edModules->Text =
-    UnicodeString("id=\"") + "0x" + UnicodeString::IntToHex(module.GetId(), 32) + "\" " +
-    UnicodeString("imageid=\"") + "0x" + UnicodeString::IntToHex(module.GetImageId(), 32) + "\" " +
-    UnicodeString("x=") + module.GetX() + " " +
-    UnicodeString("y=") + module.GetY() + " " +
-    UnicodeString("width=") + module.GetWidth() + " " +
-    UnicodeString("height=") + module.GetHeight() + " " +
+    UnicodeString("id=\"") + "0x" + UnicodeString::IntToHex(module.GetId(), 0) + "\" " +
+    UnicodeString("imageid=\"") + "0x" + UnicodeString::IntToHex(module.GetImageId(), 0) + "\" " +
+    UnicodeString("x=\"") + module.GetX() + "\" " +
+    UnicodeString("y=\"") + module.GetY() + "\" " +
+    UnicodeString("width=\"") + module.GetWidth() + "\" " +
+    UnicodeString("height=\"") + module.GetHeight() + "\" " +
     UnicodeString("info=\"") + UTF8ToString(module.GetInfo().c_str()) + "\""
     ;
 
@@ -6236,10 +6249,10 @@ void __fastcall TFormMain::OnScriptMenuItemClick(TObject *Sender)
     return;
   }
 
-  AnsiString scriptFilePath = menuItem->Hint.SubString(1, sepIndex - 1);
-  std::string scriptStr = std::string(appPath.c_str()) + std::string(scriptFilePath.c_str());
+  UnicodeString scriptFilePath = menuItem->Hint.SubString(1, sepIndex - 1);
+  auto scriptStr = appPath + scriptFilePath;
 
-  mSprite.LoadScriptFromFile(scriptStr);
+  mSprite.LoadScriptFromFile(UTF8Encode(scriptStr).c_str());
 
   if (FormScript->Init(&mSprite))
   {

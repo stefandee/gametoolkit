@@ -4,10 +4,12 @@
 #pragma hdrstop
 
 #include "AppConfig.h"
+#include "tinyxml2.h"
 #include <sstream>
 
 //---------------------------------------------------------------------------
 
+using namespace tinyxml2;
 #pragma package(smart_init)
 
 AppConfig::AppConfig() : mState(APP_CONFIG_STATE_CLOSED)
@@ -19,13 +21,13 @@ AppConfig::AppConfig() : mState(APP_CONFIG_STATE_CLOSED)
 bool AppConfig::Load(std::string fileName)
 {
   mDoc.Clear();
-  bool loadResult = mDoc.LoadFile(fileName.c_str());
+  auto loadResult = mDoc.LoadFile(fileName.c_str());
 
   mState = APP_CONFIG_STATE_CLOSED;
 
   Default();
 
-  if (!loadResult)
+  if (loadResult != XML_SUCCESS)
   {
     return false;
   }
