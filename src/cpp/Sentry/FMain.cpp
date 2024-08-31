@@ -105,8 +105,6 @@ __fastcall TFormMain::TFormMain(TComponent* Owner)
 
   colorMapMouseMode = colorMapAvailableMouseMode = MMM_PAN;
 
-  RefreshAllScripts();
-
   ArrangeFramesPageItems();
   ArrangeModulesPageItems();
   ArrangeAnimsPageItems();
@@ -116,7 +114,9 @@ __fastcall TFormMain::TFormMain(TComponent* Owner)
   PageControl1->ActivePage = TabSheetModules;
 
   LoadConfig();
-  
+
+  RefreshAllScripts();
+
   GUIDefaultConfig();
   GUIFromDocState(mSprite.GetDocState());
 
@@ -812,15 +812,7 @@ void __fastcall TFormMain::gridModulesClick(TObject *Sender)
 
   CModule module = mSprite.mModulesManager.Get(gridModules->Row - 1);
 
-  edModules->Text =
-    AnsiString("id=\"") + "0x" + AnsiString::IntToHex(module.GetId(), 0) + "\" " +
-    AnsiString("imageid=\"") + "0x" + AnsiString::IntToHex(module.GetImageId(), 0) + "\" " +
-    AnsiString("x=\"") + module.GetX() + "\" " +
-    AnsiString("y=\"") + module.GetY() + "\" " +
-    AnsiString("width=\"") + module.GetWidth() + "\" " +
-    AnsiString("height=\"") + module.GetHeight() + "\" " +
-    AnsiString("info=\"") + module.GetInfo().c_str() + "\""
-    ;
+  ModuleToTextField(module);
 
   paintModulesPaint(this);
 }
@@ -836,12 +828,7 @@ void __fastcall TFormMain::gridImagesClick(TObject *Sender)
 
   CImage image = mSprite.mImagesManager.Get(gridImages->Row - 1);
 
-  edImages->Text =
-    AnsiString("id=\"") + "0x" + IntToHex(image.GetId(), 32) + "\" " +
-    AnsiString("filename=\"") + image.GetFileName().c_str() + "\" " +
-    AnsiString("color=\"") + "0x" + IntToHex(image.GetTransparentColor(), 32) + "\" " +
-    AnsiString("info=\"") + image.GetInfo().c_str() + "\""
-    ;
+  ImageToTextField(image);
 
   paintModulesPaint(this); 
 }
@@ -961,15 +948,7 @@ void __fastcall TFormMain::edModulesExit(TObject *Sender)
 
   mSprite.mModulesManager.Set(gridModules->Row - 1, module);
 
-  edModules->Text =
-    UnicodeString("id=\"") + "0x" + UnicodeString::IntToHex(module.GetId(), 0) + "\" " +
-    UnicodeString("imageid=\"") + "0x" + UnicodeString::IntToHex(module.GetImageId(), 0) + "\" " +
-    UnicodeString("x=\"") + module.GetX() + "\" " +
-    UnicodeString("y=\"") + module.GetY() + "\" " +
-    UnicodeString("width=\"") + module.GetWidth() + "\" " +
-    UnicodeString("height=\"") + module.GetHeight() + "\" " +
-    UnicodeString("info=\"") + UTF8ToString(module.GetInfo().c_str()) + "\""
-    ;
+  ModuleToTextField(module);
 
   ModulesToGrid();
 
@@ -1006,11 +985,19 @@ void __fastcall TFormMain::edImagesExit(TObject *Sender)
   // parse the new attiributes through tinyxml
   tinyxml2::XMLDocument doc;
 
-  doc.Parse( UTF8Encode("<element " + edImages->Text + "/>").c_str());
+  auto result = doc.Parse( UTF8Encode("<element " + edImages->Text + "/>").c_str());
+
+  if (result != XML_SUCCESS)
+  {
+    return;
+  }
 
   auto elem = doc.FirstChildElement("element");
 
-  int result;
+  if (!elem)
+  {
+    return;
+  }
 
   //
   // Parse hex attributes
@@ -1066,12 +1053,7 @@ void __fastcall TFormMain::edImagesExit(TObject *Sender)
 
   mSprite.mImagesManager.Set(gridImages->Row - 1, image);
 
-  edImages->Text =
-    UnicodeString("id=\"") + "0x" + IntToHex(image.GetId(), 32) + "\" " +
-    UnicodeString("filename=\"") + UTF8ToString(image.GetFileName().c_str()) + "\" " +
-    UnicodeString("color=\"") + "0x" + IntToHex(image.GetTransparentColor(), 32) + "\" " +
-    UnicodeString("info=\"") + image.GetInfo().c_str() + "\""
-    ;
+  ImageToTextField(image);
 
   ImagesToGrid();
 
@@ -4428,7 +4410,7 @@ void __fastcall TFormMain::paintQuickFramesPaint(TObject *Sender)
         {
           // reimplemented using GDI+
           CPoint fmodulePos = fModule.GetPos();
-          
+
           // translate and scale the fmodules position
           fmodulePos.mX = (float)(fmodulePos.mX - frameBoundRect.mX - frameBoundRect.mWidth / 2) * mAppConfig.mQuickFrameSize * scaleW / frameBoundRect.mWidth;
           fmodulePos.mY = (float)(fmodulePos.mY - frameBoundRect.mY - frameBoundRect.mHeight / 2) * mAppConfig.mQuickFrameSize * scaleH / frameBoundRect.mHeight;
@@ -4593,7 +4575,7 @@ void __fastcall TFormMain::btnPauseClick(TObject *Sender)
     TimerAnim->Enabled = false;
     btnPlay->Enabled   = true;
     btnPause->Enabled  = false;
-  }  
+  }
 }
 //---------------------------------------------------------------------------
 
@@ -4923,7 +4905,7 @@ void __fastcall TFormMain::gridFrameLogicPopDelete(TObject *Sender)
     {
       gridFrameLogic->Row = row + 1;
     }
-    
+
     gridFrameLogicClick(this);
   }
 }
@@ -6165,7 +6147,7 @@ void TFormMain::RefreshScripts(TMenuItem* menuItem, std::string scriptType)
   bool scriptsAdded = false;
 
   // search all scripts that match the scriptType in the scripts directory
-  if (FindFirst(UTF8ToString(mAppConfig.mPathScripts.c_str()) + "\\*.csl", faArchive | faReadOnly, sr) == 0)
+  if (FindFirst(UTF8ToString(mAppConfig.mPathScripts.c_str()) + "\\*.csl", faNormal, sr) == 0)
   {
     do
     {
@@ -6250,7 +6232,7 @@ void __fastcall TFormMain::OnScriptMenuItemClick(TObject *Sender)
   }
 
   UnicodeString scriptFilePath = menuItem->Hint.SubString(1, sepIndex - 1);
-  auto scriptStr = appPath + scriptFilePath;
+  auto scriptStr = /*appPath + */scriptFilePath;
 
   mSprite.LoadScriptFromFile(UTF8Encode(scriptStr).c_str());
 
@@ -6751,9 +6733,7 @@ void __fastcall TFormMain::gridColorMapItemsClick(TObject *Sender)
 
   CColorMapItem colorMapItem = GetColorMapItem();
 
-  editColorMapItem->Text =
-    AnsiString("s=") + "0x" + AnsiString::IntToHex(colorMapItem.GetSrcColor(), 6) + " " +
-    AnsiString("d=") + "0x" + AnsiString::IntToHex(colorMapItem.GetDstColor(), 6);
+  ColorMapItemToTextField(colorMapItem);
 
   paintColorMapPaint(Sender);
 }
@@ -6943,6 +6923,11 @@ void __fastcall TFormMain::editColorMapItemExit(TObject *Sender)
 
   auto elem = doc.FirstChildElement("element");
 
+  if (!elem)
+  {
+    return;
+  }
+
   int result;
 
   //
@@ -6975,11 +6960,7 @@ void __fastcall TFormMain::editColorMapItemExit(TObject *Sender)
   image.mColorMaps.Set(gridColorMaps->Row - 1, colorMap);
   mSprite.mImagesManager.Set(gridImagesForColorMap->Row - 1, image);
 
-  // same code as in
-  editColorMapItem->Text =
-    UnicodeString("s=") + "0x" + UnicodeString::IntToHex(colorMapItem.GetSrcColor(), 6) + " " +
-    UnicodeString("d=") + "0x" + UnicodeString::IntToHex(colorMapItem.GetDstColor(), 6) + " "
-    ;
+  ColorMapItemToTextField(colorMapItem);
 
   ColorMapItemsToGrid();
 
@@ -7352,9 +7333,7 @@ void __fastcall TFormMain::paintColorMapMouseUp(TObject *Sender,
     gridColorMapItems->Row = oldRow;
 
     // update the edit box
-    editColorMapItem->Text =
-        AnsiString("s=") + "0x" + AnsiString::IntToHex(colorMapItem.GetSrcColor(), 6) + " " +
-        AnsiString("d=") + "0x" + AnsiString::IntToHex(colorMapItem.GetDstColor(), 6) + " ";
+    ColorMapItemToTextField(colorMapItem);
 
     paintColorMapPaint(Sender);
 
@@ -7427,9 +7406,7 @@ void __fastcall TFormMain::ColorPickerClick(TObject *Sender)
     gridColorMapItems->Row = oldRow;
 
     // update the edit box
-    editColorMapItem->Text =
-        AnsiString("s=") + "0x" + AnsiString::IntToHex(colorMapItem.GetSrcColor(), 6) + " " +
-        AnsiString("d=") + "0x" + AnsiString::IntToHex(colorMapItem.GetDstColor(), 6) + " ";
+    ColorMapItemToTextField(colorMapItem);
 
     paintColorMapPaint(Sender);
   }
@@ -7481,6 +7458,39 @@ void TFormMain::DrawImage(Graphics::TCanvas* canvas, int imageIndex, float tx, f
   }
 
   graphics.DrawImage((Gdiplus::Image*)bitmap, destRect, 0, 0, bitmap->GetWidth(), bitmap->GetHeight(), Gdiplus::UnitPixel, &imAtt);
+}
+//---------------------------------------------------------------------------
+
+void TFormMain::ModuleToTextField(CModule& module)
+{
+  edModules->Text =
+    UnicodeString("id=\"") + "0x" + UnicodeString::IntToHex(module.GetId(), 0) + "\" " +
+    "imageid=\"" + "0x" + UnicodeString::IntToHex(module.GetImageId(), 0) + "\" " +
+    "x=\"" + module.GetX() + "\" " +
+    "y=\"" + module.GetY() + "\" " +
+    "width=\"" + module.GetWidth() + "\" " +
+    "height=\"" + module.GetHeight() + "\" " +
+    "info=\"" + UTF8ToString(module.GetInfo().c_str()) + "\""
+    ;
+}
+//---------------------------------------------------------------------------
+
+void TFormMain::ColorMapItemToTextField(CColorMapItem& colorMapItem)
+{
+    editColorMapItem->Text =
+        UnicodeString("s=") + "0x" + UnicodeString::IntToHex(colorMapItem.GetSrcColor(), 6) + " " +
+        "d=" + "0x" + UnicodeString::IntToHex(colorMapItem.GetDstColor(), 6) + " ";
+}
+//---------------------------------------------------------------------------
+
+void TFormMain::ImageToTextField(CImage& image)
+{
+  edImages->Text =
+    UnicodeString("id=\"") + "0x" + IntToHex(image.GetId(), 0) + "\" " +
+    "filename=\"" + UTF8ToString(image.GetFileName().c_str()) + "\" " +
+    "color=\"" + "0x" + IntToHex(image.GetTransparentColor(), 6) + "\" " +
+    "info=\"" + UTF8Decode(image.GetInfo().c_str()) + "\""
+    ;
 }
 //---------------------------------------------------------------------------
 

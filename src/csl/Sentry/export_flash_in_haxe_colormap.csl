@@ -254,11 +254,11 @@ execute()
   //
   FileWriteParam(fileH, GetColorMapsCount(0), FILELIB_PARAM_INT);  
 
-  for(colorMap = 0; colorMap < GetColorMapsCount(0); colorMap++)
+  for(var colorMap = 0; colorMap < GetColorMapsCount(0); colorMap++)
   {
     FileWriteParam(fileH, GetColorMapItemsCount(0, colorMap), FILELIB_PARAM_INT);
 
-    for(colorMapItem = 0; colorMapItem < GetColorMapItemsCount(0, colorMap); colorMapItem++)
+    for(var colorMapItem = 0; colorMapItem < GetColorMapItemsCount(0, colorMap); colorMapItem++)
     {
       FileWriteParam(fileH, GetColorMapItemSrcColor(0, colorMap, colorMapItem), FILELIB_PARAM_INT);
       FileWriteParam(fileH, GetColorMapItemDstColor(0, colorMap, colorMapItem), FILELIB_PARAM_INT);

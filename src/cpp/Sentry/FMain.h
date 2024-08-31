@@ -67,7 +67,6 @@ __published:	// IDE-managed Components
     TMenuItem *About1;
     TMenuItem *N3;
     TMenuItem *Contents1;
-    TMenuItem *Scripts1;
     TMenuItem *Edit1;
     TMenuItem *Undo1;
     TMenuItem *Redo1;
@@ -199,9 +198,6 @@ __published:	// IDE-managed Components
     TMenuItem *NoScriptsAvailable2;
     TMenuItem *N7;
     TMenuItem *Refresh2;
-    TMenuItem *NoScriptsAvailable3;
-    TMenuItem *N8;
-    TMenuItem *Refresh3;
     TPanel *Panel6;
     TPanel *Panel5;
     TSplitter *Splitter3;
@@ -539,6 +535,10 @@ private:	// User declarations
     void __fastcall ColorPickerClick(TObject *Sender);
 
     void __fastcall DisplayHint(TObject* Sender);
+
+    void ModuleToTextField(CModule& module);
+    void ColorMapItemToTextField(CColorMapItem& colorMapItem);
+    void ImageToTextField(CImage& image);
 
 private: // Utilities
     CImage GetImageForColorMap();

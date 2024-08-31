@@ -9,8 +9,9 @@
 
 #include "ImageCache.h"
 #include "Manager.h"
+#include "Script.h"
 
-class SentryScript;
+//class SentryScript;
 
 const int FMODULE_BITFLAG_FLIP_X = 1;
 const int FMODULE_BITFLAG_FLIP_Y = 2;

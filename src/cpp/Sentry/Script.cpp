@@ -47,6 +47,11 @@ bool SentryScript::LoadScriptFromFile(std::string scriptFile)
 
   file.open (scriptFile.c_str(), ifstream::in | ifstream::binary);
 
+  if (!file.is_open())
+  {
+    return false;
+  }
+
   while (!file.eof())
   {
     mScript += (char) file.get();
@@ -193,7 +198,7 @@ void SentryScript::InitScriptingInterface()
   addModuleFunc("GetColorMapItemsCount(const imageIndex, const colorMapIndex)",                            mHandleGetColorMapItemsCount);
   addModuleFunc("GetColorMapItemId(const imageIndex, const colorMapIndex, const colorMapItemIndex)",       mHandleGetColorMapItemId);
   addModuleFunc("GetColorMapItemSrcColor(const imageIndex, const colorMapIndex, const colorMapItemIndex)", mHandleGetColorMapItemSrcColor);
-  addModuleFunc("GetColorMapItemSrcColor(const imageIndex, const colorMapIndex, const colorMapItemIndex)", mHandleGetColorMapItemDstColor);
+  addModuleFunc("GetColorMapItemDstColor(const imageIndex, const colorMapIndex, const colorMapItemIndex)", mHandleGetColorMapItemDstColor);
 
   // modules
   addModuleFunc("GetModuleCount()",                 mHandleGetModuleCount);

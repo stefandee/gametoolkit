@@ -1484,32 +1484,6 @@ object FormMain: TFormMain
       object N6: TMenuItem
         Caption = '-'
       end
-      object Import1: TMenuItem
-        Caption = '&Import'
-        object NoScriptsAvailable2: TMenuItem
-          Caption = 'No Scripts Available'
-          Enabled = False
-        end
-        object N7: TMenuItem
-          Caption = '-'
-        end
-        object Refresh2: TMenuItem
-          Caption = 'Refresh'
-        end
-      end
-      object Export1: TMenuItem
-        Caption = '&Export'
-        object NoScriptsAvailable1: TMenuItem
-          Caption = 'No Scripts Available'
-          Enabled = False
-        end
-        object N1: TMenuItem
-          Caption = '-'
-        end
-        object Refresh1: TMenuItem
-          Caption = 'Refresh'
-        end
-      end
       object N2: TMenuItem
         Caption = '-'
       end
@@ -1545,15 +1519,29 @@ object FormMain: TFormMain
     end
     object Tools1: TMenuItem
       Caption = '&Tools'
-      object Scripts1: TMenuItem
-        Caption = '&Scripts'
-        object NoScriptsAvailable3: TMenuItem
+      object Export1: TMenuItem
+        Caption = '&Export Scripts'
+        object NoScriptsAvailable1: TMenuItem
           Caption = 'No Scripts Available'
+          Enabled = False
         end
-        object N8: TMenuItem
+        object N1: TMenuItem
           Caption = '-'
         end
-        object Refresh3: TMenuItem
+        object Refresh1: TMenuItem
+          Caption = 'Refresh'
+        end
+      end
+      object Import1: TMenuItem
+        Caption = '&Import Scripts'
+        object NoScriptsAvailable2: TMenuItem
+          Caption = 'No Scripts Available'
+          Enabled = False
+        end
+        object N7: TMenuItem
+          Caption = '-'
+        end
+        object Refresh2: TMenuItem
           Caption = 'Refresh'
         end
       end

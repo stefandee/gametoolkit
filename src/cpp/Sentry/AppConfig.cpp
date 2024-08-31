@@ -37,31 +37,28 @@ bool AppConfig::Load(std::string fileName)
   int tmp;
   std::string strTmp;
 
+  GetStrProperty("general", "SCRIPT_PATH", mPathScripts);
+
   //
   // Read the file history related items
   //
-  if (!GetIntProperty("general", "FILE_HISTORY_INDEX", mFileHistoryIndex))
+  GetIntProperty("general", "FILE_HISTORY_INDEX", mFileHistoryIndex);
+
+  if (GetCategoryPropertyCount("filehistory", tmp))
   {
-    return false;
-  }
-
-  if (!GetCategoryPropertyCount("filehistory", tmp))
-  {
-    return false;
-  }
-
-  for(int i = 0; i < tmp; i++)
-  {
-    std::stringstream myStream;
-
-    myStream << "FILE" << i;
-
-    if (!GetStrProperty("filehistory", myStream.str(), strTmp))
+    for(int i = 0; i < tmp; i++)
     {
-      return false;
-    }
+      std::stringstream myStream;
 
-    mFileHistory.push_back(strTmp);
+      myStream << "FILE" << i;
+
+      if (!GetStrProperty("filehistory", myStream.str(), strTmp))
+      {
+        continue;
+      }
+
+      mFileHistory.push_back(strTmp);
+    }
   }
 
   return true;
@@ -86,6 +83,7 @@ bool AppConfig::Save(std::string fileName)
   xmlDoc += "<general>\n";
   xmlDoc += "<property name=\"MODULES_BACKGROUND_COLOR\" value=\"0xHAHAHAHAHAHAHA\" />\n";
   xmlDoc += std::string("<property name=\"FILE_HISTORY_INDEX\" value=\"") + IntToStr(mFileHistoryIndex) + "\" />\n";
+  xmlDoc += std::string("<property name=\"SCRIPT_PATH\" value=\"") + mPathScripts + "\" />\n";
   xmlDoc += "</general>\n";
 
   xmlDoc += "<filehistory>\n";
