@@ -2173,10 +2173,12 @@ void TFormMain::FramesToGrid()
 
   for(int i = 0; i < mSprite.mFramesManager.Size(); i++)
   {
-    gridFrames->Cells[0][i + 1] = AnsiString(i);
-    gridFrames->Cells[1][i + 1] = "0x" + AnsiString::IntToHex(mSprite.mFramesManager.Get(i).GetId(), 32);
-    gridFrames->Cells[2][i + 1] = mSprite.mFramesManager.Get(i).mFModules.Size();
-    gridFrames->Cells[3][i + 1] = mSprite.mFramesManager.Get(i).GetInfo().c_str();
+    auto frame = mSprite.mFramesManager.Get(i);
+
+    gridFrames->Cells[0][i + 1] = UnicodeString(i);
+    gridFrames->Cells[1][i + 1] = "0x" + UnicodeString::IntToHex(frame.GetId(), 0);
+    gridFrames->Cells[2][i + 1] = frame.mFModules.Size();
+    gridFrames->Cells[3][i + 1] = UTF8ToString(frame.GetInfo().c_str());
     gridFrames->RowCount++;
   }
 
@@ -2215,8 +2217,8 @@ void TFormMain::FModulesToGrid()
         moduleInfo = " " + mSprite.mModulesManager.GetItemById(fModule.GetModuleId()).GetInfo();
       }
 
-      gridFModules->Cells[0][i + 1] = AnsiString(i);
-      gridFModules->Cells[1][i + 1] = "0x" + AnsiString::IntToHex(fModule.GetModuleId(), 32) + moduleInfo.c_str();
+      gridFModules->Cells[0][i + 1] = UnicodeString(i);
+      gridFModules->Cells[1][i + 1] = "0x" + UnicodeString::IntToHex(fModule.GetModuleId(), 0) + " (" + UTF8ToString(moduleInfo.c_str()) + ")";
       gridFModules->Cells[2][i + 1] = fModule.GetPos().mX;
       gridFModules->Cells[3][i + 1] = fModule.GetPos().mY;
       gridFModules->Cells[4][i + 1] = fModule.GetFlags();
@@ -2259,10 +2261,7 @@ void __fastcall TFormMain::gridFramesClick(TObject *Sender)
 
   CFrame frame = mSprite.mFramesManager.Get(gridFrames->Row - 1);
 
-  edFrames->Text =
-    AnsiString("id=\"") + "0x" + AnsiString::IntToHex(frame.GetId(), 32) + "\" " +
-    AnsiString("info=\"") + frame.GetInfo().c_str() + "\""
-    ;
+  FrameToTextField(frame);
 
   paintFramesPaint(Sender);
 }
@@ -2394,11 +2393,19 @@ void __fastcall TFormMain::edFramesExit(TObject *Sender)
   // parse the new attributes through tinyxml
   tinyxml2::XMLDocument doc;
 
-  doc.Parse( (AnsiString("<element ") + edFrames->Text + "/>").c_str());
+  auto result = doc.Parse( UTF8Encode("<element " + edFrames->Text + "/>").c_str() );
+
+  if (result != XML_SUCCESS)
+  {
+    return;
+  }
 
   auto elem = doc.FirstChildElement("element");
 
-  int result;
+  if (!elem)
+  {
+    return;
+  }
 
   //
   // Parse integer attributes
@@ -2437,10 +2444,7 @@ void __fastcall TFormMain::edFramesExit(TObject *Sender)
 
   mSprite.mFramesManager.Set(gridFrames->Row - 1, frame);
 
-  edFrames->Text =
-    UnicodeString("id=\"") + "0x" + UnicodeString::IntToHex(frame.GetId(), 32) + "\" " +
-    UnicodeString("info=\"") + UTF8ToString(frame.GetInfo().c_str()) + "\""
-    ;
+  FrameToTextField(frame);
 
   FramesToGrid();
 
@@ -2468,14 +2472,9 @@ void __fastcall TFormMain::gridFModulesClick(TObject *Sender)
   CFrame frame = mSprite.mFramesManager.Get(gridFrames->Row - 1);
   CFrameModule fmodule = frame.mFModules.Get(gridFModules->Row - 1);
 
-  edFModules->Text =
-    AnsiString("moduleid=\"") + "0x" + AnsiString::IntToHex(fmodule.GetModuleId(), 32) + "\" " +
-    AnsiString("x=") + fmodule.GetPos().mX + " " +
-    AnsiString("y=") + fmodule.GetPos().mY + " " +
-    AnsiString("flags=\"") + "0x" + AnsiString::IntToHex(fmodule.GetFlags(), 32) + "\""
-    ;
+  FModuleToTextField(fmodule);
 
-  paintFramesPaint(Sender);  
+  paintFramesPaint(Sender);
 }
 //---------------------------------------------------------------------------
 
@@ -2629,11 +2628,19 @@ void __fastcall TFormMain::edFModulesExit(TObject *Sender)
   // parse the new attiributes through tinyxml
   tinyxml2::XMLDocument doc;
 
-  doc.Parse( UTF8Encode("<element " + edFModules->Text + "/>").c_str() );
+  auto result = doc.Parse( UTF8Encode("<element " + edFModules->Text + "/>").c_str() );
+
+  if (result != XML_SUCCESS)
+  {
+    return;
+  }
 
   auto elem = doc.FirstChildElement("element");
 
-  int result;
+  if (!elem)
+  {
+    return;
+  }
 
   //
   // Parse integer attributes
@@ -2685,12 +2692,7 @@ void __fastcall TFormMain::edFModulesExit(TObject *Sender)
   frame.mFModules.Set(gridFModules->Row - 1, fmodule);
   mSprite.mFramesManager.Set(gridFrames->Row - 1, frame);
 
-  edFModules->Text =
-    UnicodeString("moduleid=\"") + "0x" + UnicodeString::IntToHex(fmodule.GetModuleId(), 32) + "\" " +
-    UnicodeString("x=") + fmodule.GetPos().mX + " " +
-    UnicodeString("y=") + fmodule.GetPos().mY + " " +
-    UnicodeString("flags=\"") + "0x" + UnicodeString::IntToHex(fmodule.GetFlags(), 32) + "\""
-    ;
+  FModuleToTextField(fmodule);
 
   FModulesToGrid();
 
@@ -7491,6 +7493,24 @@ void TFormMain::ImageToTextField(CImage& image)
     "color=\"" + "0x" + IntToHex(image.GetTransparentColor(), 6) + "\" " +
     "info=\"" + UTF8Decode(image.GetInfo().c_str()) + "\""
     ;
+}
+//---------------------------------------------------------------------------
+
+void TFormMain::FrameToTextField(CFrame& frame)
+{
+  edFrames->Text =
+    UnicodeString("id=\"") + "0x" + UnicodeString::IntToHex(frame.GetId(), 0) + "\" " +
+    "info=\"" + UTF8ToString(frame.GetInfo().c_str()) + "\"";
+ }
+//---------------------------------------------------------------------------
+
+void TFormMain::FModuleToTextField(CFrameModule& fmodule)
+{
+  edFModules->Text =
+    UnicodeString("moduleid=\"") + "0x" + UnicodeString::IntToHex(fmodule.GetModuleId(), 0) + "\" " +
+    "x=\"" + fmodule.GetPos().mX + "\" " +
+    "y=\"" + fmodule.GetPos().mY + "\" " +
+    "flags=\"" + "0x" + UnicodeString::IntToHex(fmodule.GetFlags(), 0) + "\"";
 }
 //---------------------------------------------------------------------------
 

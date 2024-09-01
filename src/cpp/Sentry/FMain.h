@@ -536,9 +536,13 @@ private:	// User declarations
 
     void __fastcall DisplayHint(TObject* Sender);
 
-    void ModuleToTextField(CModule& module);
-    void ColorMapItemToTextField(CColorMapItem& colorMapItem);
     void ImageToTextField(CImage& image);
+    void ModuleToTextField(CModule& module);
+
+    void FrameToTextField(CFrame& frame);
+    void FModuleToTextField(CFrameModule& fmodule);
+
+    void ColorMapItemToTextField(CColorMapItem& colorMapItem);
 
 private: // Utilities
     CImage GetImageForColorMap();
