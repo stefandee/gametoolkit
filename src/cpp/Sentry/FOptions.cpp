@@ -4,6 +4,8 @@
 #pragma hdrstop
 
 #include "FOptions.h"
+#include "FileCtrl.hpp"
+#include <IOUtils.hpp>
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma link "CSPIN"
@@ -70,6 +72,9 @@ void TFormOptions::AppConfigToGUI()
   CSpinEdit14->Value    = mAppConfig->mColorMapGridXSpacing;
   CSpinEdit13->Value    = mAppConfig->mColorMapGridYSpacing;
   Shape24->Brush->Color = (TColor)mAppConfig->mColorMapGridColor;
+
+  // scripts
+  edScriptsPath->Text = UTF8ToString(mAppConfig->mPathScripts.c_str());
 }
 //---------------------------------------------------------------------------
 
@@ -166,6 +171,8 @@ void __fastcall TFormOptions::BtnOkClick(TObject *Sender)
   mAppConfig->mColorMapGridXSpacing          = CSpinEdit14->Value;
   mAppConfig->mColorMapGridYSpacing          = CSpinEdit13->Value;
   mAppConfig->mColorMapGridColor             = (int)Shape24->Brush->Color;
+
+  // scripts path are handled differently at the moment
 }
 //---------------------------------------------------------------------------
 
@@ -175,6 +182,21 @@ void __fastcall TFormOptions::btnResetClick(TObject *Sender)
   {
     mAppConfig->Default();
     AppConfigToGUI();
+  }
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFormOptions::btnBrowseScriptsPathClick(TObject *Sender)
+{
+  auto startDir = mAppConfig->mPathScripts.empty() ? "" : UTF8ToString(mAppConfig->mPathScripts.c_str());
+
+  System::DynamicArray<System::UnicodeString> result;
+
+  if (SelectDirectory(startDir, result, TSelectDirFileDlgOpts(), "Browser For Scripts Folder" ))
+  {
+    auto path = result[0];
+    mAppConfig->mPathScripts = UTF8Encode(path).c_str();
+    edScriptsPath->Text = path;
   }
 }
 //---------------------------------------------------------------------------

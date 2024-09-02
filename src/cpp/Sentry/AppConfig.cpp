@@ -187,6 +187,8 @@ void AppConfig::AddFileToHistory(std::string fileName)
     {
       mFileHistory.pop_back();
     }
+
+    mState = APP_CONFIG_STATE_MODIFIED;
   }
 }
 //---------------------------------------------------------------------------

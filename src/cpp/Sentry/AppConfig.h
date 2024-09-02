@@ -9,7 +9,7 @@
 #include "tinyxml2.h"
 //---------------------------------------------------------------------------
 
-enum TAppConfigState { APP_CONFIG_STATE_NEW, APP_CONFIG_STATE_SAVED, APP_CONFIG_STATE_CLOSED };
+enum TAppConfigState { APP_CONFIG_STATE_NEW, APP_CONFIG_STATE_SAVED, APP_CONFIG_STATE_CLOSED, APP_CONFIG_STATE_MODIFIED };
 //---------------------------------------------------------------------------
 
 const int MODULES_BACKGROUND_COLOR = 0xFFFFFF;

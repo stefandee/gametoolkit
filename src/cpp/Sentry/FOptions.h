@@ -110,10 +110,17 @@ __published:	// IDE-managed Components
     TShape *Shape25;
     TShape *Shape26;
     TLabel *Label40;
+    TTabSheet *Scripts;
+    TLabel *Label41;
+    TEdit *edScriptsPath;
+    TButton *btnBrowseScriptsPath;
+    TOpenDialog *OpenScriptsPathDialog;
     void __fastcall Shape1MouseDown(TObject *Sender, TMouseButton Button,
           TShiftState Shift, int X, int Y);
     void __fastcall BtnOkClick(TObject *Sender);
     void __fastcall btnResetClick(TObject *Sender);
+    void __fastcall btnBrowseScriptsPathClick(TObject *Sender);
+
 private:	// User declarations
     AppConfig* mAppConfig;
 

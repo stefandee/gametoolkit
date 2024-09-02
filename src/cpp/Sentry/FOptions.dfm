@@ -2,24 +2,29 @@ object FormOptions: TFormOptions
   Left = 746
   Top = 312
   Caption = 'Options'
-  ClientHeight = 284
-  ClientWidth = 387
+  ClientHeight = 299
+  ClientWidth = 403
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
+  Position = poMainFormCenter
+  DesignSize = (
+    403
+    299)
   TextHeight = 13
   object PageControl1: TPageControl
-    Left = 0
-    Top = 0
-    Width = 387
+    AlignWithMargins = True
+    Left = 3
+    Top = 3
+    Width = 397
     Height = 261
-    ActivePage = TabColorMap
+    ActivePage = TabModules
     Align = alTop
+    Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
-    ExplicitWidth = 383
     object TabGeneral: TTabSheet
       Caption = 'General'
     end
@@ -605,36 +610,73 @@ object FormOptions: TFormOptions
         TabOrder = 1
       end
     end
+    object Scripts: TTabSheet
+      Caption = 'Scripts'
+      ImageIndex = 6
+      object Label41: TLabel
+        Left = 3
+        Top = 10
+        Width = 62
+        Height = 13
+        Caption = 'Search Path:'
+      end
+      object edScriptsPath: TEdit
+        Left = 68
+        Top = 5
+        Width = 247
+        Height = 21
+        Enabled = False
+        TabOrder = 0
+      end
+      object btnBrowseScriptsPath: TButton
+        Left = 318
+        Top = 2
+        Width = 75
+        Height = 25
+        Caption = 'Browse...'
+        TabOrder = 1
+        OnClick = btnBrowseScriptsPathClick
+      end
+    end
   end
   object BtnOk: TButton
-    Left = 244
-    Top = 268
+    Left = 243
+    Top = 270
     Width = 75
     Height = 25
+    Anchors = [akRight, akBottom]
     Caption = '&Ok'
     ModalResult = 1
     TabOrder = 1
     OnClick = BtnOkClick
   end
   object BtnCancel: TButton
-    Left = 324
-    Top = 268
+    Left = 323
+    Top = 270
     Width = 75
     Height = 25
+    Anchors = [akRight, akBottom]
     Caption = '&Cancel'
     ModalResult = 2
     TabOrder = 2
   end
   object btnReset: TButton
     Left = 4
-    Top = 268
+    Top = 270
     Width = 75
     Height = 25
+    Anchors = [akLeft, akBottom]
     Caption = '&Reset'
     TabOrder = 3
     OnClick = btnResetClick
   end
   object ColorDialog: TColorDialog
     Left = 372
+    Top = 224
+  end
+  object OpenScriptsPathDialog: TOpenDialog
+    Options = [ofHideReadOnly, ofPathMustExist, ofEnableSizing]
+    Left = 340
+    Top = 224
   end
 end
