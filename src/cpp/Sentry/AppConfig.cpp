@@ -40,6 +40,8 @@ bool AppConfig::Load(std::string fileName)
 
   GetStrProperty("general", "SCRIPT_PATH", mPathScripts);
   GetColorProperty("general", "MODULES_BACKGROUND_COLOR", mModulesBackgroundColor);
+  GetColorProperty("general", "QUICK_MODULES_BACKGROUND_COLOR", mQuickModulesBackgroundColor);
+  GetColorProperty("general", "QUICK_MODULES_ID_TEXT_COLOR", mQuickModulesIdTextColor);
 
   //
   // Read the file history related items
@@ -84,6 +86,8 @@ bool AppConfig::Save(std::string fileName)
 
   xmlDoc += "<general>\n";
   xmlDoc += std::string("<property name=\"MODULES_BACKGROUND_COLOR\" value=\"") + UTF8Encode(ColorToString((TColor)mModulesBackgroundColor)).c_str() + "\" />\n";
+  xmlDoc += std::string("<property name=\"QUICK_MODULES_BACKGROUND_COLOR\" value=\"") + UTF8Encode(ColorToString((TColor)mQuickModulesBackgroundColor)).c_str() + "\" />\n";
+  xmlDoc += std::string("<property name=\"QUICK_MODULES_ID_TEXT_COLOR\" value=\"") + UTF8Encode(ColorToString((TColor)mQuickModulesIdTextColor)).c_str() + "\" />\n";
   xmlDoc += std::string("<property name=\"FILE_HISTORY_INDEX\" value=\"") + IntToStr(mFileHistoryIndex) + "\" />\n";
   xmlDoc += std::string("<property name=\"SCRIPT_PATH\" value=\"") + mPathScripts + "\" />\n";
   xmlDoc += "</general>\n";

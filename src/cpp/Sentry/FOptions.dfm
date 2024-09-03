@@ -678,6 +678,7 @@ object FormOptions: TFormOptions
     ExplicitTop = 269
   end
   object ColorDialog: TColorDialog
+    Options = [cdAnyColor]
     Left = 372
     Top = 224
   end

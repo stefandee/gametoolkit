@@ -2902,15 +2902,13 @@ void __fastcall TFormMain::paintFramesPaint(TObject *Sender)
           }
 
           graphics.DrawImage((Gdiplus::Image*)bitmap, destRect, module.GetX(), module.GetY(), module.GetWidth(), module.GetHeight(), Gdiplus::UnitPixel, &imAtt);
-          
+
           // highlight the selected fmodule
           if (i == gridFModules->Row - 1)
           {
-            paintFrames->Canvas->MoveTo(destRect.X, destRect.Y);
-            paintFrames->Canvas->LineTo(destRect.X + destRect.Width, destRect.Y);
-            paintFrames->Canvas->LineTo(destRect.X + destRect.Width, destRect.Y + destRect.Height);
-            paintFrames->Canvas->LineTo(destRect.X, destRect.Y + destRect.Height);
-            paintFrames->Canvas->LineTo(destRect.X, destRect.Y);
+            Gdiplus::Pen highlightPen(Gdiplus::Color(255, 255, 0, 0), 1);
+            highlightPen.SetDashStyle(Gdiplus::DashStyleDash);
+            graphics.DrawRectangle(&highlightPen, destRect);
           }
           
           /*
@@ -2977,15 +2975,12 @@ void __fastcall TFormMain::paintFramesPaint(TObject *Sender)
       boundRect.mX += paintFrames->Width / 2 - framesPan.x;
       boundRect.mY += paintFrames->Height / 2 - framesPan.y;
 
-      paintFrames->Canvas->Pen->Style = psDashDotDot;
-      paintFrames->Canvas->Pen->Color = (TColor)mAppConfig.mFramesBoundRectColor;
+      auto destRect = Gdiplus::Rect(boundRect.mX, boundRect.mY, boundRect.mWidth, boundRect.mHeight);
 
-      paintFrames->Canvas->MoveTo(boundRect.mX, boundRect.mY);
-      paintFrames->Canvas->LineTo(boundRect.mX + boundRect.mWidth, boundRect.mY);
-      paintFrames->Canvas->LineTo(boundRect.mX + boundRect.mWidth, boundRect.mY + boundRect.mHeight);
-      paintFrames->Canvas->LineTo(boundRect.mX, boundRect.mY + boundRect.mHeight);
-      paintFrames->Canvas->LineTo(boundRect.mX, boundRect.mY);
-    }  
+      Gdiplus::Pen boundPen(Gdiplus::Color(255, GetRValue((TColor)mAppConfig.mFramesBoundRectColor), GetGValue((TColor)mAppConfig.mFramesBoundRectColor), GetBValue((TColor)mAppConfig.mFramesBoundRectColor)), 1);
+      boundPen.SetDashStyle(Gdiplus::DashStyleDashDot);
+      graphics.DrawRectangle(&boundPen, destRect);
+    }
   }
 
   // draw the canvas embelishments (axis, grid and so on)
