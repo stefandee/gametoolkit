@@ -25,6 +25,8 @@ object FormOptions: TFormOptions
     Align = alTop
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
+    ExplicitWidth = 393
+    ExplicitHeight = 260
     object TabGeneral: TTabSheet
       Caption = 'General'
     end
@@ -649,6 +651,8 @@ object FormOptions: TFormOptions
     ModalResult = 1
     TabOrder = 1
     OnClick = BtnOkClick
+    ExplicitLeft = 239
+    ExplicitTop = 269
   end
   object BtnCancel: TButton
     Left = 323
@@ -659,6 +663,8 @@ object FormOptions: TFormOptions
     Caption = '&Cancel'
     ModalResult = 2
     TabOrder = 2
+    ExplicitLeft = 319
+    ExplicitTop = 269
   end
   object btnReset: TButton
     Left = 4
@@ -669,6 +675,7 @@ object FormOptions: TFormOptions
     Caption = '&Reset'
     TabOrder = 3
     OnClick = btnResetClick
+    ExplicitTop = 269
   end
   object ColorDialog: TColorDialog
     Left = 372

@@ -137,6 +137,8 @@ class AppConfig
     bool GetIntProperty(std::string category, std::string name, int& value);
     //bool SetIntProperty(std::string category, std::string name, int value);
 
+    bool GetColorProperty(std::string category, std::string name, int& value);
+
     bool GetCategoryPropertyCount(std::string category, int& count);
 
   private:

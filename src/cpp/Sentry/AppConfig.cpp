@@ -5,6 +5,7 @@
 
 #include "AppConfig.h"
 #include "tinyxml2.h"
+#include "Vcl.Graphics.hpp"
 #include <sstream>
 
 //---------------------------------------------------------------------------
@@ -38,6 +39,7 @@ bool AppConfig::Load(std::string fileName)
   std::string strTmp;
 
   GetStrProperty("general", "SCRIPT_PATH", mPathScripts);
+  GetColorProperty("general", "MODULES_BACKGROUND_COLOR", mModulesBackgroundColor);
 
   //
   // Read the file history related items
@@ -81,7 +83,7 @@ bool AppConfig::Save(std::string fileName)
   xmlDoc += "<sentryconfig version=\"1.0\">\n";
 
   xmlDoc += "<general>\n";
-  xmlDoc += "<property name=\"MODULES_BACKGROUND_COLOR\" value=\"0xHAHAHAHAHAHAHA\" />\n";
+  xmlDoc += std::string("<property name=\"MODULES_BACKGROUND_COLOR\" value=\"") + UTF8Encode(ColorToString((TColor)mModulesBackgroundColor)).c_str() + "\" />\n";
   xmlDoc += std::string("<property name=\"FILE_HISTORY_INDEX\" value=\"") + IntToStr(mFileHistoryIndex) + "\" />\n";
   xmlDoc += std::string("<property name=\"SCRIPT_PATH\" value=\"") + mPathScripts + "\" />\n";
   xmlDoc += "</general>\n";
@@ -259,6 +261,21 @@ bool AppConfig::GetIntProperty(std::string category, std::string name, int& valu
   if (GetStrProperty(category, name, tmpStr))
   {
     value = atoi(tmpStr.c_str());
+
+    return true;
+  }
+
+  return false;
+}
+//---------------------------------------------------------------------------
+
+bool AppConfig::GetColorProperty(std::string category, std::string name, int& value)
+{
+  std::string tmpStr;
+
+  if (GetStrProperty(category, name, tmpStr))
+  {
+    value = StringToColor(tmpStr.c_str());
 
     return true;
   }

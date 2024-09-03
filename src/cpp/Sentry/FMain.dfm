@@ -71,7 +71,7 @@ object FormMain: TFormMain
       Top = 2
       Width = 1069
       Height = 732
-      ActivePage = TabSheetColorMapping
+      ActivePage = TabSheetFrames
       Align = alTop
       Anchors = [akLeft, akTop, akRight, akBottom]
       TabOrder = 0

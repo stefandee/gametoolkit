@@ -542,6 +542,13 @@ private:	// User declarations
     void FrameToTextField(CFrame& frame);
     void FModuleToTextField(CFrameModule& fmodule);
 
+    void AnimToTextField(CAnim& anim);
+    void AnimFrameToTextField(CAnimFrame& anim);
+
+    void FrameLogicToTextField(CFrameLogic& fLogic);
+    void FrameLogicItemToTextField(CFrameLogicItem& fLogicItem);
+
+    void ColorMapToTextField(CColorMap& colorMap);
     void ColorMapItemToTextField(CColorMapItem& colorMapItem);
 
 private: // Utilities

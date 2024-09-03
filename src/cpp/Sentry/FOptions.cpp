@@ -121,7 +121,7 @@ void __fastcall TFormOptions::BtnOkClick(TObject *Sender)
   }
 
   // modules
-  mAppConfig->mModulesBackgroundColor        = (int)Shape1->Brush->Color;
+  mAppConfig->mModulesBackgroundColor        = (uint32_t)Shape1->Brush->Color;
   mAppConfig->mModulesAxisColor              = (int)Shape2->Brush->Color;
   mAppConfig->mModulesSelectedColor          = (int)Shape3->Brush->Color;
   mAppConfig->mModulesNotSelectedColor       = (int)Shape4->Brush->Color;
@@ -172,7 +172,8 @@ void __fastcall TFormOptions::BtnOkClick(TObject *Sender)
   mAppConfig->mColorMapGridYSpacing          = CSpinEdit13->Value;
   mAppConfig->mColorMapGridColor             = (int)Shape24->Brush->Color;
 
-  // scripts path are handled differently at the moment
+  // scripts
+  mAppConfig->mPathScripts = UTF8Encode(edScriptsPath->Text).c_str();
 }
 //---------------------------------------------------------------------------
 
@@ -194,9 +195,7 @@ void __fastcall TFormOptions::btnBrowseScriptsPathClick(TObject *Sender)
 
   if (SelectDirectory(startDir, result, TSelectDirFileDlgOpts(), "Browser For Scripts Folder" ))
   {
-    auto path = result[0];
-    mAppConfig->mPathScripts = UTF8Encode(path).c_str();
-    edScriptsPath->Text = path;
+    edScriptsPath->Text = result[0];
   }
 }
 //---------------------------------------------------------------------------

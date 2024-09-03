@@ -2569,15 +2569,15 @@ void __fastcall TFormMain::paintQuickModulesPaint(TObject *Sender)
     //SelectObject(paintQuickModules->Canvas->Handle, paintQuickModules->Canvas->Font->Handle);
     SetBkMode(paintQuickModules->Canvas->Handle, TRANSPARENT);
 
-    AnsiString tmp = "0x" + AnsiString::IntToHex(module.GetId(), 32);
+    UnicodeString tmp = "0x" + UnicodeString::IntToHex(module.GetId(), 0);
     TSize textSize = paintQuickModules->Canvas->TextExtent(tmp);
     //paintQuickModules->Canvas->TextRect(TRect(i*mAppConfig.mQuickModuleSize, 2, i*mAppConfig.mQuickModuleSize + mAppConfig.mQuickModuleSize, 2 + textSize.cy), i*mAppConfig.mQuickModuleSize + mAppConfig.mQuickModuleSize / 2 - textSize.cx / 2, 2, tmp);
-    paintQuickModules->Canvas->TextOut(i*mAppConfig.mQuickModuleSize + textSize.cx / 2, 2, tmp);
+    paintQuickModules->Canvas->TextOut(i*mAppConfig.mQuickModuleSize + textSize.cx / 2, 15, tmp);
 
-    tmp = module.GetInfo().c_str();
+    tmp = UTF8ToString(module.GetInfo().c_str());
     textSize = paintQuickModules->Canvas->TextExtent(tmp);
     //paintQuickModules->Canvas->TextRect(TRect(i*mAppConfig.mQuickModuleSize, mAppConfig.mQuickModuleSize - textSize.cy - 2, i*mAppConfig.mQuickModuleSize + mAppConfig.mQuickModuleSize, mAppConfig.mQuickModuleSize - 2), i*mAppConfig.mQuickModuleSize + mAppConfig.mQuickModuleSize / 2 - textSize.cx / 2, mAppConfig.mQuickModuleSize - 2 - textSize.cy, tmp);
-    paintQuickModules->Canvas->TextOut(i*mAppConfig.mQuickModuleSize + textSize.cx / 2, mAppConfig.mQuickModuleSize - textSize.cy - 2, tmp);
+    paintQuickModules->Canvas->TextOut(i*mAppConfig.mQuickModuleSize + textSize.cx / 2, mAppConfig.mQuickModuleSize - textSize.cy + 15, tmp);
   }
 }
 //---------------------------------------------------------------------------
@@ -3381,10 +3381,10 @@ void TFormMain::AnimsToGrid()
 
   for(int i = 0; i < mSprite.mAnimsManager.Size(); i++)
   {
-    gridAnims->Cells[0][i + 1] = AnsiString(i);
-    gridAnims->Cells[1][i + 1] = "0x" + AnsiString::IntToHex(mSprite.mAnimsManager.Get(i).GetId(), 32);
+    gridAnims->Cells[0][i + 1] = UnicodeString(i);
+    gridAnims->Cells[1][i + 1] = "0x" + UnicodeString::IntToHex(mSprite.mAnimsManager.Get(i).GetId(), 0);
     gridAnims->Cells[2][i + 1] = mSprite.mAnimsManager.Get(i).mAFrames.Size();
-    gridAnims->Cells[3][i + 1] = mSprite.mAnimsManager.Get(i).GetInfo().c_str();
+    gridAnims->Cells[3][i + 1] = UTF8ToString(mSprite.mAnimsManager.Get(i).GetInfo().c_str());
     gridAnims->RowCount++;
   }
 
@@ -3424,8 +3424,8 @@ void TFormMain::AFramesToGrid()
         frameInfo = " " + mSprite.mFramesManager.GetItemById(aFrame.GetFrameId()).GetInfo();
       }
 
-      gridAFrames->Cells[0][i + 1] = AnsiString(i);
-      gridAFrames->Cells[1][i + 1] = "0x" + AnsiString::IntToHex(aFrame.GetFrameId(), 32) + frameInfo.c_str();
+      gridAFrames->Cells[0][i + 1] = UnicodeString(i);
+      gridAFrames->Cells[1][i + 1] = "0x" + UnicodeString::IntToHex(aFrame.GetFrameId(), 0) + UTF8ToString(frameInfo.c_str());
       gridAFrames->Cells[2][i + 1] = aFrame.GetTime();
       gridAFrames->Cells[3][i + 1] = aFrame.GetPos().mX;
       gridAFrames->Cells[4][i + 1] = aFrame.GetPos().mY;
@@ -3490,10 +3490,7 @@ void __fastcall TFormMain::gridAnimsClick(TObject *Sender)
 
   CAnim anim = mSprite.mAnimsManager.Get(gridAnims->Row - 1);
 
-  edAnims->Text =
-    AnsiString("id=\"") + "0x" + AnsiString::IntToHex(anim.GetId(), 32) + "\" " +
-    AnsiString("info=\"") + anim.GetInfo().c_str() + "\""
-    ;
+  AnimToTextField(anim);
 
   paintAnimsPaint(Sender);
 
@@ -3604,13 +3601,7 @@ void __fastcall TFormMain::gridAFramesClick(TObject *Sender)
   {
     CAnimFrame aFrame = anim.mAFrames.Get(gridAFrames->Row - 1);
 
-    edAFrames->Text =
-      AnsiString("frameid=\"") + "0x" + AnsiString::IntToHex(aFrame.GetFrameId(), 32) + "\" " +
-      AnsiString("time=") + aFrame.GetTime() + " " +
-      AnsiString("x=") + aFrame.GetPos().mX + " " +
-      AnsiString("y=") + aFrame.GetPos().mY + " " +
-      AnsiString("flags=\"") + "0x" + AnsiString::IntToHex(aFrame.GetFlags(), 32) + "\""
-    ;
+    AnimFrameToTextField(aFrame);
   }
   else
   {
@@ -3774,11 +3765,19 @@ void __fastcall TFormMain::edAnimsExit(TObject *Sender)
   // parse the new attiributes through tinyxml
   tinyxml2::XMLDocument doc;
 
-  doc.Parse( UTF8Encode("<element " + edAnims->Text + "/>").c_str());
+  auto result = doc.Parse( UTF8Encode("<element " + edAnims->Text + "/>").c_str());
+
+  if (result != XML_SUCCESS)
+  {
+    return;
+  }
 
   auto elem = doc.FirstChildElement("element");
 
-  int result;
+  if (!elem)
+  {
+    return;
+  }
 
   //
   // Parse integer attributes
@@ -3817,10 +3816,7 @@ void __fastcall TFormMain::edAnimsExit(TObject *Sender)
 
   mSprite.mAnimsManager.Set(gridAnims->Row - 1, anim);
 
-  edAnims->Text =
-    UnicodeString("id=\"") + "0x" + UnicodeString::IntToHex(anim.GetId(), 32) + "\" " +
-    UnicodeString("info=\"") + UTF8ToString(anim.GetInfo().c_str()) + "\""
-    ;
+  AnimToTextField(anim);
 
   AnimsToGrid();
 
@@ -3867,11 +3863,19 @@ void __fastcall TFormMain::edAFramesExit(TObject *Sender)
   // parse the new attiributes through tinyxml
   tinyxml2::XMLDocument doc;
 
-  doc.Parse( UTF8Encode("<element " + edAFrames->Text + "/>").c_str() );
+  auto result = doc.Parse( UTF8Encode("<element " + edAFrames->Text + "/>").c_str() );
+
+  if (result != XML_SUCCESS)
+  {
+    return;
+  }
 
   auto elem = doc.FirstChildElement("element");
 
-  int result;
+  if (!elem)
+  {
+    return;
+  }
 
   //
   // Parse integer attributes
@@ -3930,13 +3934,7 @@ void __fastcall TFormMain::edAFramesExit(TObject *Sender)
   anim.mAFrames.Set(gridAFrames->Row - 1, aFrame);
   mSprite.mAnimsManager.Set(gridAnims->Row - 1, anim);
 
-  edAFrames->Text =
-    UnicodeString("frameid=\"") + "0x" + UnicodeString::IntToHex(aFrame.GetFrameId(), 32) + "\" " +
-    UnicodeString("time=") + aFrame.GetTime() + " " +
-    UnicodeString("x=") + aFrame.GetPos().mX + " " +
-    UnicodeString("y=") + aFrame.GetPos().mY + " " +
-    UnicodeString("flags=\"") + "0x" + UnicodeString::IntToHex(aFrame.GetFlags(), 32) + "\""
-    ;
+  AnimFrameToTextField(aFrame);
 
   AFramesToGrid();
 
@@ -4486,13 +4484,13 @@ void __fastcall TFormMain::paintQuickFramesPaint(TObject *Sender)
     SelectObject(paintQuickFrames->Canvas->Handle, paintQuickFrames->Canvas->Font->Handle);
     SetBkMode(paintQuickFrames->Canvas->Handle, TRANSPARENT);
 
-    AnsiString tmp = "0x" + AnsiString::IntToHex(frame.GetId(), 32);
+    UnicodeString tmp = "0x" + UnicodeString::IntToHex(frame.GetId(), 0);
     TSize textSize = paintQuickFrames->Canvas->TextExtent(tmp);
-    paintQuickFrames->Canvas->TextOut(i*mAppConfig.mQuickFrameSize + mAppConfig.mQuickFrameSize / 2 - textSize.cx / 2, 2, tmp);
+    paintQuickFrames->Canvas->TextOut(i*mAppConfig.mQuickFrameSize + mAppConfig.mQuickFrameSize / 2 - textSize.cx / 2, 15, tmp);
 
-    tmp = frame.GetInfo().c_str();
+    tmp = UTF8ToString(frame.GetInfo().c_str());
     textSize = paintQuickFrames->Canvas->TextExtent(tmp);
-    paintQuickFrames->Canvas->TextOut(i*mAppConfig.mQuickFrameSize + mAppConfig.mQuickFrameSize / 2 - textSize.cx / 2, mAppConfig.mQuickFrameSize - 2 - textSize.cy, tmp);
+    paintQuickFrames->Canvas->TextOut(i*mAppConfig.mQuickFrameSize + mAppConfig.mQuickFrameSize / 2 - textSize.cx / 2, mAppConfig.mQuickFrameSize + 15 - textSize.cy, tmp);
 
   }
 }
@@ -4690,10 +4688,10 @@ void TFormMain::FramesForLogicToGrid()
 
   for(int i = 0; i < mSprite.mFramesManager.Size(); i++)
   {
-    gridFramesForLogic->Cells[0][i + 1] = AnsiString(i);
-    gridFramesForLogic->Cells[1][i + 1] = "0x" + AnsiString::IntToHex(mSprite.mFramesManager.Get(i).GetId(), 32);
+    gridFramesForLogic->Cells[0][i + 1] = UnicodeString(i);
+    gridFramesForLogic->Cells[1][i + 1] = "0x" + UnicodeString::IntToHex(mSprite.mFramesManager.Get(i).GetId(), 0);
     gridFramesForLogic->Cells[2][i + 1] = mSprite.mFramesManager.Get(i).mFLogic.Size();
-    gridFramesForLogic->Cells[3][i + 1] = mSprite.mFramesManager.Get(i).GetInfo().c_str();
+    gridFramesForLogic->Cells[3][i + 1] = UTF8ToString(mSprite.mFramesManager.Get(i).GetInfo().c_str());
     gridFramesForLogic->RowCount++;
   }
 
@@ -4731,9 +4729,9 @@ void TFormMain::FrameLogicToGrid()
     {
       CFrameLogic fLogic = frame.mFLogic.Get(i);
 
-      gridFrameLogic->Cells[0][i + 1] = AnsiString(i);
-      gridFrameLogic->Cells[1][i + 1] = AnsiString(fLogic.mItems.Size());
-      gridFrameLogic->Cells[2][i + 1] = fLogic.GetInfo().c_str();
+      gridFrameLogic->Cells[0][i + 1] = UnicodeString(i);
+      gridFrameLogic->Cells[1][i + 1] = UnicodeString(fLogic.mItems.Size());
+      gridFrameLogic->Cells[2][i + 1] = UTF8ToString(fLogic.GetInfo().c_str());
       gridFrameLogic->RowCount++;
     }
 
@@ -4788,11 +4786,11 @@ void TFormMain::FrameLogicItemsToGrid()
       {
         CFrameLogicItem fLogicItem = fLogic.mItems.Get(i);
 
-        gridFrameLogicItems->Cells[0][i + 1] = AnsiString(i);
+        gridFrameLogicItems->Cells[0][i + 1] = UnicodeString(i);
         gridFrameLogicItems->Cells[1][i + 1] = (fLogicItem.GetType() == FRAME_LOGIC_ITEM_POINT) ? "POINT" : "RECT";
         gridFrameLogicItems->Cells[2][i + 1] = (fLogicItem.GetType() == FRAME_LOGIC_ITEM_POINT) ?
-          AnsiString("(") + fLogicItem.mX + ", " + fLogicItem.mY + ")" :
-          AnsiString("(") + fLogicItem.mX + ", " + fLogicItem.mY + ", " + fLogicItem.mWidth + ", " + fLogicItem.mHeight + ")";
+          UnicodeString("(") + fLogicItem.mX + ", " + fLogicItem.mY + ")" :
+          UnicodeString("(") + fLogicItem.mX + ", " + fLogicItem.mY + ", " + fLogicItem.mWidth + ", " + fLogicItem.mHeight + ")";
         gridFrameLogicItems->RowCount++;
       }
     }
@@ -4849,9 +4847,7 @@ void __fastcall TFormMain::gridFrameLogicClick(TObject *Sender)
   CFrame frame = mSprite.mFramesManager.Get(gridFramesForLogic->Row - 1);
   CFrameLogic fLogic = frame.mFLogic.Get(gridFrameLogic->Row - 1);
 
-  edFrameLogic->Text =
-    AnsiString("info=\"") + AnsiString(fLogic.GetInfo().c_str()) + "\""
-    ;
+  FrameLogicToTextField(fLogic);
 
   paintFrameLogicPaint(Sender);
 }
@@ -4954,11 +4950,19 @@ void __fastcall TFormMain::edFrameLogicExit(TObject *Sender)
   // parse the new attributes through tinyxml
   tinyxml2::XMLDocument doc;
 
-  doc.Parse( UTF8Encode("<element " + edFrameLogic->Text + "/>").c_str() );
+  auto result = doc.Parse( UTF8Encode("<element " + edFrameLogic->Text + "/>").c_str() );
+
+  if (result != XML_SUCCESS)
+  {
+    return;
+  }
 
   auto elem = doc.FirstChildElement("element");
 
-  int result;
+  if (!elem)
+  {
+    return;
+  }
 
   //
   // Parse string attributes
@@ -5049,19 +5053,7 @@ void __fastcall TFormMain::gridFrameLogicItemsClick(TObject *Sender)
   CFrameLogic     fLogic     = frame.mFLogic.Get(gridFrameLogic->Row - 1);
   CFrameLogicItem fLogicItem = fLogic.mItems.Get(gridFrameLogicItems->Row - 1);
 
-  edFrameLogicItem->Text =
-    AnsiString("type=\"") + ((fLogicItem.GetType() == FRAME_LOGIC_ITEM_POINT) ? "POINT" : "RECT") + "\" " +
-    AnsiString("x=") + fLogicItem.mX + " " +
-    AnsiString("y=") + fLogicItem.mY + " "
-    ;
-
-  if (fLogicItem.GetType() == FRAME_LOGIC_ITEM_RECT)
-  {
-    edFrameLogicItem->Text =
-    edFrameLogicItem->Text + " " +
-    AnsiString("width=") + fLogicItem.mWidth + " " +
-    AnsiString("height=") + fLogicItem.mHeight;
-  }
+  FrameLogicItemToTextField(fLogicItem);
 
   paintFrameLogicPaint(Sender);
 }
@@ -5237,11 +5229,19 @@ void __fastcall TFormMain::edFrameLogicItemExit(TObject *Sender)
   // parse the new attributes through tinyxml
   tinyxml2::XMLDocument doc;
 
-  doc.Parse( UTF8Encode("<element " + edFrameLogicItem->Text + "/>").c_str());
+  auto result = doc.Parse( UTF8Encode("<element " + edFrameLogicItem->Text + "/>").c_str());
+
+  if (result != XML_SUCCESS)
+  {
+    return;
+  }
 
   auto elem = doc.FirstChildElement("element");
 
-  int result;
+  if (!elem)
+  {
+    return;
+  }
 
   //
   // Parse string attributes
@@ -5297,20 +5297,7 @@ void __fastcall TFormMain::edFrameLogicItemExit(TObject *Sender)
   frame.mFLogic.Set(gridFrameLogic->Row - 1, fLogic);
   mSprite.mFramesManager.Set(gridFramesForLogic->Row - 1, frame);
 
-  // same code as in
-  edFrameLogicItem->Text =
-    UnicodeString("type=\"") + ((fLogicItem.GetType() == FRAME_LOGIC_ITEM_POINT) ? "POINT" : "RECT") + "\" " +
-    UnicodeString("x=") + fLogicItem.mX + " " +
-    UnicodeString("y=") + fLogicItem.mY + " "
-    ;
-
-  if (fLogicItem.GetType() == FRAME_LOGIC_ITEM_RECT)
-  {
-    edFrameLogicItem->Text =
-    edFrameLogicItem->Text + " " +
-    AnsiString("width=") + fLogicItem.mWidth + " " +
-    AnsiString("height=") + fLogicItem.mHeight;
-  }
+  FrameLogicItemToTextField(fLogicItem);
 
   FrameLogicItemsToGrid();
 
@@ -6168,12 +6155,12 @@ void TFormMain::RefreshScripts(TMenuItem* menuItem, std::string scriptType)
 
           if (!paramCountAsStr.empty())
           {
-            paramCount = AnsiString(paramCountAsStr.c_str()).ToInt();
+            paramCount = UnicodeString(paramCountAsStr.c_str()).ToInt();
           }
 
-          childItem->Caption = AnsiString(scriptName.c_str()) + (paramCount > 0 ? "..." : "");
+          childItem->Caption = UTF8ToString(scriptName.c_str()) + (paramCount > 0 ? "..." : "");
 
-          childItem->Hint = AnsiString(mAppConfig.mPathScripts.c_str()) + AnsiString("\\") + sr.Name + "$" + AnsiString(script->GetScriptVar(SCRIPT_VAR_INFO).c_str());
+          childItem->Hint = UTF8ToString(mAppConfig.mPathScripts.c_str()) + "\\" + sr.Name + "$" + UTF8ToString(script->GetScriptVar(SCRIPT_VAR_INFO).c_str());
           childItem->OnClick = OnScriptMenuItemClick;
           
           menuItem->Add(childItem);
@@ -6380,10 +6367,10 @@ void TFormMain::ImagesForColorMapToGrid()
   {
     CImage image = mSprite.mImagesManager.Get(i);
 
-    gridImagesForColorMap->Cells[0][i + 1] = AnsiString(i);
-    gridImagesForColorMap->Cells[1][i + 1] = "0x" + AnsiString::IntToHex(image.GetId(), 32);
-    gridImagesForColorMap->Cells[2][i + 1] = AnsiString(image.mColorMaps.Size());
-    gridImagesForColorMap->Cells[3][i + 1] = image.GetFileName().c_str();
+    gridImagesForColorMap->Cells[0][i + 1] = UnicodeString(i);
+    gridImagesForColorMap->Cells[1][i + 1] = "0x" + UnicodeString::IntToHex(image.GetId(), 0);
+    gridImagesForColorMap->Cells[2][i + 1] = UnicodeString(image.mColorMaps.Size());
+    gridImagesForColorMap->Cells[3][i + 1] = UTF8ToString(image.GetFileName().c_str());
     gridImagesForColorMap->RowCount++;
   }
 
@@ -6422,9 +6409,9 @@ void TFormMain::ColorMapToGrid()
     {
       CColorMap colorMap = image.mColorMaps.Get(i);
 
-      gridColorMaps->Cells[0][i + 1] = AnsiString(i);
-      gridColorMaps->Cells[1][i + 1] = AnsiString(colorMap.mItems.Size());
-      gridColorMaps->Cells[2][i + 1] = colorMap.GetInfo().c_str();
+      gridColorMaps->Cells[0][i + 1] = UnicodeString(i);
+      gridColorMaps->Cells[1][i + 1] = UnicodeString(colorMap.mItems.Size());
+      gridColorMaps->Cells[2][i + 1] = UTF8ToString(colorMap.GetInfo().c_str());
       gridColorMaps->RowCount++;
     }
 
@@ -6479,9 +6466,9 @@ void TFormMain::ColorMapItemsToGrid()
       {
         CColorMapItem colorMapItem = colorMap.mItems.Get(i);
 
-        gridColorMapItems->Cells[0][i + 1] = AnsiString(i);
-        gridColorMapItems->Cells[1][i + 1] = "0x" + AnsiString::IntToHex(colorMapItem.GetSrcColor(), 6);
-        gridColorMapItems->Cells[2][i + 1] = "0x" + AnsiString::IntToHex(colorMapItem.GetDstColor(), 6);
+        gridColorMapItems->Cells[0][i + 1] = UnicodeString(i);
+        gridColorMapItems->Cells[1][i + 1] = "0x" + UnicodeString::IntToHex(colorMapItem.GetSrcColor(), 6);
+        gridColorMapItems->Cells[2][i + 1] = "0x" + UnicodeString::IntToHex(colorMapItem.GetDstColor(), 6);
 
         gridColorMapItems->RowCount++;
       }
@@ -6518,9 +6505,7 @@ void __fastcall TFormMain::gridColorMapsClick(TObject *Sender)
   CImage image       = mSprite.mImagesManager.Get(gridImagesForColorMap->Row - 1);
   CColorMap colorMap = image.mColorMaps.Get(gridColorMaps->Row - 1);
 
-  editColorMap->Text =
-    AnsiString("info=\"") + AnsiString(colorMap.GetInfo().c_str()) + "\""
-    ;
+  ColorMapToTextField(colorMap);
 
   paintColorMapPaint(Sender);
 }
@@ -6692,11 +6677,19 @@ void __fastcall TFormMain::editColorMapExit(TObject *Sender)
   // parse the new attributes through tinyxml
   tinyxml2::XMLDocument doc;
 
-  doc.Parse( UTF8Encode("<element " + editColorMap->Text + "/>").c_str() );
+  auto result = doc.Parse( UTF8Encode("<element " + editColorMap->Text + "/>").c_str() );
+
+  if (result != XML_SUCCESS)
+  {
+    return;
+  }
 
   auto elem = doc.FirstChildElement("element");
 
-  int result;
+  if (!elem)
+  {
+    return;
+  }
 
   //
   // Parse string attributes
@@ -6921,7 +6914,12 @@ void __fastcall TFormMain::editColorMapItemExit(TObject *Sender)
   // parse the new attributes through tinyxml
   tinyxml2::XMLDocument doc;
 
-  doc.Parse(UTF8Encode("<element " + editColorMapItem->Text + "/>").c_str() );
+  auto result = doc.Parse(UTF8Encode("<element " + editColorMapItem->Text + "/>").c_str() );
+
+  if (result != XML_SUCCESS)
+  {
+    return;
+  }
 
   auto elem = doc.FirstChildElement("element");
 
@@ -6929,8 +6927,6 @@ void __fastcall TFormMain::editColorMapItemExit(TObject *Sender)
   {
     return;
   }
-
-  int result;
 
   //
   // Parse string attributes
@@ -7340,7 +7336,7 @@ void __fastcall TFormMain::paintColorMapMouseUp(TObject *Sender,
     paintColorMapPaint(Sender);
 
     paintColorMap->Canvas->Font->Color = (TColor)0x00FF00;
-    paintColorMap->Canvas->TextOut(0, 0, AnsiString(x) + ", " + AnsiString(y));
+    paintColorMap->Canvas->TextOut(0, 0, UnicodeString(x) + ", " + UnicodeString(y));
   }
 }
 //---------------------------------------------------------------------------
@@ -7479,9 +7475,9 @@ void TFormMain::ModuleToTextField(CModule& module)
 
 void TFormMain::ColorMapItemToTextField(CColorMapItem& colorMapItem)
 {
-    editColorMapItem->Text =
-        UnicodeString("s=") + "0x" + UnicodeString::IntToHex(colorMapItem.GetSrcColor(), 6) + " " +
-        "d=" + "0x" + UnicodeString::IntToHex(colorMapItem.GetDstColor(), 6) + " ";
+  editColorMapItem->Text =
+    UnicodeString("s=") + "0x" + UnicodeString::IntToHex(colorMapItem.GetSrcColor(), 6) + " " +
+    "d=" + "0x" + UnicodeString::IntToHex(colorMapItem.GetDstColor(), 6) + " ";
 }
 //---------------------------------------------------------------------------
 
@@ -7491,7 +7487,7 @@ void TFormMain::ImageToTextField(CImage& image)
     UnicodeString("id=\"") + "0x" + IntToHex(image.GetId(), 0) + "\" " +
     "filename=\"" + UTF8ToString(image.GetFileName().c_str()) + "\" " +
     "color=\"" + "0x" + IntToHex(image.GetTransparentColor(), 6) + "\" " +
-    "info=\"" + UTF8Decode(image.GetInfo().c_str()) + "\""
+    "info=\"" + UTF8ToString(image.GetInfo().c_str()) + "\""
     ;
 }
 //---------------------------------------------------------------------------
@@ -7511,6 +7507,59 @@ void TFormMain::FModuleToTextField(CFrameModule& fmodule)
     "x=\"" + fmodule.GetPos().mX + "\" " +
     "y=\"" + fmodule.GetPos().mY + "\" " +
     "flags=\"" + "0x" + UnicodeString::IntToHex(fmodule.GetFlags(), 0) + "\"";
+}
+//---------------------------------------------------------------------------
+
+void TFormMain::AnimToTextField(CAnim& anim)
+{
+  edAnims->Text =
+    UnicodeString("id=\"") + "0x" + UnicodeString::IntToHex(anim.GetId(), 0) + "\" " +
+    "info=\"" + UTF8ToString(anim.GetInfo().c_str()) + "\"";
+}
+//---------------------------------------------------------------------------
+
+void TFormMain::ColorMapToTextField(CColorMap& colorMap)
+{
+  editColorMap->Text =
+    UnicodeString("info=\"") + UTF8ToString(colorMap.GetInfo().c_str()) + "\""
+    ;
+}
+//---------------------------------------------------------------------------
+
+void TFormMain::FrameLogicItemToTextField(CFrameLogicItem& fLogicItem)
+{
+  // same code as in
+  edFrameLogicItem->Text =
+    UnicodeString("type=\"") + ((fLogicItem.GetType() == FRAME_LOGIC_ITEM_POINT) ? "POINT" : "RECT") + "\" " +
+    "x=\"" + fLogicItem.mX + "\" " +
+    "y=\"" + fLogicItem.mY + "\" "
+    ;
+
+  if (fLogicItem.GetType() == FRAME_LOGIC_ITEM_RECT)
+  {
+    edFrameLogicItem->Text =
+    edFrameLogicItem->Text + " " +
+    "width=\"" + fLogicItem.mWidth + "\" " +
+    "height=\"" + fLogicItem.mHeight + "\"";
+  }
+ }
+//---------------------------------------------------------------------------
+
+void TFormMain::FrameLogicToTextField(CFrameLogic& fLogic)
+{
+  edFrameLogic->Text =
+    UnicodeString("info=\"") + UTF8ToString(fLogic.GetInfo().c_str()) + "\"";
+ }
+//---------------------------------------------------------------------------
+
+void TFormMain::AnimFrameToTextField(CAnimFrame& aFrame)
+{
+    edAFrames->Text =
+      UnicodeString("frameid=\"") + "0x" + UnicodeString::IntToHex(aFrame.GetFrameId(), 0) + "\" " +
+      "time=\"" + aFrame.GetTime() + "\" " +
+      "x=\"" + aFrame.GetPos().mX + "\" " +
+      "y=\"" + aFrame.GetPos().mY + "\" " +
+      "flags=\"" + "0x" + UnicodeString::IntToHex(aFrame.GetFlags(), 0) + "\"";
 }
 //---------------------------------------------------------------------------
 
