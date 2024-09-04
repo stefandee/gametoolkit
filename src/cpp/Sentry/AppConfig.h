@@ -142,7 +142,9 @@ class AppConfig
     bool GetCategoryPropertyCount(std::string category, int& count);
 
   private:
-    std::string IntToStr(int x);
+    void ConcatColorProperty(std::string& src, std::string property, int color);
+    void ConcatIntProperty(std::string& src, std::string property, int value);
+    void ConcatStrProperty(std::string& src, std::string property, std::string value);
 
     tinyxml2::XMLDocument mDoc;
     TAppConfigState mState;

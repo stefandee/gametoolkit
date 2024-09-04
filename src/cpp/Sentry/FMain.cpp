@@ -123,7 +123,8 @@ __fastcall TFormMain::TFormMain(TComponent* Owner)
   Application->ShowHint = true;
   Application->OnHint = DisplayHint;
 
-  //GroupBoxAnimsCanvas->DoubleBuffered = true;
+//  GroupBoxAnimsCanvas->DoubleBuffered = true;
+//  GroupBoxFrameLogicCanvas->DoubleBuffered = true;
 }
 //---------------------------------------------------------------------------
 
@@ -156,8 +157,9 @@ void TFormMain::GUIDefaultConfig()
   cbAnimsLoop->Checked     = true;
   cbAnimsReverse->Checked  = false;
 
-  cbFrameLogicAxis->Checked   = true;
-  cbFrameLogicGrid->Checked   = false;
+  cbFrameLogicAxis->Checked  = true;
+  cbFrameLogicGrid->Checked  = false;
+  cbFrameLogicTrans->Checked = true;
 
   cbColorMapAxis->Checked = false;
   cbColorMapGrid->Checked = false;
@@ -5333,7 +5335,11 @@ void __fastcall TFormMain::paintFrameLogicPaint(TObject *Sender)
     graphics.SetPixelOffsetMode( Gdiplus::PixelOffsetModeHalf );
     graphics.SetInterpolationMode( Gdiplus::InterpolationModeNearestNeighbor );
     
-    //Graphics::TBitmap* chunk = new Graphics::TBitmap();
+    auto pointColor = (TColor)mAppConfig.mFrameLogicGridPointColor;
+    Gdiplus::SolidBrush pointBrush(Gdiplus::Color(255, GetRValue(pointColor), GetGValue(pointColor), GetBValue(pointColor)));
+
+    auto rectColor = (TColor)mAppConfig.mFrameLogicGridRectColor;
+    Gdiplus::Pen rectPen(Gdiplus::Color(255, GetRValue(rectColor), GetGValue(rectColor), GetBValue(rectColor)), 1);
 
     for(int i = 0; i < frame.mFModules.Size(); i++)
     {
@@ -5419,26 +5425,22 @@ void __fastcall TFormMain::paintFrameLogicPaint(TObject *Sender)
 
         if (fLogicItem.GetType() == FRAME_LOGIC_ITEM_POINT)
         {
-          TRect rect = TRect(
+          auto pointRect = Gdiplus::Rect(
               paintFrameLogic->Width  / 2 - fLogicPan.x + fLogicItem.mX * fLogicZoom / 100,
               paintFrameLogic->Height / 2 - fLogicPan.y + fLogicItem.mY * fLogicZoom / 100,
-              paintFrameLogic->Width  / 2 - fLogicPan.x + (fLogicItem.mX + 1) * fLogicZoom / 100,
-              paintFrameLogic->Height / 2 - fLogicPan.y + (fLogicItem.mY + 1) * fLogicZoom / 100
+              1 * fLogicZoom / 100,
+              1 * fLogicZoom / 100
               );
 
           if (i == gridFrameLogicItems->Row - 1)
           {
             if (fLogicMouseMode == MMM_DO_DEFINE)
             {
-              rect.left   = fLogicCurrentDefine.x/* + paintFrameLogic->Width  / 2 - fLogicPan.x*/;
-              rect.top    = fLogicCurrentDefine.y/* + paintFrameLogic->Height / 2 - fLogicPan.y*/;
-              rect.right  = rect.left + fLogicZoom / 100;
-              rect.bottom = rect.top + fLogicZoom / 100;
+              pointRect = Gdiplus::Rect(fLogicCurrentDefine.x, fLogicCurrentDefine.y, fLogicZoom / 100, fLogicZoom / 100);
             }
           }
 
-          paintFrameLogic->Canvas->Brush->Color = (TColor)mAppConfig.mFrameLogicGridPointColor;
-          paintFrameLogic->Canvas->FillRect(rect);
+          graphics.FillRectangle(&pointBrush, pointRect);
         }
 
         if (fLogicItem.GetType() == FRAME_LOGIC_ITEM_RECT)
@@ -5550,8 +5552,7 @@ void __fastcall TFormMain::paintFrameLogicPaint(TObject *Sender)
             }
           }
 
-          paintFrameLogic->Canvas->Brush->Color = (TColor)mAppConfig.mFrameLogicGridRectColor;
-          paintFrameLogic->Canvas->FrameRect(TRect(baseX + newX, baseY + newY, baseX + newX + newWidth, baseY + newY + newHeight));
+          graphics.DrawRectangle(&rectPen, Gdiplus::Rect(baseX + newX, baseY + newY, newWidth, newHeight));
         }
       }
     }

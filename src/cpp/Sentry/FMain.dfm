@@ -71,7 +71,7 @@ object FormMain: TFormMain
       Top = 2
       Width = 1069
       Height = 732
-      ActivePage = TabSheetFrames
+      ActivePage = TabSheetModules
       Align = alTop
       Anchors = [akLeft, akTop, akRight, akBottom]
       TabOrder = 0
@@ -315,6 +315,7 @@ object FormMain: TFormMain
           BevelInner = bvLowered
           BevelOuter = bvNone
           TabOrder = 0
+          ExplicitHeight = 705
           object Splitter6: TSplitter
             Left = 1
             Top = 361
@@ -376,6 +377,7 @@ object FormMain: TFormMain
             Align = alClient
             Caption = 'Frame Modules'
             TabOrder = 1
+            ExplicitHeight = 340
             DesignSize = (
               279
               341)
@@ -420,6 +422,8 @@ object FormMain: TFormMain
           BevelInner = bvLowered
           BevelOuter = bvNone
           TabOrder = 1
+          ExplicitWidth = 773
+          ExplicitHeight = 705
           object Splitter7: TSplitter
             Left = 1
             Top = 581
@@ -438,6 +442,7 @@ object FormMain: TFormMain
             Align = alTop
             Caption = 'Frame Canvas'
             TabOrder = 0
+            ExplicitWidth = 771
             object paintFrames: TPaintBox
               Left = 2
               Top = 69
@@ -458,6 +463,7 @@ object FormMain: TFormMain
               Align = alTop
               BevelInner = bvLowered
               TabOrder = 0
+              ExplicitWidth = 767
               DesignSize = (
                 771
                 54)
@@ -510,6 +516,7 @@ object FormMain: TFormMain
                 TabOrder = 3
                 TickMarks = tmBoth
                 OnChange = trackFramesZoomChange
+                ExplicitLeft = 613
               end
               object cbFramesOffset: TCheckBox
                 Left = 98
@@ -539,6 +546,8 @@ object FormMain: TFormMain
             Align = alClient
             Caption = 'Modules Quick Selection'
             TabOrder = 1
+            ExplicitWidth = 771
+            ExplicitHeight = 120
             object paintQuickModules: TPaintBox
               Left = 2
               Top = 15
@@ -560,6 +569,8 @@ object FormMain: TFormMain
               PageSize = 0
               TabOrder = 0
               OnScroll = scrollQuickModulesScroll
+              ExplicitTop = 102
+              ExplicitWidth = 767
             end
           end
         end
@@ -943,8 +954,6 @@ object FormMain: TFormMain
           BevelInner = bvLowered
           BevelOuter = bvNone
           TabOrder = 0
-          ExplicitWidth = 1057
-          ExplicitHeight = 705
           object Splitter12: TSplitter
             Left = 270
             Top = 1
@@ -961,7 +970,6 @@ object FormMain: TFormMain
             BevelInner = bvLowered
             BevelOuter = bvNone
             TabOrder = 0
-            ExplicitHeight = 703
             object Splitter3: TSplitter
               Left = 1
               Top = 202
@@ -1031,7 +1039,6 @@ object FormMain: TFormMain
               Align = alClient
               Caption = 'Color Map Items'
               TabOrder = 1
-              ExplicitHeight = 237
               DesignSize = (
                 267
                 238)
@@ -1099,8 +1106,6 @@ object FormMain: TFormMain
             BevelInner = bvLowered
             BevelOuter = bvNone
             TabOrder = 1
-            ExplicitWidth = 783
-            ExplicitHeight = 703
             object GroupBoxColorMapCanvas: TGroupBox
               Left = 1
               Top = 1
@@ -1109,8 +1114,6 @@ object FormMain: TFormMain
               Align = alClient
               Caption = 'Color Map Canvas'
               TabOrder = 0
-              ExplicitWidth = 781
-              ExplicitHeight = 701
               object paintColorMap: TPaintBox
                 Left = 2
                 Top = 69
@@ -1132,7 +1135,6 @@ object FormMain: TFormMain
                 Align = alTop
                 BevelInner = bvLowered
                 TabOrder = 0
-                ExplicitWidth = 777
                 DesignSize = (
                   781
                   54)
@@ -1185,7 +1187,6 @@ object FormMain: TFormMain
                   TabOrder = 3
                   TickMarks = tmBoth
                   OnChange = trackColorMapZoomChange
-                  ExplicitLeft = 613
                 end
               end
             end
