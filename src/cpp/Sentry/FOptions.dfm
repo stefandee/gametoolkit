@@ -2,8 +2,8 @@ object FormOptions: TFormOptions
   Left = 746
   Top = 312
   Caption = 'Options'
-  ClientHeight = 299
-  ClientWidth = 403
+  ClientHeight = 298
+  ClientWidth = 399
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -12,21 +12,19 @@ object FormOptions: TFormOptions
   Font.Style = []
   Position = poMainFormCenter
   DesignSize = (
-    403
-    299)
+    399
+    298)
   TextHeight = 13
   object PageControl1: TPageControl
     AlignWithMargins = True
     Left = 3
     Top = 3
-    Width = 397
-    Height = 261
+    Width = 393
+    Height = 260
     ActivePage = TabModules
     Align = alTop
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
-    ExplicitWidth = 393
-    ExplicitHeight = 260
     object TabGeneral: TTabSheet
       Caption = 'General'
     end
@@ -642,8 +640,8 @@ object FormOptions: TFormOptions
     end
   end
   object BtnOk: TButton
-    Left = 243
-    Top = 270
+    Left = 239
+    Top = 269
     Width = 75
     Height = 25
     Anchors = [akRight, akBottom]
@@ -651,31 +649,26 @@ object FormOptions: TFormOptions
     ModalResult = 1
     TabOrder = 1
     OnClick = BtnOkClick
-    ExplicitLeft = 239
-    ExplicitTop = 269
   end
   object BtnCancel: TButton
-    Left = 323
-    Top = 270
+    Left = 319
+    Top = 269
     Width = 75
     Height = 25
     Anchors = [akRight, akBottom]
     Caption = '&Cancel'
     ModalResult = 2
     TabOrder = 2
-    ExplicitLeft = 319
-    ExplicitTop = 269
   end
   object btnReset: TButton
     Left = 4
-    Top = 270
+    Top = 269
     Width = 75
     Height = 25
     Anchors = [akLeft, akBottom]
     Caption = '&Reset'
     TabOrder = 3
     OnClick = btnResetClick
-    ExplicitTop = 269
   end
   object ColorDialog: TColorDialog
     Options = [cdAnyColor]

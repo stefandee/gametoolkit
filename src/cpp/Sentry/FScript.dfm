@@ -2,8 +2,8 @@ object FormScript: TFormScript
   Left = 362
   Top = 215
   Caption = 'Script'
-  ClientHeight = 617
-  ClientWidth = 514
+  ClientHeight = 616
+  ClientWidth = 510
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,7 +14,7 @@ object FormScript: TFormScript
   object gbParams: TGroupBox
     Left = 0
     Top = 0
-    Width = 514
+    Width = 510
     Height = 253
     Align = alTop
     Caption = 'Script Parameters'
@@ -24,7 +24,7 @@ object FormScript: TFormScript
   object GroupBox1: TGroupBox
     Left = 0
     Top = 253
-    Width = 514
+    Width = 510
     Height = 340
     Align = alTop
     Caption = 'Script'

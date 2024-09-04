@@ -74,7 +74,8 @@ There are a few more features and fixes to be done, namely:
 * script: module optimization: split in 2x2 and ignore the empty modules
 * script: frames from modules (create a frame for each module)
 * multiple flogic support (circle, poly shape)
-* color map: export
+* additional save/load settings: main form check boxes status, zoom and animation timer fps
+* color map: export (there's a script available for this, but not tested)
 
 ## Library Dependencies
 The toolkit uses the following libraries, for convenience included in the [lib](https://github.com/stefandee/gametoolkit/tree/main/lib) folder:
