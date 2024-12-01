@@ -66,16 +66,23 @@ It was used to create the sprites for all the Flash/HTML5/Haxe games, although t
 
 It supports defining static data (cells or modules), animations and logical data like collisions and hotspots.
 
-It allows using CSL scripts to export from a sprite definition to a format usable for a specific application. Samples are available in [src/csl](https://github.com/stefandee/gametoolkit/tree/main/src/csl/Sentry) folder.
+It allows using CSL scripts to export from a sprite definition to a format usable for a specific application. Samples are available in [src/csl](https://github.com/stefandee/gametoolkit/tree/main/src/csl/Sentry) folder. When starting up for the first time, go to Options and select the scripts path.
+
+Scripting support is extensive and scripts can be written to do various operations on an open sprite sheet.
 
 There are a few more features and fixes to be done, namely:
 * command line export (.xsprite + csl script + parameters -> .bin)
 * selection errors with zoom
-* script: module optimization: split in 2x2 and ignore the empty modules
+* script: module optimization: split in 2x2 and ignore the empty modules (makes sense for sprites with lots of empty space)
 * script: frames from modules (create a frame for each module)
+* script: export just the definitions (not the image data) - suitable for modern rendering systems
 * multiple flogic support (circle, poly shape)
 * additional save/load settings: main form check boxes status, zoom and animation timer fps
 * color map: export (there's a script available for this, but not tested)
+* flickering (figure out a way to double buffer Gdiplus rendering)
+* log parsing errors for each manual editing box
+* enable editing directly in the string grid
+* when defining a rectangle frame logic, the manual editing box doesn't update
 
 ## Library Dependencies
 The toolkit uses the following libraries, for convenience included in the [lib](https://github.com/stefandee/gametoolkit/tree/main/lib) folder:
