@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xsprite version="1.0">
+    <colormaps />
     <images>
-        <image id="4096" file="spee.bmp" transparent="0" info="No Info" />
+        <image id="4096" file="E:\Projects\github\gametoolkit\data\sprites\spee.bmp" transparent="-16777216" info="No Info" />
     </images>
     <modules>
         <module id="4099" imageid="4096" x="261" y="16" width="122" height="67" info="No info" />
@@ -38,8 +39,8 @@
     </frames>
     <anims>
         <anim id="4096" info="anim1">
-            <aframe frameid="4096" time="1" x="0" y="0" flags="0" />
-            <aframe frameid="4097" time="1" x="0" y="0" flags="0" />
+            <aframe frameid="4096" time="50" x="0" y="0" flags="0" />
+            <aframe frameid="4097" time="50" x="0" y="0" flags="0" />
         </anim>
     </anims>
 </xsprite>

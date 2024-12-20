@@ -32,7 +32,7 @@ class CXmlToCsl
     std::string           mScript;
 	std::wstring           mOutputDir;
 
-	void ReadScript(std::wstring scriptFile);
+	bool ReadScript(std::wstring scriptFile);
     void addModuleFunc(const char* szMemberName, const ZCsl_callback_t& callback);
 	bool InitCsl(std::wstring scriptFile);
     void InitHandlers();

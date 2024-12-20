@@ -74,13 +74,17 @@ bool CXmlToCsl::Run(std::wstring inputFile, std::wstring outputDir, std::wstring
 }
 //---------------------------------------------------------------------------
 
-void CXmlToCsl::ReadScript(std::wstring scriptFile)
+bool CXmlToCsl::ReadScript(std::wstring scriptFile)
 {
   mScript = "";
 
   ifstream file;
 
   file.open (scriptFile.c_str(), ifstream::in | ifstream::binary);
+
+  if (!file.good()) {
+       return false;
+  }
 
   while (!file.eof())
   {
@@ -106,7 +110,11 @@ void CXmlToCsl::addModuleFunc(const char* szMemberName, const ZCsl_callback_t& c
 
 bool CXmlToCsl::InitCsl(wstring scriptFile)
 {
-  ReadScript(scriptFile);
+  if (!ReadScript(scriptFile))
+  {
+	mErrorDesc = L"Could not open the script file.";
+	return false;
+  }
 
   delete mCompiler;
 
