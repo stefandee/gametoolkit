@@ -49,3 +49,6 @@ __history/
 __astcache/
 tmp/
 bin/
+
+# Releases
+.releases/

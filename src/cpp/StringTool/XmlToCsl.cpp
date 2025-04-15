@@ -82,7 +82,7 @@ bool CXmlToCsl::ReadScript(std::wstring scriptFile)
 
   file.open (scriptFile.c_str(), ifstream::in | ifstream::binary);
 
-  if (!file.good()) {
+  if (file.fail()) {
        return false;
   }
 
@@ -94,6 +94,8 @@ bool CXmlToCsl::ReadScript(std::wstring scriptFile)
   mScript.resize(mScript.length() - 1);
 
   file.close();
+
+  return true;
 }
 //---------------------------------------------------------------------------
 
