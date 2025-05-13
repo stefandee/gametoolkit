@@ -59,7 +59,7 @@ class CCfgXml : public CCfg
     virtual bool Close();
 
   private:
-    TiXmlDocument mXmlDoc;
+    tinyxml2::XMLDocument mXmlDoc;
 };
 
 #endif
