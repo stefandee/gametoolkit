@@ -18,6 +18,7 @@
 // along with PPTactical Engine; if not, write to the Free Software          //
 // Foundation Inc. 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA   //
 //-----------------------------------------------------------------------------
+#include <cassert>
 #include "easylogging++.h"
 #include "PP_Stdlib.h"
 #include "XmlSerializable.h"
@@ -41,8 +42,9 @@ template<typename T> void XmlDeSerializer::readElementAttribute(const char* elem
 */
 //---------------------------------------------------------------------------
 
-XmlDeSerializer::XmlDeSerializer(TiXmlDocument doc) : mDoc(doc), mCurrentElement(NULL)
+XmlDeSerializer::XmlDeSerializer(tinyxml2::XMLDocument& doc) : mCurrentElement(NULL)
 {
+    doc.DeepCopy(&mDoc);
 }
 //---------------------------------------------------------------------------
 
@@ -71,7 +73,7 @@ void XmlDeSerializer::readAttribute(const char* name, bool& value)
 
 void XmlDeSerializer::readAttribute(const char* name, int& value)
 {
-    if( mCurrentElement->QueryIntAttribute(name, &value) != TIXML_SUCCESS)
+    if( mCurrentElement->QueryIntAttribute(name, &value) != tinyxml2::XML_SUCCESS)
     {
         LOG(FATAL) << name;
         throw;
@@ -127,7 +129,7 @@ void XmlDeSerializer::readAttribute(const char* name, bool& value, bool defaultV
 
 void XmlDeSerializer::readAttribute(const char* name, int& value, int defaultValue)
 {
-    if( mCurrentElement->QueryIntAttribute(name, &value) != TIXML_SUCCESS)
+    if( mCurrentElement->QueryIntAttribute(name, &value) != tinyxml2::XML_SUCCESS)
     {
         value = defaultValue;
     }
@@ -168,11 +170,11 @@ void XmlDeSerializer::beginElement(const char* name)
 {
     if (mCurrentElement == NULL)
     {
-        mCurrentElement = mDoc.FirstChild(name)->ToElement();
+        mCurrentElement = mDoc.FirstChildElement(name);
     }
     else
     {
-        mCurrentElement = mCurrentElement->FirstChild(name)->ToElement();
+        mCurrentElement = mCurrentElement->FirstChildElement(name);
     }
 
     assert(mCurrentElement != NULL);
@@ -192,12 +194,12 @@ void XmlDeSerializer::endElement()
 
 int XmlDeSerializer::readElementCount()
 {
-    TiXmlNode* child = mCurrentElement->FirstChild();
+    tinyxml2::XMLNode* child = mCurrentElement->FirstChild();
     int count = 0;
 
     while( child != NULL )
     {
-        if( child->Type() != TiXmlNode::COMMENT )
+        if( child->ToComment() != NULL )
         {
             count++;
         }
@@ -211,9 +213,9 @@ int XmlDeSerializer::readElementCount()
 
 bool XmlDeSerializer::hasElement(const char* name)
 {
-    TiXmlNode* node = mCurrentElement ? mCurrentElement->FirstChild(name) : mDoc.FirstChild(name);
+    tinyxml2::XMLElement* element = mCurrentElement ? mCurrentElement->FirstChildElement(name) : mDoc.FirstChildElement(name);
 
-    return node != NULL;
+    return element != NULL;
 }
 //---------------------------------------------------------------------------
 
@@ -225,10 +227,7 @@ XmlSerializer::XmlSerializer()
 
 XmlSerializer::~XmlSerializer()
 {
-    if (mCurrentElement != NULL)
-    {
-        delete mCurrentElement;
-    }
+    mCurrentElement = NULL;
 }
 //---------------------------------------------------------------------------
 
@@ -255,9 +254,7 @@ void XmlSerializer::createAttribute(const char* name, const char* value)
 
 void XmlSerializer::rawWrite(int value)
 {
-    TiXmlComment* comment = new TiXmlComment();
-
-    comment->SetValue(toString(value).c_str());
+    tinyxml2::XMLComment* comment = mDoc.NewComment(toString(value).c_str());
 
     mCurrentElement->LinkEndChild(comment);
 }
@@ -265,7 +262,7 @@ void XmlSerializer::rawWrite(int value)
 
 void XmlSerializer::beginElement(const char* name)
 {
-    TiXmlElement* child = new TiXmlElement(name);
+    tinyxml2::XMLElement* child = mDoc.NewElement(name);
 
     if (mCurrentElement == NULL)
     {

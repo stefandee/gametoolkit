@@ -1,7 +1,7 @@
 #if defined(__BORLANDC__) || defined(__SUNPRO_CC) || defined (__GNUG__)
   #include <strstream>
 #else
-  #include "strstrea.h"	
+  #include "strstrea.h"
 #endif
 
 #include<iostream>
@@ -10,7 +10,6 @@ using namespace std;
 
 #include "TGenScriptAlg.h"
 #include "ZMathLib.h"
-#include "logfile.h"
 
 TGenScriptAlg::TGenScriptAlg()
 {

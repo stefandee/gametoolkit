@@ -29,6 +29,8 @@
 //#include <vcl.h>
 #pragma hdrstop
 
+#include "easylogging++.h"
+
 #include "PP_CEditControl.h"
 #include "PPIG_CScreen.h"
 #include "PP_KeyConvertor.h"
@@ -39,7 +41,6 @@
 #include "Paths.h"
 #include "basepath.h"
 #include "PlayerProfile.h"
-#include "easylogging++.h"
 
 /*---------------------------------------------------------------------------
  PROTECTED SECTION

@@ -5,7 +5,7 @@
 //
 //  Description       :
 //    *
-//  Hystory           :
+//  History           :
 //    [] - [] -
 //-----------------------------------------------------------------------------
 
@@ -14,7 +14,7 @@
 //---------------------------------------------------------------------------
 
 #include "ZLibrary.h"
-#include "GenericCallback.h"
+#include "ZCallback.h"
 
 const int FILELIB_INVALID_HANDLE = -1;
 const int FILELIB_PARAM_INT    = 0;

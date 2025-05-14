@@ -21,14 +21,14 @@ CCfgXml::~CCfgXml()
 
 bool CCfgXml::GetResource(const char* resName, void* value)
 {
-  TiXmlElement* root = mXmlDoc.RootElement();
+  tinyxml2::XMLElement* root = mXmlDoc.RootElement();
 
   if (!root)
   {
     return false;
   }
 
-  TiXmlElement* elem = root->FirstChildElement(resName);
+  tinyxml2::XMLElement* elem = root->FirstChildElement(resName);
 
   if (!elem)
   {
@@ -38,7 +38,7 @@ bool CCfgXml::GetResource(const char* resName, void* value)
   // query as int
   int tempInt;
 
-  if (elem->QueryIntAttribute("value", &tempInt) == TIXML_SUCCESS)
+  if (elem->QueryIntAttribute("value", &tempInt) == tinyxml2::XML_SUCCESS)
   {
     memcpy((__int32*)value, (__int32*)(&tempInt), 1 * sizeof(__int32));
 
@@ -60,14 +60,14 @@ bool CCfgXml::GetResource(const char* resName, void* value)
 
 TResourceType CCfgXml::GetResourceType(const char* resName)
 {
-  TiXmlElement* root = mXmlDoc.RootElement();
+  tinyxml2::XMLElement* root = mXmlDoc.RootElement();
 
   if (!root)
   {
     return RES_NOTHING;
   }
 
-  TiXmlElement* elem = root->FirstChildElement(resName);
+  tinyxml2::XMLElement* elem = root->FirstChildElement(resName);
 
   if (!elem)
   {
@@ -77,7 +77,7 @@ TResourceType CCfgXml::GetResourceType(const char* resName)
   // query as int
   int tempInt;
 
-  if (elem->QueryIntAttribute("value", &tempInt) == TIXML_SUCCESS)
+  if (elem->QueryIntAttribute("value", &tempInt) == tinyxml2::XML_SUCCESS)
   {
     return RES_INT;
   }
@@ -106,9 +106,9 @@ bool CCfgXml::DeleteResource(const char* resName)
 
 bool CCfgXml::Open(const char* fileName)
 {
-  mXmlDoc = TiXmlDocument(fileName);
+  auto loadResult = mXmlDoc.LoadFile(fileName);
 
-  return mXmlDoc.LoadFile();
+  return loadResult == tinyxml2::XML_SUCCESS;
 }
 //---------------------------------------------------------------------------
 

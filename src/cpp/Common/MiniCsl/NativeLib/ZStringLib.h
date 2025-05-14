@@ -5,7 +5,7 @@
 //
 //  Description       :
 //    *
-//  Hystory           :
+//  History           :
 //    [] - [] -
 //-----------------------------------------------------------------------------
 
@@ -14,7 +14,7 @@
 //---------------------------------------------------------------------------
 
 #include "ZLibrary.h"
-#include "GenericCallback.h"
+#include "ZCallback.h"
 
 class ZStringLib : public ZLibrary
 {

@@ -77,7 +77,7 @@ class BinSerializer : public BaseSerializer
 class XmlDeSerializer : public BaseDeSerializer
 {
     public:
-        XmlDeSerializer(TiXmlDocument doc);
+        XmlDeSerializer(tinyxml2::XMLDocument& doc);
         virtual ~XmlDeSerializer();
 
     public:
@@ -99,8 +99,8 @@ class XmlDeSerializer : public BaseDeSerializer
         bool hasElement(const char* name);
 
     private:
-        TiXmlDocument mDoc;
-        TiXmlElement* mCurrentElement;
+        tinyxml2::XMLDocument mDoc;
+        tinyxml2::XMLElement* mCurrentElement;
 };
 
 class XmlSerializer : public BaseSerializer
@@ -119,11 +119,11 @@ class XmlSerializer : public BaseSerializer
 
         void rawWrite(int value); /**< writes an xml comment */
 
-        TiXmlDocument& GetDoc() { return mDoc; }
+        tinyxml2::XMLDocument& GetDoc() { return mDoc; }
 
     private:
-        TiXmlDocument mDoc;
-        TiXmlElement* mCurrentElement;
+        tinyxml2::XMLDocument mDoc;
+        tinyxml2::XMLElement* mCurrentElement;
 };
 
 class Serializable2

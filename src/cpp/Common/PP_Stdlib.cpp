@@ -1,10 +1,11 @@
 #include <iostream>
 #include <string>
+#include <locale>
+#include <codecvt>
 #pragma hdrstop
 
 using namespace std;
 #include "PP_Stdlib.h"
-#include <codecvt>
 
 int gfRandom(int _v)
 {

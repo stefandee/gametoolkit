@@ -35,10 +35,10 @@
 --------------------------------------------------------------------------*/
 #include "PP_Graphic.h"
 #include "PP_Sprite.h"
-#include <SDL_image.h>
+#include "SDL_image.h"
+#include "easylogging++.h"
 #pragma hdrstop
 
-#include "easylogging++.h"
 #include "PP_Texture.h"
 
 //---------------------------------------------------------------------------

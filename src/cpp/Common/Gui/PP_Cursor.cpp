@@ -1,22 +1,22 @@
 //-----------------------------------------------------------------------------
 // This file is part of PPTactical Engine.                                   //
 //                                                                           //
-// PPTactical Engine - engine for tactical/strategy games                    // 
+// PPTactical Engine - engine for tactical/strategy games                    //
 // Copyright (C) 1998, 1999, 2000, 2001 Stefan Dicu & Tudor Girba            //
 //                                                                           //
 // PPTactical Engine is free software; you can redistribute it               //
-// and/or modify it under the terms of the GNU Lesser General Public License as     // 
+// and/or modify it under the terms of the GNU Lesser General Public License as     //
 // published by the Free Software Foundation; either version 2.1 of the        //
 // License, or (at your option) any later version.                           //
-//                                                                           //  
+//                                                                           //
 // PPTactical Engine is distributed in the hope that it will be useful, but  //
-// WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY// 
+// WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY//
 // or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License  //
 // for more details.                                                         //
-//                                                                           // 
+//                                                                           //
 // You should have received a copy of the GNU Lesser General Public License         //
 // along with PPTactical Engine; if not, write to the Free Software          //
-// Foundation Inc. 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA   // 
+// Foundation Inc. 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA   //
 //-----------------------------------------------------------------------------
 /*---------------------------------------------------------------------------
  application: Pure Power
@@ -29,7 +29,7 @@
  last modify: 21 04 00
         by grabX
 ---------------------------------------------------------------------------*/
-//#include <vcl.h>
+#include "easylogging++.h"
 #pragma hdrstop
 
 #include "PP_Cursor.h"
@@ -101,13 +101,12 @@ void CCursor::Paint()
 {
    if (mVisible == false)
       return;
-   GetGraphicInstance()->SetClipRegion(NULL, mRestrictedRect);
+   GetGraphicInstance()->SetClipRegion(mRestrictedRect);
    if (mSprite == NULL)
    {
-      GetGraphicInstance()->Line(NULL, CPPoint(mPosition.x, mPosition.y),
-                                       CPPoint(mPosition.x, mPosition.y+5), 0xFFFFFF);
-      GetGraphicInstance()->Line(NULL, CPPoint(mPosition.x, mPosition.y),
-                                       CPPoint(mPosition.x+4, mPosition.y+4), 0xFFFFFF);
+      GetGraphicInstance()->SetColor(0xFFFFFF);
+      GetGraphicInstance()->Line(CPPoint(mPosition.x, mPosition.y), CPPoint(mPosition.x, mPosition.y+5));
+      GetGraphicInstance()->Line(CPPoint(mPosition.x, mPosition.y), CPPoint(mPosition.x+4, mPosition.y+4));
       return;
    }
    CPGIGraphicSystem *lGSI;   //adica local Graphic System Instance
@@ -117,10 +116,10 @@ void CCursor::Paint()
    }
    catch(...)
    {
-      logWriteLn("Cursor::Paint - UNABLE TO QUERY GRAPHICS !!!!!!!!!!");
+      LOG(FATAL) << "Cursor::Paint - UNABLE TO QUERY GRAPHICS !!!!!!!!!!";
       throw;
    }
-   lGSI->PaintSpriteToSurface(NULL, mPosition.x, mPosition.y, mSprite, mAnim, mType);
+   lGSI->PaintSprite(mPosition.x, mPosition.y, mSprite, mAnim, mType);
 
 /*   try
    {
@@ -225,7 +224,7 @@ CCursor::CCursor()
    mAnimUpdateCounter.Reset();
    mRestrictedRect = CPRect(0, 0, lGSI->GetResX(), lGSI->GetResY());
    mVisible = true;
-   mEnabled = true;   
+   mEnabled = true;
 }
 
 /*--------------------------------------------------------------------------

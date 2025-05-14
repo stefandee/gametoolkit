@@ -29,18 +29,23 @@
 #include <stdlib.h>
 #include <ZTrace.hpp>
 #include <ZFile.hpp>
+#include <ZCsl.hpp>
 
+/*
 #ifdef ZC_NATIVECSLLIB
   #include <ZCsl.hpp>
 #else
   #include <ZCslWrap.hpp>
 #endif
+*/
 
+/*
 #if ZC_GNU
   #include <strstream.h>
 #else
   #include <strstrea.h>
 #endif
+*/
 
 static ZString strFormatNumber(ZCsl* csl)
 {
@@ -907,4 +912,4 @@ ZCslCleanupLib(aCsl)
 {
    ZFUNCTRACE_DEVELOP("ZCslCleanupLib(aCsl)");
 } // ZCslCleanupLib
-
+

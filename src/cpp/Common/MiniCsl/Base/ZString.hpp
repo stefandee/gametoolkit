@@ -104,6 +104,7 @@ class ZString : public ZBase
       ZString(unsigned aValue);
       ZString(signed long aValue);
       ZString(unsigned long aValue);
+      ZString(unsigned long long aValue);
 
       // construct from floating value
       ZString(double aValue);

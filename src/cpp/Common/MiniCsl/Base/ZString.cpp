@@ -241,6 +241,14 @@ ZString::ZString(unsigned long aValue)
    strcpy(*iBuffer, buf);
 } // ZString
 
+ZString::ZString(unsigned long long aValue)
+{
+   ZFUNCTRACE_DEVELOP("ZString::ZString(unsigned long long aValue)");
+   char buf[32];
+   iBuffer = new ZStringBuffer(sprintf(buf, "%llu", aValue));
+   strcpy(*iBuffer, buf);
+} // ZString
+
 ZString::ZString(double aValue)
 {
    ZFUNCTRACE_DEVELOP("ZString::ZString(double aValue)");

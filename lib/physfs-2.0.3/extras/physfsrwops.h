@@ -15,10 +15,13 @@
  * Unless otherwise stated, the rest of PhysicsFS falls under the zlib license.
  *  Please see LICENSE.txt in the root of the source tree.
  *
- * SDL falls under the LGPL license. You can get SDL at http://www.libsdl.org/
+ * SDL 1.2 falls under the LGPL license. SDL 1.3+ is zlib, like PhysicsFS.
+ *  You can get SDL at https://www.libsdl.org/
  *
  *  This file was written by Ryan C. Gordon. (icculus@icculus.org).
  */
+
+/* This works with SDL1 and SDL2. For SDL3, use physfssdl3.h */
 
 #ifndef _INCLUDE_PHYSFSRWOPS_H_
 #define _INCLUDE_PHYSFSRWOPS_H_

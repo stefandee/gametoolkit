@@ -81,18 +81,18 @@ void CVfsSystem::Init()
     //
     // read the xml config file to mount as appropriate the application paths
     //
-    TiXmlDocument xmlDoc = TiXmlDocument(GetBaseDir() + "PPEngine_Vfs.xml");
+    tinyxml2::XMLDocument xmlDoc;
 
-    xmlDoc.LoadFile();
+    xmlDoc.LoadFile(GetBaseDir() + "PPEngine_Vfs.xml");
 
-    TiXmlElement* root = xmlDoc.RootElement();
+    tinyxml2::XMLElement* root = xmlDoc.RootElement();
 
     if (!root)
     {
         return;
     }
 
-    TiXmlElement* configElem = root->FirstChildElement("config");
+    tinyxml2::XMLElement* configElem = root->FirstChildElement("config");
 
     if (configElem != NULL && configElem->Attribute("writeDir") != NULL && CPString(configElem->Attribute("writeDir")) == CPString("platform"))
     {
@@ -111,7 +111,7 @@ void CVfsSystem::Init()
         PHYSFS_mount(outPath.c_str(), PATH_OUT.c_str(), 0);
     }
 
-    TiXmlElement* elem = root->FirstChildElement("resources")->FirstChildElement("resource");
+    tinyxml2::XMLElement* elem = root->FirstChildElement("resources")->FirstChildElement("resource");
 
     while(elem)
     {
