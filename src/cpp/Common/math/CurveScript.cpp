@@ -1,5 +1,5 @@
 //---------------------------------------------------------------------------
-#include <strstream>
+//#include <strstream>
 #include <fstream>
 #pragma hdrstop
 
@@ -88,7 +88,9 @@ void CurveScript::InitCsl()
   try
   {
     // The const_cast is a workaround for a Microsoft interface bug.
-    std::istrstream str(const_cast<char*>(mScript.c_str()));
+    //std::istrstream str(const_cast<char*>(mScript.c_str()));
+    std::stringstream str;
+    str << (const_cast<char*>(mScript.c_str()));
 
     // compile
     mCompiler->loadScript(mModuleName, &str);
