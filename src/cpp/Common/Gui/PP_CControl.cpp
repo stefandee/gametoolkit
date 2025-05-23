@@ -227,7 +227,11 @@ void CPIControl::SetClipRegion()
    }
    */
 
+#if PPT_USE_SDL
    lGSI->SetClipRegion(clipRect);
+#else
+   lGSI->SetClipRegion(NULL, clipRect);
+#endif // PPT_USE_SDL
 }
 //---------------------------------------------------------------------------
 

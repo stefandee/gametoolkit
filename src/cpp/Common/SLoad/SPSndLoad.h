@@ -18,60 +18,62 @@
 // along with PPTactical Engine; if not, write to the Free Software          //
 // Foundation Inc. 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA   // 
 //-----------------------------------------------------------------------------
- //---------------------------------------------------------------------------
-//  Unit       : inputs.h
-//  Versiune   : 0.01
-//  Descriere  : DirectInput - alt gunoi microsoftist, care trebuie
-//               adaptat la necesitatzi...oh yeah :-) 
-//  Ultima
-//  modificare : 19 ianuarie '99, 23:03
-//---------------------------------------------------------------------------
-/*---------------------------------------------------------------------------
- description: Singleton Pattern
-              nu este chiar o clasa sanatoasa, da' ne-om descurca
- last modify: 16 04 00
-        by grabX
----------------------------------------------------------------------------*/
-#ifndef PP_InputH
-#define PP_InputH
-//---------------------------------------------------------------------------
-#define DIRECTINPUT_VERSION 0x0700
-#include <dinput.h>
+//-----------------------------------------------------------------------------
+//  Unit              : loader pentru fisiere .pSnd (PSndLoad)
+//
+//  Versiune          : 1.0
+//
+//  Descriere         :
+//    * .pSnd (.pSound) este format intern Piron
+//    * headerul definit mai jos ar trebui sa fie explicit
+//    * exista si compresie; deocamdata fisierele nu sint compresate, dar va
+//      o compresie stil ADPCM(?)   
+//
+//  Istorie           :
+//    [11.02.2000] - [Karg] - am creat fisierul, clasa si am scris metodele
+//-----------------------------------------------------------------------------
 
-#include "PP_String.h"
-#include "basic2d.h"
+//---------------------------------------------------------------------------
+#ifndef SPSndLoadH
+#define SPSndLoadH
+//---------------------------------------------------------------------------
+// clasa de baza
+#include "SLoad.h"
 
-class CPIIInputSystem
+// constante
+#define PSND_ID               "pSnd"
+#define PSND_ID_SIZE          4
+#define PSND_DESC_SIZE        64
+#define PSND_MAJOR_VERSION    1
+#define PSND_MINOR_VERSION    0
+#define PSND_COMPRESSION_NONE 0
+
+// structurile de date aferente formatului fisierului .pSnd
+typedef struct
 {
-   public:
-      class CErrorGeneric {};
-   public:
-      static CPIIInputSystem* Instance(void *hInst = NULL, void *hWnd = NULL);
-      static void             Release();
+  unsigned __int8  id[PSND_ID_SIZE];
+  unsigned __int8  description[PSND_DESC_SIZE];
+  unsigned __int32 version;
+  unsigned __int32 compression;
+  unsigned __int32 channels;
+  unsigned __int32 sampleRate;
+  unsigned __int32 bitsPerSample;
+} TPSndFileHeader;
 
-      void RestoreDevices(void);
-      void ReleaseDevices(void);
-      void UpdateKeys(void);
-      void UpdateMouse(void);
+// clasa de incarcare a fisierelor .pSnd
+class SPSndLoad : public SLoad
+{
+  private:
+    TPSndFileHeader fileHeader;
 
-      CPPoint Mouse;                              //de fapt este deltaX si deltaY
-      BOOL MouseLB, MouseMB, MouseRB;
-      BYTE Keyz[256];
-   protected:
-      CPIIInputSystem(void *hInst, void *hWnd);
-      ~CPIIInputSystem();
-      BOOL InitInputs(void *hInst, void *hWnd);
-   private:
-      static CPIIInputSystem *mInstance;
-      static int              mInstanceCount;
+  protected:
+    virtual bool ReadHeader(/*int sampleRate, int bitsPerSample, int channels*/);
 
-      LPDIRECTINPUT lpDI;
-      LPDIRECTINPUTDEVICE lpDIDKeyboard;
-      LPDIRECTINPUTDEVICE lpDIDMouse;
-
-      CPString ErrorDetailedStr(HRESULT hRet);
+  public:
+    SPSndLoad    ();
+    virtual bool Load       (unsigned char* data1, int dataSize1, unsigned char* data2, int dataSize2);
+    //virtual bool Save       (char* fileName, unsigned char* data,  int dataSize, TSndInfo info, char* description);
+    unsigned char* GetDescription();
 };
 
-CPIIInputSystem* GetInputInstance(void *hInst = NULL, void *hWnd = NULL);
-//pentru eliminarea warningurilor
 #endif

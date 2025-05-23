@@ -439,6 +439,7 @@ void CPIListBox::Paint()
   SetClipRegion();
 
   // desenez backgroundul - doar de test
+
   GetGraphicInstance()->SetColor(mBackGround);
   GetGraphicInstance()->FillRectangle(CPRect(GetAbsoluteLeft(), GetAbsoluteTop(), GetAbsoluteLeft() + GetEWidth() - 1, GetAbsoluteTop() + GetHeight() - 1));
 
@@ -509,6 +510,7 @@ void CPIListBox::PaintAsStandard()
     }
 
     // desen
+
     GetGraphicInstance()->TextOut2(
       //CPRect(lL, lT + lTopClip, lL + GetEWidth() - 1, lT + lBottomClip),
       lL, lT + lTopClip,

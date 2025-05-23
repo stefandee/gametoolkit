@@ -34,7 +34,11 @@ CPICheckBox::CPICheckBox(CPIWinControl *Parent) : CPIWinControl(Parent)
 {
   mTextAllignment = PPDT_RIGHT;
 
+#if PPT_USE_SDL
   mFont = new CPFont(PATH_FONTS + FILE_FONT_SMALL, 12, true);
+#else
+  mFont = new CPFont(PATH_FONTS + FILE_FONT_SMALL);
+#endif // PPT_USE_SDL
 
   SetSprite(GetGraphicInstance()->AddSprite(CPString(PATH_GUI_GFX) + "checkbox.png", 4, 1));
 

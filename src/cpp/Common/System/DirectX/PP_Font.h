@@ -41,7 +41,8 @@ const int PPDT_SINGLELINE = 4;
 const int PPDT_LEFT       = 8;
 const int PPDT_CENTER     = 16;
 const int PPDT_TOP        = 32;
-const int PPDT_BOTTOM     = 64;
+const int PPDT_BOTTOM     = 64;
+
 class CPGIGraphicSystem;
 
 class CPFont
@@ -90,6 +91,9 @@ class CPFont
    protected:
       virtual void CreateFontHandle();
       virtual HFONT GetFontHandle();
+
+   private:
+      // wchar_t* StringToWChar(CPString aStr);
 
    private:
       CPString       mName;

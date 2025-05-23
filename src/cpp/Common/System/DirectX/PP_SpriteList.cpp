@@ -36,9 +36,8 @@
 //#include <vcl.h>
 #pragma hdrstop
 
+#include "easylogging++.h"
 #include "PP_SpriteList.h"
-
-#include "logfile.h"
 
 //TEST FUNCTION
 void CPGISpriteList::WriteFiles()
@@ -46,7 +45,7 @@ void CPGISpriteList::WriteFiles()
    for (int i=0; i<noOfSprites; i++)
    {
       if (Sprites[i] != NULL)
-         logWriteLn(Sprites[i]->mFileName);
+         LOG(INFO) << Sprites[i]->mFileName;
    }
 }
 
@@ -103,8 +102,7 @@ int CPGISpriteList::Add(CPString filename, int wcells, int hcells)
    }
    catch(...)
    {
-      logWrite("CPGISpriteList::Add - UNABLE TO CREATE SPRITE from file ");
-      logWriteLn(filename.c_str());
+      LOG(ERROR) << "CPGISpriteList::Add - UNABLE TO CREATE SPRITE from file " << filename.c_str();
       Sprites[firstnull] = NULL;
 
       return firstnull;
@@ -138,7 +136,7 @@ int CPGISpriteList::AddCustom(int _width, int _height, int wcells, int hcells)
    }
    catch(...)
    {
-      logWrite("CPGISpriteList::AddCustom - UNABLE TO CREATE SPRITE.");
+      LOG(ERROR) << "CPGISpriteList::AddCustom - UNABLE TO CREATE SPRITE.";
       Sprites[firstnull] = NULL;
    }
    if (noOfSprites == firstnull)
@@ -195,22 +193,20 @@ void CPGISpriteList::Remove(CPGISprite* _sprite)
 --------------------------------------------------------------------------*/
 void CPGISpriteList::RemoveAll()
 {
-   logWriteLn("CPGISpriteList::RemoveAll", LOGDET_LOWEST);
-   logWriteILn(noOfSprites, LOGDET_LOWEST);
+   VLOG(9) << "CPGISpriteList::RemoveAll: " << noOfSprites << " sprites";
    int i;
    for (i=0; i<noOfSprites; i++)
    {
       if (Sprites[i] != NULL)
       {
-         logWriteILn(i, LOGDET_LOWEST);
+         VLOG(9) << "sprite index: " << i;
          delete Sprites[i];
          Sprites[i] = NULL;
          Links[i] = 0;
-         logWriteILn(i, LOGDET_LOWEST);
       }
    }
    noOfSprites = 0;
-   logWriteLn("CPGISpriteList::RemoveAll - over", LOGDET_LOWEST);
+   VLOG(9) << "CPGISpriteList::RemoveAll - over";
 }
 
 /*---------------------------------------------------------------------------

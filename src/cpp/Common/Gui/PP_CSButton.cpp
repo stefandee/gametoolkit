@@ -15,7 +15,12 @@
 
 CPP_CSButton::CPP_CSButton(CPIWinControl *Parent) : CPIButton(Parent)
 {
+#if PPT_USE_SDL
   mFont = new CPFont(PATH_FONTS + FILE_FONT_BIG, 14, true);
+#else
+  mFont = new CPFont(PATH_FONTS + FILE_FONT_BIG);
+  mFont->SetSize(14);
+#endif // PPT_USE_SDL
 
   mFontColor         = 0xD3D0D0;
   mFontColorDisabled = 0x808080;

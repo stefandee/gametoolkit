@@ -111,6 +111,18 @@ class CPGIGraphicSystem
       void     SetFont (CPFont *Font);        //inline
       void     SetPen (HPEN Pen);             //inline
 
+   public: // SDL compatible interface
+      void     PaintSprite(int whereX, int whereY,
+                           TPGISpriteReference Sprite, int animCount, int animType,
+                           int zoomFactor = 1, int alpha = 255);
+      void     FillRectangle(CPRect rect);
+      void     TextOut2(int X, int Y, CPString text, UINT Alignment = TA_LEFT);
+      void     Rectangle(CPRect rect);
+      void     Pie(CPPoint _center, int _radius, CPPoint _dir, int _angle);
+      void     Line(CPPoint ptStart, CPPoint ptEnd);
+      void     PutPixel(CPPoint ptCenter);
+      void     SelectionRectangle(CPRect rect, int Length);
+
    public: // sprites related methods
      CPGISprite* AddSprite(CPString fileName, int wCells, int hCells, PGIList _list = SPRL_GENERIC);
      CPGISprite* AddSpriteCustom(int _width, int _height, int wCells, int hCells, PGIList _list = SPRL_GENERIC);

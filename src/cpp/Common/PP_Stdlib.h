@@ -18,11 +18,13 @@ template <typename T>T clamp(T in, T low, T high)
 
 extern CPString padZero(CPString _string, int size);
 
-template <typename T> std::string toString(T v)
-{
-    std::ostringstream s;
-    s << v;
-    return s.str();
+namespace PP {
+    template <typename T> std::string toString(T v)
+    {
+        std::ostringstream s;
+        s << v;
+        return s.str();
+    }
 }
 
 #endif

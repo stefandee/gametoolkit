@@ -32,7 +32,6 @@
 #include "prims16.h"
 #include "colors16.h"
 #include "fixed.h"
-#include "logfile.h"
 
 #define SWAP(x,y) ((x)^=(y)^=(x)^=(y))
 

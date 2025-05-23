@@ -32,11 +32,12 @@
 #include <io.h>
 #pragma hdrstop
 
+#include "easylogging++.h"
 #include "PP_Graphic.h"
 #include "GBmpLoad.h"
-#include "logfile.h"
 #include "HelpersWin32.h"
 #include "basic3d.h"
+#include "PP_Stdlib.h"
 
 #ifdef _MSC_VER	// Standard workaround for Microsoft compiler bug
 #define for if(0) {} else for
@@ -53,17 +54,21 @@ public:
       mRes = surface->Lock(NULL, &mDDSD, DDLOCK_WAIT, NULL);
       if (FAILED(mRes))
       {
-         logWriteLn(CPGIGraphicSystem::ErrorDetailedStr(mRes));
+         LOG(ERROR) << CPGIGraphicSystem::ErrorDetailedStr(mRes);
          throw CPGIGraphicSystem::CErrorGeneric();
       }
-      if (mDDSD.ddpfPixelFormat.dwRGBBitCount != 16)
+
+      auto bitCount = mDDSD.ddpfPixelFormat.dwRGBBitCount;
+
+      /*if (bitCount != 16)
       {
          // Reduce the chance of compiler errors (such as not calling
          // the d'tor when c'tor throws) leave the surface locked.
+         LOG(ERROR) << "Surface pixel format is not 16 bit!";
          surface->Unlock(0);
          mRes = DDERR_GENERIC;
          throw CPGIGraphicSystem::CErrorGeneric();
-      }
+      } */
    }
    ~SurfaceLocker16bpp()
    {
@@ -208,7 +213,7 @@ void CPGIGraphicSystem::SetCooperativeLevel(HWND hWnd, DWORD Flags)
    lHRet = mDD->SetCooperativeLevel(hWnd, Flags);
    if (lHRet != DD_OK && lHRet != DDERR_HWNDALREADYSET)
    {
-      logWriteLn(ErrorDetailedStr(lHRet));
+      LOG(ERROR) << ErrorDetailedStr(lHRet);
       throw CErrorGeneric();
    }
 }
@@ -260,19 +265,19 @@ bool CPGIGraphicSystem::SetClipRegion(CPGISurface **Surface, CPRect clipRegion)
    GetRegionData(hrgn, sizeof(rgnDataBuffer), (RGNDATA*)rgnDataBuffer);
    if ((hRet = mDD->CreateClipper(0, &pclip, 0)) != DD_OK)
    {
-      logWriteLn(ErrorDetailedStr(hRet));
+      LOG(ERROR) << ErrorDetailedStr(hRet);
       return false;
    }
    if ((hRet = pclip->SetClipList((RGNDATA*)rgnDataBuffer, 0)) != DD_OK)
    {
       pclip->Release();
-      logWriteLn(ErrorDetailedStr(hRet));
+      LOG(ERROR) << ErrorDetailedStr(hRet);
       return false;
    }
    if ((hRet = (lSurface)->SetClipper(pclip)) != DD_OK)
    {
       pclip->Release();
-      logWriteLn(ErrorDetailedStr(hRet));
+      LOG(ERROR) << ErrorDetailedStr(hRet);
       return false;
    }
    pclip->Release();
@@ -303,26 +308,26 @@ bool CPGIGraphicSystem::ResetClipRegion(CPGISurface **Surface)
    ddsd.dwSize = sizeof(ddsd);
    if ((hRet = (lSurface)->GetSurfaceDesc(&ddsd)) != DD_OK)
    {
-      logWriteLn(ErrorDetailedStr(hRet));
+      LOG(ERROR) << ErrorDetailedStr(hRet);
       return false;
    }
    hrgn = CreateRectRgn(0, 0, ddsd.dwWidth, ddsd.dwHeight);
    GetRegionData(hrgn, sizeof(rgnDataBuffer), (RGNDATA*)rgnDataBuffer);
    if ((hRet = mDD->CreateClipper(0, &pclip, 0)) != DD_OK)
    {
-      logWriteLn(ErrorDetailedStr(hRet));
+      LOG(ERROR) << ErrorDetailedStr(hRet);
       return false;
    }
    if ((hRet = pclip->SetClipList((RGNDATA*)rgnDataBuffer, 0)) != DD_OK)
    {
       pclip->Release();
-      logWriteLn(ErrorDetailedStr(hRet));
+      LOG(ERROR) << ErrorDetailedStr(hRet);
       return false;
    }
    if ((hRet = (lSurface)->SetClipper(pclip)) != DD_OK)
    {
       pclip->Release();
-      logWriteLn(ErrorDetailedStr(hRet));
+      LOG(ERROR) << ErrorDetailedStr(hRet);
       return false;
    }
    pclip->Release();
@@ -362,8 +367,7 @@ void CPGIGraphicSystem::PaintToScreen()
             );
 
             // Display the string.
-            logWrite("GetWindowRect: ");
-            logWriteLn((char*)lpMsgBuf);
+            VLOG(9) << "GetWindowRect: " << (char*)lpMsgBuf;
 
             // Free the buffer.
             LocalFree( lpMsgBuf );
@@ -379,9 +383,8 @@ void CPGIGraphicSystem::PaintToScreen()
          lHRet = mDDSPrimary->Blt(&rcDest, mDDSBack, &rcSrc, 0, &bltfx);
          if (lHRet != DD_OK)
          {
-            logWrite("To primary blt:");
-            logWriteLn(ErrorDetailedStr(lHRet));
-            
+            VLOG(9) << "To primary blt:" << ErrorDetailedStr(lHRet);
+
             if (lHRet == DDERR_SURFACELOST)
             {
                lHRet = mDDSPrimary->Restore();
@@ -419,7 +422,7 @@ void CPGIGraphicSystem::PaintToScreen()
    }
    if (lHRet != DD_OK)
    {
-      logWriteLn(ErrorDetailedStr(lHRet));
+      LOG(ERROR) << ErrorDetailedStr(lHRet);
       throw CErrorGeneric();
    }
 }
@@ -469,7 +472,7 @@ bool CPGIGraphicSystem::PaintSurfaceToSurface(CPGISurface *destSurface, CPRect D
    destSurface = GetPaintableSurface(destSurface);
    if (sourceSurface == NULL)
    {
-      logWriteLn("CPGIGraphicSystem::PaintSurfaceToSurface - Source Surface is NULL !!!!!!!!!!");
+      LOG(ERROR) << "CPGIGraphicSystem::PaintSurfaceToSurface - Source Surface is NULL !!!!!!!!!!";
       return true;
    }
    HRESULT lHRet;
@@ -512,7 +515,7 @@ bool CPGIGraphicSystem::PaintSurfaceToSurface(CPGISurface *destSurface, CPRect D
 
 	  if (lHRet == DDERR_NOALPHAHW)
 	  {
-		  logWriteLn("No alpha hardware.");
+		  LOG(WARNING) << "No hardware alpha support.";
 		  return false;
 	  }
 
@@ -620,7 +623,7 @@ void CPGIGraphicSystem::Line(CPGISurface* Surface, CPPoint ptStart, CPPoint ptEn
    }
    else
    {
-      logWriteLn(ErrorDetailedStr(lHRet));
+      LOG(ERROR) << ErrorDetailedStr(lHRet);
       throw CErrorGeneric();
    }
 }
@@ -647,7 +650,7 @@ void CPGIGraphicSystem::FillSurface(CPGISurface* Surface, COLORREF color)
          break;
       if (lHRet != DDERR_WASSTILLDRAWING)
       {
-         logWriteLn(ErrorDetailedStr(lHRet));
+         LOG(ERROR) << ErrorDetailedStr(lHRet);
          throw CErrorGeneric();
       }
    }
@@ -1063,12 +1066,15 @@ void CPGIGraphicSystem::DrawText(CPGISurface *Surface, CPString Text,
       SelectObject(hdc, mFont->GetFontHandle());
       SetBkMode(hdc, TRANSPARENT);
       SetTextColor(hdc, mColor);      //adica alb
-      ::DrawText(hdc, Text, Text.Length(), &lClipRect, Format);
+
+      std::wstring textW = StringToWString(Text.c_str());
+
+      ::DrawText(hdc, textW.c_str(), textW.length(), &lClipRect, Format);
       Surface->ReleaseDC(hdc);
    }
    else
    {
-      logWriteLn(ErrorDetailedStr(lHRet));
+      LOG(ERROR) << ErrorDetailedStr(lHRet);
       throw CErrorGeneric();
    }
 }
@@ -1094,12 +1100,16 @@ void CPGIGraphicSystem::TextOut(CPGISurface *Surface, int X, int Y, CPString Tex
       SetBkMode(hdc, TRANSPARENT);
       SetTextColor(hdc, mColor);      //adica alb
       SetTextAlign(hdc, Alignment);
-      ::TextOut(hdc, X, Y, Text, Text.Length());
+
+      std::wstring textW = StringToWString(Text.c_str());
+
+      ::TextOut(hdc, X, Y, textW.c_str(), textW.length());
+
       Surface->ReleaseDC(hdc);
    }
    else
    {
-      logWriteLn(ErrorDetailedStr(lHRet));
+      LOG(ERROR) << ErrorDetailedStr(lHRet);
       throw CErrorGeneric();
    }
 }
@@ -1299,7 +1309,7 @@ CPGISurface* CPGIGraphicSystem::CreateSurface(int Width, int Height)
 
       if ((lHRet = PrivateCreateSurface(lDDSD, lSurface))!= DD_OK)
       {
-         logWriteLn(ErrorDetailedStr(lHRet));
+         LOG(ERROR) << ErrorDetailedStr(lHRet);
          throw CErrorGeneric();
       }
    }
@@ -1412,19 +1422,19 @@ CPGIGraphicSystem::CPGIGraphicSystem(HWND hwnd, int resX, int resY)
 CPGIGraphicSystem::~CPGIGraphicSystem()
 {
    DeleteObject(mPen);
-   logWriteLn("CPGIGraphicSystem::~CPGIGraphicSystem()", LOGDET_LOWEST);
+   VLOG(9) << "CPGIGraphicSystem::~CPGIGraphicSystem()";
 
    if (mGenericSprites != NULL)
    {
      delete mGenericSprites;
-   }  
+   }
 
    if (mMissionSprites != NULL)
    {
      delete mMissionSprites;
    }
 
-   logWriteLn("CPGIGraphicSystem::~CPGIGraphicSystem() - sprites deleted", LOGDET_LOWEST);
+   VLOG(9) << "CPGIGraphicSystem::~CPGIGraphicSystem() - sprites deleted";
    if (mDDSBack != NULL)
    {
       mDDSBack->Release();
@@ -1440,7 +1450,7 @@ CPGIGraphicSystem::~CPGIGraphicSystem()
       mDD->Release();
       mDD = NULL;
    }
-   logWriteLn("CPGIGraphicSystem::~CPGIGraphicSystem() - end", LOGDET_LOWEST);
+   VLOG(9) << "CPGIGraphicSystem::~CPGIGraphicSystem() - end";
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1474,11 +1484,6 @@ bool CPGIGraphicSystem::InitGraphics(HWND hWnd, int resX, int resY, bool windowe
    //mResolutionY = 768;
 
 
-   if (mDD != NULL)
-   {
-     logWriteLn("mDD != NULL");
-   }  
-
    //initializarea Direct Draw
    HRESULT lHRet;
 #if DIRECTDRAW_VERSION >= 0x0700
@@ -1495,7 +1500,7 @@ bool CPGIGraphicSystem::InitGraphics(HWND hWnd, int resX, int resY, bool windowe
 #endif
    if (lHRet != DD_OK)
    {
-      logWriteLn(ErrorDetailedStr(lHRet));
+      LOG(ERROR) << ErrorDetailedStr(lHRet);
       return false;
    }
 
@@ -1509,7 +1514,7 @@ bool CPGIGraphicSystem::InitGraphics(HWND hWnd, int resX, int resY, bool windowe
       lHRet = mDD->SetCooperativeLevel(hWnd, DDSCL_NORMAL);
       if (lHRet != DD_OK)
       {
-         logWriteLn(ErrorDetailedStr(lHRet));
+         LOG(ERROR) << ErrorDetailedStr(lHRet);
          throw CErrorGeneric();
       }
 
@@ -1519,11 +1524,22 @@ bool CPGIGraphicSystem::InitGraphics(HWND hWnd, int resX, int resY, bool windowe
       lDDSD.dwFlags = DDSD_CAPS;
       lDDSD.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE;
 
+        DDPIXELFORMAT ddpf;
+        ZeroMemory(&ddpf, sizeof(DDPIXELFORMAT));
+        ddpf.dwSize = sizeof(DDPIXELFORMAT);
+        ddpf.dwFlags = DDPF_RGB;
+        ddpf.dwRGBBitCount = 16;
+        ddpf.dwRBitMask = 0x0000F800;
+        ddpf.dwGBitMask = 0x000007E0;
+        ddpf.dwBBitMask = 0x0000001F;
+
+      lDDSD.ddpfPixelFormat = ddpf;
+
       lHRet = PrivateCreateSurface(lDDSD, mDDSPrimary);
 
       if (lHRet != DD_OK)
       {
-         logWriteLn(ErrorDetailedStr(lHRet));
+         LOG(ERROR) << ErrorDetailedStr(lHRet);
          throw CErrorGeneric();
       }
 
@@ -1531,7 +1547,7 @@ bool CPGIGraphicSystem::InitGraphics(HWND hWnd, int resX, int resY, bool windowe
       lHRet = mDD->CreateClipper(0, &lClipper, NULL);
       if (lHRet != DD_OK)
       {
-         logWriteLn(ErrorDetailedStr(lHRet));
+         LOG(ERROR) << ErrorDetailedStr(lHRet);
          throw CErrorGeneric();
       }
       
@@ -1542,8 +1558,8 @@ bool CPGIGraphicSystem::InitGraphics(HWND hWnd, int resX, int resY, bool windowe
       lClipper = NULL;
 
       // Create the back surface
-      //ZeroMemory( &lDDSD, sizeof( lDDSD ) );
-      //lDDSD.dwSize         = sizeof(lDDSD);
+      ZeroMemory( &lDDSD, sizeof( lDDSD ) );
+      lDDSD.dwSize         = sizeof(lDDSD);
       lDDSD.dwFlags        = DDSD_WIDTH | DDSD_HEIGHT | DDSD_CAPS;
       lDDSD.dwWidth        = mResolutionX;
       lDDSD.dwHeight       = mResolutionY;
@@ -1551,40 +1567,54 @@ bool CPGIGraphicSystem::InitGraphics(HWND hWnd, int resX, int resY, bool windowe
       //lDDSD.dwHeight       = 480;
       lDDSD.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN;
 
+        ZeroMemory(&ddpf, sizeof(DDPIXELFORMAT));
+        ddpf.dwSize = sizeof(DDPIXELFORMAT);
+        ddpf.dwFlags = DDPF_RGB;
+        ddpf.dwRGBBitCount = 16;
+        ddpf.dwRBitMask = 0x0000F800;
+        ddpf.dwGBitMask = 0x000007E0;
+        ddpf.dwBBitMask = 0x0000001F;
+
+      lDDSD.ddpfPixelFormat = ddpf;
+
       lHRet = PrivateCreateSurface(lDDSD, mDDSBack);
 
       if (lHRet != DD_OK)
       {
-         logWriteLn(ErrorDetailedStr(lHRet));
+         LOG(ERROR) << ErrorDetailedStr(lHRet);
          throw CErrorGeneric();
       }
 
       //if( SetClipRegion(&mDDSBack, CPRect(0, 0, 639, 479)) == false)
       if( SetClipRegion(&mDDSBack, CPRect(0, 0, mResolutionX-1, mResolutionY-1)) == false)
       {
-         logWriteLn(ErrorDetailedStr(lHRet));
+         LOG(ERROR) << ErrorDetailedStr(lHRet);
          throw CErrorGeneric();
       }
 
       lDDPF.dwSize = sizeof(lDDPF);
       mDDSPrimary->GetPixelFormat(&lDDPF);
+
+      auto dwRGBBitCount = lDDPF.dwRGBBitCount;
+      auto dwRBitMask = ddpf.dwRBitMask;
+      auto dwGBitMask = ddpf.dwGBitMask;
+      auto dwBBitMask = ddpf.dwBBitMask;
+
       if (!(lDDPF.dwFlags & DDPF_RGB))
       {
-         logWriteLn(ErrorDetailedStr(lHRet));
+         LOG(ERROR) << ErrorDetailedStr(lHRet);
          throw CErrorGeneric();
       }
       InitColor(lDDPF.dwRBitMask, lDDPF.dwGBitMask, lDDPF.dwBBitMask);
     }
    else
    {// Full screen mode
-      if (hWnd == NULL)
-         logWriteLn("InitGraphics - NULL");
       lHRet = mDD->SetCooperativeLevel(hWnd, DDSCL_EXCLUSIVE |
                                              DDSCL_FULLSCREEN|
                                              DDSCL_ALLOWREBOOT);
       if (lHRet != DD_OK)
       {
-         logWriteLn(ErrorDetailedStr(lHRet));
+         LOG(ERROR) << ErrorDetailedStr(lHRet);
 //         throw CErrorGeneric();
       }
 
@@ -1597,7 +1627,7 @@ bool CPGIGraphicSystem::InitGraphics(HWND hWnd, int resX, int resY, bool windowe
 #endif
       if (lHRet != DD_OK)
       {
-         logWriteLn(ErrorDetailedStr(lHRet));
+         LOG(ERROR) << ErrorDetailedStr(lHRet);
          throw CErrorGeneric();
       }
 
@@ -1614,7 +1644,7 @@ bool CPGIGraphicSystem::InitGraphics(HWND hWnd, int resX, int resY, bool windowe
 
       if (lHRet != DD_OK)
       {
-         logWriteLn(ErrorDetailedStr(lHRet));
+         LOG(ERROR) << ErrorDetailedStr(lHRet);
          throw CErrorGeneric();
       }
 
@@ -1623,12 +1653,12 @@ bool CPGIGraphicSystem::InitGraphics(HWND hWnd, int resX, int resY, bool windowe
       lHRet = mDDSPrimary->GetAttachedSurface(&lDDSDCaps, &mDDSBack);
       if (lHRet != DD_OK)
       {
-         logWrite("mDDSPrimary->GetAttachedSurface(&lDDSDCaps, &mDDSBack);");
-         logWriteLn(ErrorDetailedStr(lHRet));
+         LOG(ERROR) << "mDDSPrimary->GetAttachedSurface(&lDDSDCaps, &mDDSBack): " << ErrorDetailedStr(lHRet);
          throw CErrorGeneric();
       }
       if (SetClipRegion(NULL, CPRect(0, 0, resX, resY)) == false)
       {
+         LOG(ERROR) << "SetClipRegion(NULL, CPRect(0, 0, resX, resY): " << ErrorDetailedStr(lHRet);
          throw CErrorGeneric();
       }
 
@@ -1636,7 +1666,7 @@ bool CPGIGraphicSystem::InitGraphics(HWND hWnd, int resX, int resY, bool windowe
       mDDSPrimary->GetPixelFormat(&lDDPF);
       if (!(lDDPF.dwFlags & DDPF_RGB))
       {
-         logWriteLn(ErrorDetailedStr(lHRet));
+         LOG(ERROR) << ErrorDetailedStr(lHRet);
          throw CErrorGeneric();
       }
       InitColor(lDDPF.dwRBitMask, lDDPF.dwGBitMask, lDDPF.dwBBitMask);
@@ -1831,7 +1861,7 @@ void CPGIGraphicSystem::TakeScreenShot(CPString baseFileName)
 
      if (!lBmpSave.SaveAligned(static_cast<unsigned char*>(lDDSD.lpSurface), mResolutionX, mResolutionY, lDDSD.lPitch, ApplicationBpp, ApplicationBpp))
      {
-       logWriteLn("CPGIGraphicSystem::TakeScreenShot - error saving image.");
+       LOG(ERROR) << "CPGIGraphicSystem::TakeScreenShot: error saving image to " << lFileName.c_str();
      }
 
      // everything went fine, bye bye
@@ -1839,6 +1869,59 @@ void CPGIGraphicSystem::TakeScreenShot(CPString baseFileName)
    }
 
    // it seems that there are 100000 screenshots in the folder; well, do nothing :)
+}
+//---------------------------------------------------------------------------
+
+//---------------------------------------------------------------------------
+// SDL compatible interface implementation
+//---------------------------------------------------------------------------
+void CPGIGraphicSystem::PaintSprite(int whereX, int whereY,
+                                    TPGISpriteReference Sprite, int animCount, int animType,
+                                    int zoomFactor, int alpha)
+{
+    PaintSpriteToSurface(NULL, whereX, whereY, Sprite, animCount, animType, zoomFactor, alpha);
+}
+//---------------------------------------------------------------------------
+
+void CPGIGraphicSystem::FillRectangle(CPRect rect)
+{
+    FillRectangle(NULL, rect, mColor);
+}
+//---------------------------------------------------------------------------
+
+void CPGIGraphicSystem::Rectangle(CPRect rect)
+{
+    Rectangle(NULL, rect, mColor);
+}
+//---------------------------------------------------------------------------
+
+void CPGIGraphicSystem::Line(CPPoint ptStart, CPPoint ptEnd)
+{
+    Line(NULL, ptStart, ptEnd, mColor);
+}
+//---------------------------------------------------------------------------
+
+void CPGIGraphicSystem::Pie(CPPoint _center, int _radius, CPPoint _dir, int _angle)
+{
+    Pie(NULL, _center, _radius, _dir, _angle, mColor);
+}
+//---------------------------------------------------------------------------
+
+void CPGIGraphicSystem::TextOut2(int X, int Y, CPString text, UINT Alignment)
+{
+    TextOut(NULL, X, Y, text, Alignment);
+}
+//---------------------------------------------------------------------------
+
+void CPGIGraphicSystem::PutPixel(CPPoint ptCenter)
+{
+    PutPixel(NULL, ptCenter, mColor);
+}
+//---------------------------------------------------------------------------
+
+void CPGIGraphicSystem::SelectionRectangle(CPRect rect, int Length)
+{
+    SelectionRectangle(NULL, rect, Length, mColor);
 }
 //---------------------------------------------------------------------------
 

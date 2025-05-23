@@ -26,7 +26,6 @@
 #include "Platform.h"
 #ifdef PPT_PLATFORM_WIN
 #include "GPngLoad.h"
-#include "logfile.h"
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__)
 #define WIN32_LEAN_AND_MEAN
@@ -99,10 +98,13 @@ bool GPngLoad::LoadAligned(unsigned char* data, int width, int height, int bytes
 // History: 
 bool GPngLoad::ReadHeader()
 {
-	if (!rewind()) 
+    // TODO this seems to fail, figure out why
+    /*
+	if (!rewind())
 	{
 		return false;
 	}
+    */
 	
 	PP::Stream* pStream = GetStream();
 	if (!pStream)

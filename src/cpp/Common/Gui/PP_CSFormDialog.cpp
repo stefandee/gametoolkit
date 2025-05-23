@@ -31,7 +31,12 @@ CPP_CSFormDialog::CPP_CSFormDialog(CPIWinControl *Parent) : CPICommonDialog(Pare
   mScreen->AddControl(mImgDialog);
 
   // message label
+#if PPT_USE_SDL
   CPFont* lFont1 = new CPFont(PATH_FONTS + FILE_FONT_SMALL, 16, true);
+#else
+  CPFont* lFont1 = new CPFont(PATH_FONTS + FILE_FONT_SMALL);
+  lFont1->SetSize(16);
+#endif // PPT_USE_SDL
 
   mLabelMsg = new CPILabel(mScreen);
   mLabelMsg->SetFont(lFont1);
@@ -50,7 +55,12 @@ CPP_CSFormDialog::CPP_CSFormDialog(CPIWinControl *Parent) : CPICommonDialog(Pare
   mLabelMsg->BringToFront();
 
   // title label
+#if PPT_USE_SDL
   CPFont* lFont2 = new CPFont(PATH_FONTS + FILE_FONT_BIG, 18, true);
+#else
+  CPFont* lFont2 = new CPFont(PATH_FONTS + FILE_FONT_BIG);
+  lFont2->SetSize(18);
+#endif // PPT_USE_SDL
 
   mLabelTitle = new CPILabel(mScreen);
   mLabelTitle->SetFont(lFont2);
@@ -86,7 +96,9 @@ void CPP_CSFormDialog::ShowModal(CPIControl *parent)
 {
   mScreen->SetTop(-mImgDialog->GetHeight() - mMenu->GetWidth());
   mScreen->SetTopDestination(0);
-  mScreen->SetHandleOnStopMove(NULL);
+
+  StandardGUICallback dummy;
+  mScreen->SetHandleOnStopMove(dummy);
 
   CPIForm::ShowModal(parent);
 }

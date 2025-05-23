@@ -4,6 +4,8 @@
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+
+#define DIRECTDRAW_VERSION 0x0700
 #include "ddraw.h"
 
 // tmn:  Why require anything higher than we really need.

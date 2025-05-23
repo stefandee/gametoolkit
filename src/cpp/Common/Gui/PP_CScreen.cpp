@@ -122,7 +122,11 @@ void CPIScreen::Update()
       {
          CPGIGraphicSystem *lGSI;
          lGSI = GetGraphicInstance();
+#if PPT_USE_SDL
          lGSI->ResetClipRegion();
+#else
+         lGSI->ResetClipRegion(NULL);
+#endif // PPT_USE_SDL
       }
       catch(...)
       {

@@ -110,7 +110,7 @@ class CSoundSystem
     static void   Release();
 
     // misc routines
-    char* ErrorReport(int);
+    const char* ErrorReport(int);
 
     // initializari
     bool PowerOn(void* hWnd);

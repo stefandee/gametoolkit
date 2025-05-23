@@ -30,6 +30,7 @@
 #pragma hdrstop
 
 #include "PP_Font.h"
+#include "PP_Stdlib.h"
 
 /*---------------------------------------------------------------------------
  description: constructor
@@ -102,7 +103,7 @@ void CPFont::CreateFontHandle()
                     CLIP_DEFAULT_PRECIS,     // clipping precision
                     DEFAULT_QUALITY,         // output quality
                     DEFAULT_PITCH,           // pitch and family
-                    mName                // pointer to typeface name string
+                    StringToWString(mName.c_str()).c_str() // pointer to typeface name string
                     );
 }
 
@@ -166,7 +167,9 @@ int CPFont::GetTextWidth(CPString _text)
   SelectObject(lHdc, mFont);
 
   //GetTextExtentPoint32(mFont, _text.c_str(), _text.Length(), &lSize);
-  GetTextExtentPoint32(lHdc, _text.c_str(), _text.Length(), &lSize);
+  std::wstring textW = StringToWString(_text.c_str());
+
+  GetTextExtentPoint32(lHdc, textW.c_str(), textW.length(), &lSize);
 
   return lSize.cx;
 }
@@ -181,12 +184,27 @@ int CPFont::GetTextHeight(CPString _text)
   SelectObject(lHdc, mFont);
 
   //GetTextExtentPoint32(mFont, _text.c_str(), _text.Length(), &lSize);
-  GetTextExtentPoint32(lHdc, _text.c_str(), _text.Length(), &lSize);
+  GetTextExtentPoint32(lHdc, StringToWString(_text.c_str()).c_str(), _text.Length(), &lSize);
 
   return lSize.cy;
 }
 //---------------------------------------------------------------------------
 
+/*
+wchar_t* CPFont::StringToWChar(CPString aStr)
+{
+   int lenA = lstrlenA(aStr.c_str());
+   int lenW = ::MultiByteToWideChar(CP_ACP, 0, aStr.c_str(), lenA, NULL, 0);
+   wchar_t* output = nullptr;
+   if (lenW > 0)
+   {
+     output = new wchar_t[lenW];
+     ::MultiByteToWideChar(CP_ACP, 0, aStr.c_str(), lenA, output, lenW);
+   }
+
+   return output;
+}
+*/
 
 #ifdef __BORLANDC__
 #pragma package(smart_init)

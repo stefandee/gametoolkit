@@ -101,7 +101,13 @@ void CCursor::Paint()
 {
    if (mVisible == false)
       return;
+
+#if PPT_USE_SDL
    GetGraphicInstance()->SetClipRegion(mRestrictedRect);
+#else
+   GetGraphicInstance()->SetClipRegion(NULL, mRestrictedRect);
+#endif // PPT_USE_SDL
+
    if (mSprite == NULL)
    {
       GetGraphicInstance()->SetColor(0xFFFFFF);

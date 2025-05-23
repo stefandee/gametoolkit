@@ -104,7 +104,6 @@ void CPICheckButton::Paint()
       {
          GetGraphicInstance()->SetFont(mFont);
          GetGraphicInstance()->SetColor(GetColor());
-         //GetGraphicInstance()->DrawText(NULL, GetText(), GetAbsoluteBoundsRect(), mTextAllignment);
 
          GetGraphicInstance()->TextOut2(GetAbsoluteLeft(), GetAbsoluteTop(), GetText());//, mTextAllignment);
       }
@@ -116,7 +115,6 @@ void CPICheckButton::Paint()
          GetGraphicInstance()->SetColor(GetColor());
 
          GetGraphicInstance()->TextOut2(GetAbsoluteLeft(), GetAbsoluteTop(), GetText(), PPDT_CENTER | PPDT_VCENTER | PPDT_SINGLELINE);
-         //GetGraphicInstance()->DrawText(NULL, GetText(), GetAbsoluteBoundsRect(), PPDT_CENTER | PPDT_VCENTER | PPDT_SINGLELINE);
       }
 }
 

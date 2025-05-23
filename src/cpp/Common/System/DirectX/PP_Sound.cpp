@@ -24,8 +24,8 @@
 //#include <vcl.h>
 #pragma hdrstop
 
+#include "easylogging++.h"
 #include "PP_Sound.h"
-#include "logfile.h"
 #include "SWavLoad.h"
 #include "SVocLoad.h"
 #include "SAuLoad.h"
@@ -165,8 +165,11 @@ bool CSoundSystem::PowerOn(void* hWnd)
       return false;
     }
 
-    if(direct_sound->SetCooperativeLevel( static_cast<HWND>(hWnd), DSSCL_EXCLUSIVE ) != DS_OK)
+    result = direct_sound->SetCooperativeLevel( static_cast<HWND>(hWnd), DSSCL_PRIORITY );
+
+    if(result != DS_OK)
     {
+      LOG(ERROR) << ErrorReport(result);
       return false;
     }
 
@@ -180,7 +183,7 @@ bool CSoundSystem::PowerOn(void* hWnd)
 
     if ((result = direct_sound->CreateSoundBuffer(&dsbd, &primary_buffer, NULL)) != 0)
     {
-      OutputDebugString(ErrorReport(result));
+      LOG(ERROR) << ErrorReport(result);
       return false;
     }
 
@@ -197,7 +200,7 @@ bool CSoundSystem::PowerOn(void* hWnd)
 
     if ((result = primary_buffer->SetFormat(&waveFormat)) != DS_OK)
     {
-      OutputDebugString(ErrorReport(result));
+      LOG(ERROR) << ErrorReport(result);
       return false;
     }
 
@@ -208,7 +211,7 @@ bool CSoundSystem::PowerOn(void* hWnd)
 //---------------------------------------------------------------------------
 // descriere : returneaza un string dintr'o eroare
 //---------------------------------------------------------------------------
-char* CSoundSystem::ErrorReport(int error)
+const char* CSoundSystem::ErrorReport(int error)
 {
   // un switch
   switch(error)
@@ -312,8 +315,8 @@ UINT CSoundSystem::LoadNew(const char* filename, int instances)
    int i;
 
    //daca sistemul a fost disabled atunci se iese din metoda
-   logWriteLn("CSoundSystem::LoadNew - begin");
-   logWriteLn(filename);
+   VLOG(9) << "CSoundSystem::LoadNew - begin " << filename;
+
    if (Enabled == false)
       return -1;
 
@@ -322,22 +325,22 @@ UINT CSoundSystem::LoadNew(const char* filename, int instances)
       {
          if (Load(i, filename, instances))
          {
-            logWriteLn("CSoundSystem::LoadNew - new one");
+            VLOG(9) << "CSoundSystem::LoadNew - new one";
             return i;
          }
          else
          {
-            logWriteLn("CSoundSystem::LoadNew - cannot load");
+            VLOG(9) << "CSoundSystem::LoadNew - cannot load";
             return -1;
          }
       }
       else
          if (strcmp(filename, sounds[i]->pszFileName) == 0)
          {
-            logWriteLn("CSoundSystem::LoadNew - found");
+            VLOG(9) << "CSoundSystem::LoadNew - found";
             return i;
          }
-   logWriteLn("CSoundSystem::LoadNew - end");
+   VLOG(9) << "CSoundSystem::LoadNew - end";
    return -1;
 }
 
@@ -397,7 +400,7 @@ bool CSoundSystem::PlayWithVol(int what_sound, int pan_value, int vol_value)
   Buffer = GetFreeBuffer(what_sound);
   if(Buffer == NULL)
   {
-    logWriteLn("no free buffer");
+    LOG(WARNING) << "no free buffer";
     return false;
   }
 
@@ -406,7 +409,7 @@ bool CSoundSystem::PlayWithVol(int what_sound, int pan_value, int vol_value)
   result = Buffer->SetPan(lDevicePan);
   if(result != DS_OK)
   {
-    logWriteLn("cannot set pan");
+    LOG(WARNING) << "cannot set pan";
     return false;
   }
 
@@ -430,7 +433,7 @@ bool CSoundSystem::PlayWithVol(int what_sound, int pan_value, int vol_value)
   result = Buffer->SetVolume(VolumeToDeviceValue(lVerifiedVolume));
   if(result != DS_OK)
   {
-    logWriteLn("cannot set volume");
+    LOG(WARNING) << "cannot set volume";
     return false;
   }
 
@@ -441,7 +444,7 @@ bool CSoundSystem::PlayWithVol(int what_sound, int pan_value, int vol_value)
   result = Buffer->Play(0, 0, dwFlags);
   if(result != DS_OK)
   {
-    logWriteLn("buffer play failed");
+    LOG(WARNING) << "buffer play failed";
     return false;
   }
 
@@ -469,7 +472,7 @@ bool CSoundSystem::Play(int what_sound, int pan_value)
   Buffer = GetFreeBuffer(what_sound);
   if(Buffer == NULL)
   {
-    logWriteLn("no free buffer");
+    LOG(WARNING) << "no free buffer";
     return false;
   }
 
@@ -479,7 +482,7 @@ bool CSoundSystem::Play(int what_sound, int pan_value)
   //result = Buffer->SetPan(10000);
   if(result != DS_OK)
   {
-    logWriteLn("cannot set pan");
+    LOG(WARNING) << "cannot set pan";
     return false;
   }
 
@@ -490,7 +493,7 @@ bool CSoundSystem::Play(int what_sound, int pan_value)
   result = Buffer->Play(0, 0, dwFlags);
   if(result != DS_OK)
   {
-    logWriteLn("buffer play failed");
+    LOG(WARNING) << "buffer play failed";
     return false;
   }
 
@@ -646,9 +649,7 @@ bool CSoundSystem::Load(int what_sound, const char* filename, int instances)
         if (!pSndLoad.Open(filename))
         {
           // atunci e RAW (adica nu are format)
-          logWriteLn("Sound file ");
-          logWriteLn(filename);
-          logWriteLn(" has no format");
+          LOG(WARNING) << "Sound file " << filename << " has no format";
           return false;
         }
         else
@@ -680,7 +681,7 @@ bool CSoundSystem::Load(int what_sound, const char* filename, int instances)
       (sndInfo.sampleRate    != SS_SAMPLE_RATE)   ||
       (sndInfo.bitsPerSample != SS_BITSPERSAMPLE))
   {
-    logWriteLn("Params do not match for sound");
+    LOG(WARNING) << "Params do not match for sound";
     return false;
   }
 
@@ -812,7 +813,7 @@ void CSoundSystem::SetMasterVolume(int _volume)
 
   if (primary_buffer->SetVolume(lDeviceVolume) != DS_OK)
   {
-    logWriteLn("CSoundSystem::SetPrimaryVolume : cannot set volume");
+    LOG(WARNING) << "CSoundSystem::SetPrimaryVolume : cannot set volume";
   }
 }
 //---------------------------------------------------------------------------

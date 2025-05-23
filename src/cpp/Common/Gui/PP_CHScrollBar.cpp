@@ -169,6 +169,7 @@ void CPIHScrollBar::DrawThumb()
       GetGraphicInstance()->FillRectangle(
         //Rect(lL, lT + GetThumbPos() - GetThumbHeight() / 2, lL + lBW, lT + GetThumbPos() + GetThumbHeight() / 2),
         CPRect(lL + GetThumbPos() - GetThumbWidth() / 2, lT, lL + GetThumbPos() + GetThumbWidth() / 2, lT + lBH));
+
       break;
   }
 }

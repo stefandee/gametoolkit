@@ -42,7 +42,12 @@
 ---------------------------------------------------------------------------*/
 CPILabel::CPILabel(CPIWinControl *Parent) : CPIControl(Parent)
 {
+#if PPT_USE_SDL
    mFont = new CPFont(PATH_FONTS + FILE_FONT_SMALL, 12, true);
+#else
+   mFont = new CPFont(PATH_FONTS + FILE_FONT_SMALL);
+   mFont->SetSize(12);
+#endif // PPT_USE_SDL
    SetColor(0x00FFFFFF);
    SetAutoSize(false);
    SetWidth(100);
@@ -187,7 +192,9 @@ void CPILabel::Paint()
 
    if (mMultiline)
    {
+#if PPT_USE_SDL
         GetGraphicInstance()->TextOutWrapped(GetAbsoluteLeft(), GetAbsoluteTop(), GetText(), GetWidth());
+#endif
    }
    else
    {

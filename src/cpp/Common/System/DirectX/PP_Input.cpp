@@ -35,9 +35,9 @@
 #pragma hdrstop
 
 #include "PP_Input.h"
-#include "logfile.h"
-
+#include "easylogging++.h"
 //---------------------------------------------------------------------------
+
 //#pragma package(smart_init)
 
 CPIIInputSystem *CPIIInputSystem::mInstance = NULL;
@@ -217,19 +217,19 @@ BOOL CPIIInputSystem::InitInputs(void *hInst, void *hWnd)
    rval = DirectInputCreate(static_cast<HINSTANCE>(hInst), DIRECTINPUT_VERSION, &lpDI, NULL);
    if(rval != DI_OK)
    {
-      logWriteLn(ErrorDetailedStr(rval));
+      LOG(ERROR) << ErrorDetailedStr(rval);
       throw CErrorGeneric();
    }
    rval = lpDI->CreateDevice(GUID_SysMouse, &lpDIDMouse, NULL);
    if(rval != DI_OK)
    {
-      logWriteLn(ErrorDetailedStr(rval));
+      LOG(ERROR) << ErrorDetailedStr(rval);
       throw CErrorGeneric();
    }
    rval = lpDI->CreateDevice(GUID_SysKeyboard, &lpDIDKeyboard, NULL);
    if(rval != DI_OK)
    {
-      logWriteLn(ErrorDetailedStr(rval));
+      LOG(ERROR) << ErrorDetailedStr(rval);
       throw CErrorGeneric();
    }
 
@@ -237,7 +237,7 @@ BOOL CPIIInputSystem::InitInputs(void *hInst, void *hWnd)
    //rval = lpDIDMouse->SetCooperativeLevel(hWnd, DISCL_NONEXCLUSIVE | DISCL_BACKGROUND);
    if(rval != DI_OK)
    {
-      logWriteLn(ErrorDetailedStr(rval));
+      LOG(ERROR) << ErrorDetailedStr(rval);
       throw CErrorGeneric();
    }
 
@@ -245,33 +245,33 @@ BOOL CPIIInputSystem::InitInputs(void *hInst, void *hWnd)
    //rval = lpDIDKeyboard->SetCooperativeLevel(hWnd, DISCL_NONEXCLUSIVE | DISCL_BACKGROUND);
    if(rval != DI_OK)
    {
-      logWriteLn(ErrorDetailedStr(rval));
+      LOG(ERROR) << ErrorDetailedStr(rval);
       throw CErrorGeneric();
    }
    rval = lpDIDMouse->SetDataFormat(&c_dfDIMouse);
    if(rval != DI_OK)
    {
-      logWriteLn(ErrorDetailedStr(rval));
+      LOG(ERROR) << ErrorDetailedStr(rval);
       throw CErrorGeneric();
    }
    rval = lpDIDKeyboard->SetDataFormat(&c_dfDIKeyboard);
    if(rval != DI_OK)
    {
-      logWriteLn(ErrorDetailedStr(rval));
+      LOG(ERROR) << ErrorDetailedStr(rval);
       throw CErrorGeneric();
    }
 
    rval = lpDIDMouse->Acquire();
    if(rval != DI_OK)
    {
-      logWriteLn(ErrorDetailedStr(rval));
+      LOG(ERROR) << ErrorDetailedStr(rval);
       throw CErrorGeneric();
    }
 
    rval = lpDIDKeyboard->Acquire();
    if(rval != DI_OK)
    {
-      logWriteLn(ErrorDetailedStr(rval));
+      LOG(ERROR) << ErrorDetailedStr(rval);
       throw CErrorGeneric();
    }
 
@@ -293,22 +293,22 @@ CPString CPIIInputSystem::ErrorDetailedStr(HRESULT hRet)
       case DIERR_ALREADYINITIALIZED:      lError = "DIERR_ALREADYINITIALIZED"; break;
       case DIERR_BETADIRECTINPUTVERSION : lError = "DIERR_BETADIRECTINPUTVERSION"; break;
       case DIERR_BADDRIVERVER:            lError = "DIERR_BADDRIVERVER"; break;
-      case DIERR_DEVICEFULL:              lError = "DIERR_DEVICEFULL"; break;
+      //case DIERR_DEVICEFULL:              lError = "DIERR_DEVICEFULL"; break;
       case DIERR_DEVICENOTREG:            lError = "DIERR_DEVICENOTREG"; break;
-      case DIERR_EFFECTPLAYING:           lError = "DIERR_EFFECTPLAYING"; break;
-      case DIERR_HASEFFECTS:              lError = "DIERR_HASEFFECTS"; break;
+      //case DIERR_EFFECTPLAYING:           lError = "DIERR_EFFECTPLAYING"; break;
+      //case DIERR_HASEFFECTS:              lError = "DIERR_HASEFFECTS"; break;
       case DIERR_GENERIC:                 lError = "DIERR_GENERIC"; break;
 //    case DIERR_HANDLEEXISTS:            lError = ""; break;
-      case DIERR_INCOMPLETEEFFECT:        lError = "DIERR_INCOMPLETEEFFECT"; break;
+      //case DIERR_INCOMPLETEEFFECT:        lError = "DIERR_INCOMPLETEEFFECT"; break;
       case DIERR_INPUTLOST:               lError = "DIERR_INPUTLOST"; break;
       case DIERR_INVALIDPARAM :           lError = "DIERR_INVALIDPARAM"; break;
-      case DIERR_MOREDATA:                lError = "DIERR_MOREDATA"; break;
+      //case DIERR_MOREDATA:                lError = "DIERR_MOREDATA"; break;
       case DIERR_NOAGGREGATION:           lError = "DIERR_NOAGGREGATION"; break;
       case DIERR_NOINTERFACE:             lError = "DIERR_NOINTERFACE"; break;
       case DIERR_NOTACQUIRED:             lError = "DIERR_NOTACQUIRED"; break;
-      case DIERR_NOTBUFFERED:             lError = "DIERR_NOTBUFFERED"; break;
-      case DIERR_NOTDOWNLOADED:           lError = "DIERR_NOTDOWNLOADED"; break;
-      case DIERR_NOTEXCLUSIVEACQUIRED:    lError = "DIERR_NOTEXCLUSIVEACQUIRED"; break;
+      //case DIERR_NOTBUFFERED:             lError = "DIERR_NOTBUFFERED"; break;
+      //case DIERR_NOTDOWNLOADED:           lError = "DIERR_NOTDOWNLOADED"; break;
+      //case DIERR_NOTEXCLUSIVEACQUIRED:    lError = "DIERR_NOTEXCLUSIVEACQUIRED"; break;
       case DIERR_NOTFOUND:                lError = "DIERR_NOTFOUND"; break;
       case DIERR_NOTINITIALIZED :         lError = "DIERR_NOTINITIALIZED"; break;
 //    case DIERR_OBJECTNOTFOUND:          lError = ""; break;
@@ -316,8 +316,8 @@ CPString CPIIInputSystem::ErrorDetailedStr(HRESULT hRet)
       case DIERR_OTHERAPPHASPRIO:         lError = "DIERR_OTHERAPPHASPRIO"; break;
       case DIERR_OUTOFMEMORY :            lError = "DIERR_OUTOFMEMORY"; break;
 //    case DIERR_READONLY:                lError = ""; break;
-      case DIERR_REPORTFULL:              lError = "DIERR_REPORTFULL"; break;
-      case DIERR_UNPLUGGED:               lError = "DIERR_UNPLUGGED"; break;
+      //case DIERR_REPORTFULL:              lError = "DIERR_REPORTFULL"; break;
+      //case DIERR_UNPLUGGED:               lError = "DIERR_UNPLUGGED"; break;
       case DIERR_UNSUPPORTED:             lError = "DIERR_UNSUPPORTED"; break;
       case E_HANDLE:                      lError = "E_HANDLE"; break;
       case E_PENDING:                     lError = "E_PENDING"; break;

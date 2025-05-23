@@ -35,11 +35,11 @@
 //#include <vcl.h>
 #pragma hdrstop
 
+#include "easylogging++.h"
 #include "PP_Sprite.h"
 #include "PP_Graphic.h"
-#include "logfile.h"
 #include "GBmpLoad.h"
-#include "GJpgLoad.h"
+//#include "GJpgLoad.h"
 #include "GPcxLoad.h"
 #include "GPngLoad.h"
 
@@ -85,9 +85,8 @@ CSprite::CSprite(CPString filename, long wcells, long hcells)
    mFileName = filename;
    mSurface = 0;
 
-   logWriteLn("CSprite::CSprite - BEGIN", LOGDET_LOWEST);
-   logWrite("Sprite file name : ",LOGDET_LOWEST);
-   logWriteLn(filename,LOGDET_LOWEST);
+   VLOG(9) << "CSprite::CSprite - BEGIN";
+   VLOG(9) << "Sprite file name : " << filename.c_str();
    if (!LoadGraphicFile16(filename))
    {
       //exceptie
@@ -96,19 +95,15 @@ CSprite::CSprite(CPString filename, long wcells, long hcells)
 
    // loadGraphicFile a completat cimpurile Width si Height, de fapt apelul la createSprite
    mHCells = hcells;
-   logWrite("CSprite::CSprite - HCells  =", LOGDET_LOWEST);
-   logWriteILn(mHCells, LOGDET_LOWEST);
+   VLOG(9) << "CSprite::CSprite - HCells  =" << mHCells;
    mWCells = wcells;
-   logWrite("CSprite::CSprite - WCells  =", LOGDET_LOWEST);
-   logWriteILn(mWCells, LOGDET_LOWEST);
+   VLOG(9) << "CSprite::CSprite - WCells  =" << mWCells;
    mCWidth = mWidth / mWCells;
-   logWrite("CSprite::CSprite - CWidth  =", LOGDET_LOWEST);
-   logWriteILn(mCWidth, LOGDET_LOWEST);
+   VLOG(9) << "CSprite::CSprite - CWidth  =" << mCWidth;
    mCHeight= mHeight / mHCells;
-   logWrite("CSprite::CSprite - CHeight = ", LOGDET_LOWEST);
-   logWriteILn(mCHeight, LOGDET_LOWEST);
+   VLOG(9) << "CSprite::CSprite - CHeight = " << mCHeight;
    mCount  = (long) mWidth / mCWidth;
-   logWriteLn("CSprite::CSprite - OVER", LOGDET_LOWEST);
+   VLOG(9) << "CSprite::CSprite - OVER";
 }
 //--------------------------------------------------------------------------
 
@@ -117,10 +112,10 @@ CSprite::CSprite(CPString filename, long wcells, long hcells)
 //--------------------------------------------------------------------------
 CSprite::~CSprite()
 {
-   logWriteLn("CSprite::~CSprite - BEGIN", LOGDET_LOWEST);
-   logWriteLn(mFileName.c_str(), LOGDET_LOWEST);
+   VLOG(9) << "CSprite::~CSprite - BEGIN";
+   VLOG(9) << mFileName.c_str();
    ReleaseSurface();
-   logWriteLn("CSprite::~CSprite - OVER", LOGDET_LOWEST);
+   VLOG(9) << "CSprite::~CSprite - OVER";
 }
 //---------------------------------------------------------------------------
 
@@ -205,7 +200,7 @@ HRESULT CSprite::CreateSurface(long width, long height)
    }
    catch(...)
    {
-      logWriteLn("CSprite::CreateSurface - Unable to create surface.");
+      LOG(ERROR) << "CSprite::CreateSurface - Unable to create surface.";
       return E_FAIL;
    }
 
@@ -261,7 +256,7 @@ bool CSprite::LoadGraphicFile16(CPString filename)
   lHRet = mSurface->Lock(NULL, &lDDSD, DDLOCK_WAIT, NULL);
   if (lHRet != DD_OK)
   {
-    logWriteLn("CSprite::LoadGraphicFile16 - error getting surface lock, LOGDET_LOWEST");
+    LOG(ERROR) << "CSprite::LoadGraphicFile16 - error getting surface lock";
     delete lLoader;
     return false;
   }
@@ -269,7 +264,7 @@ bool CSprite::LoadGraphicFile16(CPString filename)
   // Load the image from file
   if (!lLoader->LoadAligned((unsigned char*)lDDSD.lpSurface, lWidth, lHeight, lDDSD.lPitch, RGB_565))
   {
-    logWriteLn("CSprite::LoadGraphicFile16 - failed to load from graphic file", LOGDET_LOWEST);
+    LOG(ERROR) << "CSprite::LoadGraphicFile16 - failed to load from graphic file";
     mSurface->Unlock(NULL);
     delete lLoader;
     return false;
@@ -290,10 +285,10 @@ GLoad* CSprite::GetLoader(CPString _filename)
   CPString lFileExt3 = _filename.SubString(_filename.Length() - 3, 3);
   lFileExt3.ToUpperCase();
 
-  if (lFileExt3 == CPString("JPG"))
+  /*if (lFileExt3 == CPString("JPG"))
   {
     return new GJpgLoad();
-  }
+  }*/
 
   if (lFileExt3 == CPString("BMP"))
   {
@@ -332,4 +327,11 @@ CSpriteCustom::CSpriteCustom(int _width, int _height, int _wcells, int _hcells)
 }
 //---------------------------------------------------------------------------
 
+CPRect CSprite::GetPaintRect(CPPoint _where, int animCount, int animType, int zoomFactor)
+{
+    CPRect lSource = GetAnimRect(animCount, animType);
+
+    return CPRect(_where.x, _where.y, _where.x + lSource.right - lSource.left, _where.y + lSource.bottom - lSource.top);
+}
+//---------------------------------------------------------------------------
 

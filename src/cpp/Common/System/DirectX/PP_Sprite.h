@@ -71,6 +71,7 @@ class CSprite
       int      GetAnimTypes();                           //inline
       int      GetWidth()  { return mWidth; }
       int      GetHeight() { return mHeight; }
+      CPRect   GetPaintRect(CPPoint _where, int animCount, int animType, int zoomFactor = 1);
 
       CPString              mFileName;          //pentru restore
 

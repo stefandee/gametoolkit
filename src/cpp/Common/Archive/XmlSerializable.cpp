@@ -254,7 +254,7 @@ void XmlSerializer::createAttribute(const char* name, const char* value)
 
 void XmlSerializer::rawWrite(int value)
 {
-    tinyxml2::XMLComment* comment = mDoc.NewComment(toString(value).c_str());
+    tinyxml2::XMLComment* comment = mDoc.NewComment(PP::toString(value).c_str());
 
     mCurrentElement->LinkEndChild(comment);
 }

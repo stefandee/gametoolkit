@@ -124,13 +124,6 @@ void CPIEditControl::Paint()
       lGSI->TextOut2(lL, lT, GetText() + "|", mTextAllignment);
    else
       lGSI->TextOut2(lL, lT, GetText(), mTextAllignment);
-
-   /*
-   if ((mBlinkCounter.MaxReached() == true) && mHasFocus)
-      lGSI->DrawText(NULL, GetText()+"|", GetAbsoluteBoundsRect(), mTextAllignment);
-   else
-      lGSI->DrawText(NULL, GetText(), GetAbsoluteBoundsRect(), mTextAllignment);
-   */
 }
 
 /*---------------------------------------------------------------------------
