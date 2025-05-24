@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Internal function/structure declaration. Do NOT include in your
  *  application.
  *
@@ -25,7 +25,7 @@
 #endif
 
 /* !!! FIXME: remove this when revamping stack allocation code... */
-#if defined(_MSC_VER) || defined(__MINGW32__)
+#if defined(_MSC_VER) || defined(__MINGW32__)  || defined(__BORLANDC__)
 #include <malloc.h>
 #endif
 
