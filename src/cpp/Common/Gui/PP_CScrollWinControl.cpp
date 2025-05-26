@@ -99,21 +99,6 @@ void CPIScrollWinControl::ComputeLimits()
 }
 //---------------------------------------------------------------------------
 
-/*
-void CPIScrollWinControl::Update()
-{
-  CPIWinControl::Update();
-
-  /*
-
-  logWriteILn(lHMin);
-  logWriteILn(lHMax);
-  logWriteILn(lVMin);
-  logWriteILn(lVMax);
-  */
-//}
-//---------------------------------------------------------------------------
-
 void CPIScrollWinControl::Paint()
 {
   SetClipRegion();
